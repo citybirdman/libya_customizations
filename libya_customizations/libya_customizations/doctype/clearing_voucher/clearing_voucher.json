@@ -1,0 +1,315 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-10-24 12:02:47.232054",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "company",
+  "column_break_3",
+  "posting_date",
+  "amended_from",
+  "section_break_6",
+  "from",
+  "from_party_type",
+  "from_party",
+  "from_party_name",
+  "column_break_11",
+  "to",
+  "to_party_type",
+  "to_party",
+  "to_party_name",
+  "section_break_16",
+  "from_account",
+  "from_account_type",
+  "from_account_currency",
+  "deducted_amount",
+  "source_exchange_rate",
+  "base_deducted_amount",
+  "column_break_23",
+  "to_account",
+  "to_account_type",
+  "to_account_currency",
+  "added_amount",
+  "target_exchange_rate",
+  "base_added_amount",
+  "section_break_30",
+  "remark"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Series",
+   "no_copy": 1,
+   "options": "ACC-CLRG-.YYYY.-",
+   "print_hide": 1,
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "remember_last_selected_value": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Clearing Voucher",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "from",
+   "fieldtype": "Autocomplete",
+   "label": "From?",
+   "options": "Customer\nSupplier\nAccount"
+  },
+  {
+   "depends_on": "eval:doc.from_a_party;",
+   "fieldname": "from_party_type",
+   "fieldtype": "Link",
+   "label": "From Party Type",
+   "mandatory_depends_on": "eval:doc.from_a_party;",
+   "options": "DocType"
+  },
+  {
+   "depends_on": "eval:doc.from_party_type",
+   "fieldname": "from_party",
+   "fieldtype": "Dynamic Link",
+   "label": "From Party",
+   "mandatory_depends_on": "eval:doc.from_party_type",
+   "options": "from_party_type"
+  },
+  {
+   "fieldname": "from_party_name",
+   "fieldtype": "Data",
+   "label": "From Party Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to",
+   "fieldtype": "Autocomplete",
+   "label": "To?",
+   "options": "Customer\nSupplier\nAccount"
+  },
+  {
+   "depends_on": "eval:doc.to_a_party;",
+   "fieldname": "to_party_type",
+   "fieldtype": "Link",
+   "label": "To Party Type",
+   "mandatory_depends_on": "eval:doc.to_a_party;",
+   "options": "DocType"
+  },
+  {
+   "depends_on": "eval:doc.to_party_type",
+   "fieldname": "to_party",
+   "fieldtype": "Dynamic Link",
+   "label": "To Party",
+   "mandatory_depends_on": "eval:doc.to_party_type",
+   "options": "to_party_type"
+  },
+  {
+   "fieldname": "to_party_name",
+   "fieldtype": "Data",
+   "label": "To Party Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_16",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "from_account",
+   "fieldtype": "Link",
+   "label": "From Account",
+   "options": "Account",
+   "read_only_depends_on": "eval:doc.from_a_party",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "from_account.account_type",
+   "fieldname": "from_account_type",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "From Account Type",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.from_account",
+   "fetch_from": "from_account.account_currency",
+   "fieldname": "from_account_currency",
+   "fieldtype": "Link",
+   "label": "From Account Currency",
+   "options": "Currency",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "deducted_amount",
+   "fieldtype": "Currency",
+   "label": "Deducted Amount",
+   "non_negative": 1,
+   "options": "from_account_currency",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "source_exchange_rate",
+   "fieldtype": "Float",
+   "label": "Deduction Exchange Rate",
+   "non_negative": 1,
+   "precision": "9",
+   "read_only_depends_on": "eval:doc.from_account_currency == 'LYD'",
+   "reqd": 1
+  },
+  {
+   "fieldname": "base_deducted_amount",
+   "fieldtype": "Currency",
+   "label": "Deducted Amount (Company Currency)",
+   "non_negative": 1,
+   "options": "Company:company:default_currency",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_23",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to_account",
+   "fieldtype": "Link",
+   "label": "To Account",
+   "options": "Account",
+   "read_only_depends_on": "eval:doc.to_a_party",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "to_account.account_type",
+   "fieldname": "to_account_type",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "To Account Type",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.to_account",
+   "fetch_from": "to_account.account_currency",
+   "fieldname": "to_account_currency",
+   "fieldtype": "Link",
+   "label": "To Account Currency",
+   "options": "Currency",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "added_amount",
+   "fieldtype": "Currency",
+   "label": "Added Amount",
+   "options": "to_account_currency",
+   "read_only_depends_on": "eval:doc.to_account_currency == 'LYD'",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "target_exchange_rate",
+   "fieldtype": "Float",
+   "label": "Addition Exchange Rate",
+   "read_only_depends_on": "eval:doc.paid_to_account_currency == 'LYD'",
+   "reqd": 1
+  },
+  {
+   "fieldname": "base_added_amount",
+   "fieldtype": "Currency",
+   "label": "Added Amount (Company Currency)",
+   "options": "Company:company:default_currency",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_30",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remark",
+   "fieldtype": "Small Text",
+   "label": "Remark"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Clearing Voucher",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "group": "Related",
+   "link_doctype": "Journal Entry",
+   "link_fieldname": "custom_voucher_no"
+  }
+ ],
+ "modified": "2024-10-24 12:10:57.402853",
+ "modified_by": "Administrator",
+ "module": "Libya Customizations",
+ "name": "Clearing Voucher",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
