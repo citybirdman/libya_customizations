@@ -82,8 +82,8 @@ app_license = "mit"
 # Installation
 # ------------
 
-before_install = "libya_customizations.install.before_install"
-# after_install = "libya_customizations.install.after_install"
+# before_install = "libya_customizations.install.before_install"
+after_install = "libya_customizations.install.after_install"
 
 # Uninstallation
 # ------------

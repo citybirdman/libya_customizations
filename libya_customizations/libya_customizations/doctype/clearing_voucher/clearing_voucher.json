@@ -9,21 +9,18 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
-  "company",
-  "column_break_3",
   "posting_date",
+  "column_break_3",
+  "company",
   "amended_from",
-  "section_break_6",
+  "section_break_taxu",
   "from",
+  "column_break_uyxq",
+  "to",
+  "section_break_16",
   "from_party_type",
   "from_party",
   "from_party_name",
-  "column_break_11",
-  "to",
-  "to_party_type",
-  "to_party",
-  "to_party_name",
-  "section_break_16",
   "from_account",
   "from_account_type",
   "from_account_currency",
@@ -31,6 +28,9 @@
   "source_exchange_rate",
   "base_deducted_amount",
   "column_break_23",
+  "to_party_type",
+  "to_party",
+  "to_party_name",
   "to_account",
   "to_account_type",
   "to_account_currency",
@@ -42,6 +42,7 @@
  ],
  "fields": [
   {
+   "depends_on": "eval:false",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "in_list_view": 1,
@@ -81,21 +82,16 @@
    "read_only": 1
   },
   {
-   "fieldname": "section_break_6",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "from",
    "fieldtype": "Autocomplete",
    "label": "From?",
    "options": "Customer\nSupplier\nAccount"
   },
   {
-   "depends_on": "eval:doc.from_a_party;",
    "fieldname": "from_party_type",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "From Party Type",
-   "mandatory_depends_on": "eval:doc.from_a_party;",
    "options": "DocType"
   },
   {
@@ -113,21 +109,16 @@
    "read_only": 1
   },
   {
-   "fieldname": "column_break_11",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "to",
    "fieldtype": "Autocomplete",
    "label": "To?",
    "options": "Customer\nSupplier\nAccount"
   },
   {
-   "depends_on": "eval:doc.to_a_party;",
    "fieldname": "to_party_type",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "To Party Type",
-   "mandatory_depends_on": "eval:doc.to_a_party;",
    "options": "DocType"
   },
   {
@@ -145,15 +136,16 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval:doc.from && doc.to",
    "fieldname": "section_break_16",
    "fieldtype": "Section Break"
   },
   {
+   "depends_on": "eval:doc.from == \"Account\"",
    "fieldname": "from_account",
    "fieldtype": "Link",
    "label": "From Account",
    "options": "Account",
-   "read_only_depends_on": "eval:doc.from_a_party",
    "reqd": 1
   },
   {
@@ -206,6 +198,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.from == \"Account\"",
    "fieldname": "to_account",
    "fieldtype": "Link",
    "label": "To Account",
@@ -256,6 +249,7 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.from && doc.to",
    "fieldname": "section_break_30",
    "fieldtype": "Section Break"
   },
@@ -272,6 +266,14 @@
    "options": "Clearing Voucher",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_taxu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_uyxq",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -283,7 +285,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-10-24 12:10:57.402853",
+ "modified": "2024-11-03 07:36:21.194196",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Clearing Voucher",

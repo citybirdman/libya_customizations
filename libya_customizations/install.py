@@ -1,6 +1,6 @@
 import frappe
 from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
-def before_install():
+def after_install():
     create_fields_for_all_doctypes()
     # frappe.throw(repr(frappe.db.get_list(("DocField", [["parent", "=", "Customer"], ["fieldname", "=", "salutation"]], "hidden", 1), "*")))
     edit_customer_doctype()
@@ -38,8 +38,50 @@ def create_fields_for_all_doctypes():
                 fieldname="restrict_account_view",
                 label="Restrict Account View",
                 fieldtype="Link",
+                options="Restrict Account View",
                 insert_after="include_in_gross",
                 permlevel=1
+            )
+        ],
+        "company":[
+            dict(
+                fieldname="default_debt_add_account",
+                label="Default Debt Account",
+                fieldtype="Link",
+                options="Account",
+                insert_after="write_off_account"
+            )
+        ],
+        "Payment Entry":[
+            dict(
+                fieldname="custom_voucher_type",
+                label="Custom Voucher Type",
+                fieldtype="Link",
+                options= "DocType",
+                insert_after=""
+            ),
+            dict(
+                fieldname="custom_voucher_no",
+                label="Custom Voucher No",
+                fieldtype="Dynamic Link",
+                options= "custom_voucher_type",
+                insert_after="custom_voucher_type"
+            )
+        ],
+        "Journal Entry":[
+            dict(
+                fieldname="custom_voucher_type",
+                label="Custom Voucher Type",
+                fieldtype="Link",
+                options= "DocType",
+                insert_after="due_date"
+            ),
+            dict(
+                fieldname="custom_voucher_no",
+                label="Custom Voucher No",
+                fieldtype="Dynamic Link",
+                options= "custom_voucher_type",
+                insert_after="custom_voucher_type"
             )
         ]
     }
