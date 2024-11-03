@@ -14,7 +14,7 @@ class DebtVoucher(Document):
 			if not debt_account:
 				frappe.throw(_("Please Add default Debt Add Account in Company Settings"))
 			accounts_add.append({
-				'account': self.debt_account,
+				'account': debt_account,
 				'exchange_rate': 1,
 				'credit_in_account_currency': abs(self.amount)
 			})
@@ -54,7 +54,7 @@ class DebtVoucher(Document):
 				'credit_in_account_currency': abs(self.amount)
 			})
 			accounts_deduct.append({
-				'account': self.debt_account,
+				'account': debt_account,
 				'exchange_rate': 1,
 				'debit_in_account_currency': abs(self.base_amount)
 			})
