@@ -1,0 +1,113 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-11-06 10:50:46.110502",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "purchase_receipt",
+  "shipment_name",
+  "total_qty",
+  "grand_total",
+  "currency",
+  "virtual_receipt",
+  "posting_date",
+  "submit_button",
+  "actual_receipt"
+ ],
+ "fields": [
+  {
+   "fieldname": "purchase_receipt",
+   "fieldtype": "Link",
+   "label": "Purchase Receipt",
+   "options": "Purchase Receipt",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "columns": 2,
+   "fetch_from": "purchase_receipt.title",
+   "fieldname": "shipment_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Shipment Name",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "columns": 2,
+   "fetch_from": "purchase_receipt.total_qty",
+   "fieldname": "total_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Total Quantity",
+   "non_negative": 1,
+   "precision": "0",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Grand Total",
+   "non_negative": 1,
+   "options": "currency",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "fieldname": "virtual_receipt",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Virtual Receipt",
+   "read_only_depends_on": "eval:doc.actual_receipt"
+  },
+  {
+   "columns": 2,
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Posting Date",
+   "read_only_depends_on": "eval:doc.actual_receipt || doc.virtual_receipt"
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "fieldname": "actual_receipt",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Actual Receipt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:!doc.actual_receipt && !doc.virtual_receipt",
+   "fieldname": "submit_button",
+   "fieldtype": "Button",
+   "label": "Submit",
+   "read_only_depends_on": "eval:doc.actual_receipt || doc.virtual_receipt"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-11-12 09:52:33.251916",
+ "modified_by": "Administrator",
+ "module": "Libya Customizations",
+ "name": "Purchase Receipt Management Detail",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

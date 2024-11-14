@@ -95,7 +95,7 @@ frappe.ui.form.on('Transfer Voucher', 'before_save', function(frm){
 /////////////////////////////////////////////////
 
 frappe.ui.form.on("Transfer Voucher", "paid_from", function(frm) {
-    if (frm.doc.paid_to_account_currency == 'LYD') {
+    if (frm.doc.paid_to_account_currency == frm.doc.paid_from_account_currency) {
         calculate_received_amount(frm);
     }
 });

@@ -2,10 +2,10 @@ import frappe
 from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 def after_install():
     create_fields_for_all_doctypes()
-    # frappe.throw(repr(frappe.db.get_list(("DocField", [["parent", "=", "Customer"], ["fieldname", "=", "salutation"]], "hidden", 1), "*")))
     edit_customer_doctype()
     edit_account_doctype()
     edit_territory_doctype()
+    create_roles()
 
 def edit_account_doctype():
     fields_to_change_the_perm_level = ["account_number", "is_group", "company", "root_type", "report_type", "account_currency", "parent_account", "account_type", "tax_rate", "freeze_account", "balance_must_be"]
@@ -45,8 +45,8 @@ def create_fields_for_all_doctypes():
         ],
         "company":[
             dict(
-                fieldname="default_debt_add_account",
-                label="Default Debt Account",
+                fieldname="write_up_account",
+                label="Write Up Account",
                 fieldtype="Link",
                 options="Account",
                 insert_after="write_off_account"
@@ -83,6 +83,39 @@ def create_fields_for_all_doctypes():
                 options= "custom_voucher_type",
                 insert_after="custom_voucher_type"
             )
+        ],
+        "Purchase Receipt":[
+            dict(
+                fieldname="virtual_receipt",
+                label="Virtual Receipt",
+                fieldtype="Check",
+                insert_after="is_return",
+                allow_on_submit=1
+            )
+        ],
+        "Sales Order":[
+            dict(
+                fieldname="reservation_status",
+                label="Reservation Status",
+                fieldtype="Select",
+                insert_after="skip_delivery_note",
+                options= "\nReserve with Delivery\nReserve without Delivery\nReserve against Future",
+                default= "Reserve with Delivery",
+                allow_on_submit= 1
+                
+            )
         ]
     }
     create_custom_fields(custom_fields)
+
+def create_roles():
+    role_name = "Chief Sales Officer"
+    
+    if not frappe.db.exists("Role", role_name):
+        role = frappe.get_doc({
+            "doctype": "Role",
+            "role_name": role_name,
+            "desk_access": 1
+        })
+        role.insert()
+        frappe.db.commit()

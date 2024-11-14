@@ -43,8 +43,11 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+doctype_js = {"Sales Order" : "public/sales_order.js"}
+doctype_list_js = {
+    "Sales Order" : "public/sales_order_list.js",
+    "Item Price" : "public/item_price_list.js"
+}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
@@ -137,13 +140,21 @@ after_install = "libya_customizations.install.after_install"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+    "Item": {
+        "after_insert": "libya_customizations.server_script.Item.after_insert_item"
+    },
+    "Sales Invoice":{
+        "on_submit":"libya_customizations.server_script.sales_invoice.after_submit_sales_invoice",
+        "before_cancel":"libya_customizations.server_script.sales_invoice.before_cancel_sales_invoice"
+    },
+    "Sales Order": {
+        "on_submit": "libya_customizations.server_script.sales_order.after_submit_sales_order",
+        "before_submit": "libya_customizations.server_script.sales_order.validate_before_submit_sales_order",
+        "before_save": "libya_customizations.server_script.sales_order.before_save_sales_order",
+        "after_update_after_submit": "libya_customizations.server_script.sales_order.before_update_after_submit_sales_order",
+    }
+}
 
 # Scheduled Tasks
 # ---------------
@@ -242,3 +253,5 @@ after_install = "libya_customizations.install.after_install"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+
+website_route_rules = [{'from_route': '/libya/<path:app_path>', 'to_route': 'libya'},]

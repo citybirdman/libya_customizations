@@ -161,7 +161,7 @@ frappe.ui.form.on('Receipt Voucher', 'before_save', function(frm){
 /////////////////////////////////////////////////
 
 frappe.ui.form.on("Receipt Voucher", "paid_from", function(frm) {
-    if (frm.doc.paid_to_account_currency == 'LYD') {
+    if (frm.doc.paid_to_account_currency == frm.doc.paid_from_account_currency) {
         calculate_paid_amount(frm);
     }
 });

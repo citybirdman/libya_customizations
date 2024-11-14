@@ -142,6 +142,7 @@
    "label": "Paid Amount",
    "non_negative": 1,
    "options": "paid_from_account_currency",
+   "precision": "3",
    "read_only_depends_on": "// eval:(doc.paid_from_account_currency == 'LYD' && doc.paid_to_account_currency == 'LYD')",
    "reqd": 1
   },
@@ -163,6 +164,7 @@
    "label": "Paid Amount (Company Currency)",
    "non_negative": 1,
    "options": "Company:company:default_currency",
+   "precision": "3",
    "read_only": 1,
    "reqd": 1
   },
@@ -205,6 +207,7 @@
    "label": "Received Amount",
    "non_negative": 1,
    "options": "paid_to_account_currency",
+   "precision": "3",
    "reqd": 1
   },
   {
@@ -213,6 +216,7 @@
    "fieldname": "target_exchange_rate",
    "fieldtype": "Float",
    "label": "Received Exchange Rate",
+   "non_negative": 1,
    "precision": "9",
    "read_only_depends_on": "eval:doc.paid_to_account_currency == 'LYD'",
    "reqd": 1
@@ -222,7 +226,9 @@
    "fieldname": "base_received_amount",
    "fieldtype": "Currency",
    "label": "Received Amount (Company Currency)",
+   "non_negative": 1,
    "options": "Company:company:default_currency",
+   "precision": "3",
    "read_only": 1,
    "reqd": 1
   },
@@ -258,7 +264,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-11-02 08:36:52.596548",
+ "modified": "2024-11-12 10:31:03.916602",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Payment Voucher",

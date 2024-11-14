@@ -142,7 +142,7 @@ frappe.ui.form.on('Payment Voucher', 'before_save', function(frm){
 /////////////////////////////////////////////////
 
 frappe.ui.form.on("Payment Voucher", "paid_from", function(frm) {
-    if (frm.doc.paid_to_account_currency == 'LYD') {
+    if (frm.doc.paid_to_account_currency == frm.doc.paid_from_account_currency) {
         calculate_received_amount(frm);
     }
 });
@@ -176,4 +176,5 @@ var calculate_base_received_amount = function(frm) {
     var base_received_amount = flt(frm.doc.received_amount) * flt(frm.doc.target_exchange_rate);
     frm.set_value("base_received_amount", base_received_amount);
 };
+
 /////////////////////////////////////////////////
