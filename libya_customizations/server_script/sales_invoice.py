@@ -17,6 +17,25 @@ def after_submit_sales_invoice(doc, method):
     if flag:
         frappe.call("erpnext.selling.doctype.sales_order.sales_order.update_status", status="Closed", name=docname)
 
+def after_submit_sales_invoice(doc, method):
+    rows = [{"name": row.dn_detail, "qty": row.qty} for row in doc.items]
+
+    for row in rows:
+        qty = frappe.db.get_value("Delivery Note Item", row["name"], "billed_qty")
+        frappe.db.set_value("Delivery Note Item", row["name"], "billed_qty", qty + row["qty"])
+    docname = frappe.db.get_value("Delivery Note Item", rows[0]['name'], "parent")
+    total_billed_qty = frappe.db.get_value("Delivery Note Item", {'parent':docname}, 'sum(billed_qty)')
+    total_delivered_qty = frappe.db.get_value("Delivery Note Item", {'parent':docname}, 'sum(qty)')
+    if total_billed_qty == 0:
+         frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', 0)
+         frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Not Billed')
+    elif total_billed_qty > 0 and total_billed_qty < total_delivered_qty:
+         frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', total_billed_qty / total_delivered_qty)
+         frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Partly Billed')
+    else:
+         frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', 100)
+         frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Fully Billed')
+        
 def before_cancel_sales_invoice(doc, method):
     rows = [{"name": row.so_detail, "qty": row.qty} for row in doc.items]
 
@@ -32,3 +51,22 @@ def before_cancel_sales_invoice(doc, method):
             break
     if flag:
         frappe.call("erpnext.selling.doctype.sales_order.sales_order.update_status", status="Draft", name=docname)
+
+def before_cancel_sales_invoice(doc, method):
+    rows = [{"name": row.dn_detail, "qty": row.qty} for row in doc.items]
+
+    for row in rows:
+        qty = frappe.db.get_value("Delivery Note Item", row["name"], "billed_qty")
+        frappe.db.set_value("Delivery Note Item", row["name"], "billed_qty", qty - row["qty"])
+    docname = frappe.db.get_value("Delivery Note Item", rows[0]['name'], "parent")
+    total_billed_qty = frappe.db.get_value("Delivery Note Item", {'parent':docname}, 'sum(billed_qty)')
+    total_delivered_qty = frappe.db.get_value("Delivery Note Item", {'parent':docname}, 'sum(qty)')
+    if total_billed_qty == 0:
+         frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', 0)
+         frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Not Billed')
+    elif total_billed_qty > 0 and total_billed_qty < total_delivered_qty:
+         frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', total_billed_qty / total_delivered_qty)
+         frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Partly Billed')
+    else:
+         frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', 100)
+         frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Fully Billed')

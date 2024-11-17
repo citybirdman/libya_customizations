@@ -85,7 +85,7 @@ def submit_receipt(docname, posting_date):
 
 @frappe.whitelist()
 def get_values_for_validation():
-    doc = frappe.get_doc("Sales Order", "SAL-ORD-2024-00005")
+    doc = frappe.get_doc("Sales Order", doc.name)
     for row in doc.items:
         sql = frappe.db.sql(f"""
         SELECT

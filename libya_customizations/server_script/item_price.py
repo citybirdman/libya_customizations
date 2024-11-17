@@ -5,11 +5,12 @@ from frappe.utils import get_site_path
 import json
 
 @frappe.whitelist()
-def export_item_price_data():
+def export_item_price_data(filters):
     # Define the fields for "Item Price" export
     doctype = "Item Price"
     fields = ["name", "item_code", "item_name", "brand", "price_list_rate"]
-    names = frappe.get_all("Item Price")
+    filters = json.loads(filters)
+    names = frappe.get_all("Item Price", filters)
     # Initialize the workbook and add header row
     workbook = Workbook()
     sheet = workbook.active

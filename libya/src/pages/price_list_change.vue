@@ -1,5 +1,5 @@
 <template>
-  <!-- <div>
+  <div>
   <ListView
     class="h-[250px]"
     :columns="[
@@ -17,12 +17,12 @@
         },
       },
       {
-        label: 'Item Code',
-        key: 'item_code',
+        label: 'Item name',
+        key: 'item_name',
         width: '223px',
       }
     ]"
-    :rows= "ItemPrice",
+    :rows= "Items.data",
     :options="{
       selectable: true,
       showTooltip: true,
@@ -44,14 +44,16 @@
         {{ item }}
       </span>
     </template>
-  </ListView> -->
-<!-- </div> -->
-{{todos}}
+  </ListView>
+</div>
+{{Items}}
 </template>
 <script setup>
 import { createListResource, ListView } from 'frappe-ui';
 
-let todos = createListResource({
-    doctype: 'ToDo'
+let Items = createListResource({
+    doctype: 'Item',
+    fields: ["name", "item_name"]
   });
+  Items.fetch();
 </script>

@@ -43,10 +43,13 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"Sales Order" : "public/sales_order.js"}
+doctype_js = {"Sales Order" : "public/sales_order.js",
+			  "Delivery Note" : "public/delivery_note.js"}
+
 doctype_list_js = {
     "Sales Order" : "public/sales_order_list.js",
-    "Item Price" : "public/item_price_list.js"
+    "Item Price" : "public/item_price_list.js",
+	"Delivery Note" : "public/delivery_note_list.js"
 }
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -142,7 +145,8 @@ after_install = "libya_customizations.install.after_install"
 
 doc_events = {
     "Item": {
-        "after_insert": "libya_customizations.server_script.Item.after_insert_item"
+        "after_insert": "libya_customizations.server_script.Item.after_insert_item",
+        "on_update": "libya_customizations.server_script.Item.after_update_item"
     },
     "Sales Invoice":{
         "on_submit":"libya_customizations.server_script.sales_invoice.after_submit_sales_invoice",

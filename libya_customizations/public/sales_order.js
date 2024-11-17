@@ -24,20 +24,32 @@ frappe.ui.form.on("Sales Order", {
 				});
 			});
 
-			if(!["On Hold", "Closed"].includes(frm.doc.status) && frm.doc.per_delivered !== 100){
-				frm.add_custom_button(__("Create Delivery Note"), () => {
-					frappe.call({
-						method: "libya_customizations.server_script.sales_order.create_dn_upon_so",
-						args:{
-							doc: frm.doc
-						},
-						callback: function(r){
-							if(r.message){
-								docname = r.message;
-								frappe.set_route("Form", "Delivery Note", docname);
-							}
+			if(!["On Hold", "Closed"].includes(frm.doc.status) && frm.doc.per_delivered !== 100 && frm.doc.docstatus == 1){
+				frappe.call({
+					method: "frappe.client.has_permission",
+					args: {
+						doctype: "Delivery Note",
+						docname: null,
+						perm_type: "create"
+					},
+					callback: function(r) {
+						if (r.message.has_permission) {
+							frm.add_custom_button(__("Delivery Note "), function() {
+								frappe.call({
+									method: "libya_customizations.server_script.sales_order.create_dn_from_so",
+									args: {
+										doc: frm.doc
+									},
+									callback: function(r) {
+										if (r.message) {
+											const docname = r.message;
+											frappe.set_route("Form", "Delivery Note", docname);
+										}
+									}
+								});
+							}, __("Create"));
 						}
-					})
+					}
 				});
 			}
 		}
@@ -345,32 +357,42 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 
 frappe.ui.form.on("Sales Order", {
 	onload_post_render(frm){
-		cur_frm.remove_custom_button("Pick List", "Create")
-		cur_frm.remove_custom_button("Delivery Note", "Create")
-		cur_frm.remove_custom_button("Work Order", "Create")
-		cur_frm.remove_custom_button("Sales Invoice", "Create")
-		cur_frm.remove_custom_button("Material Request", "Create")
-		cur_frm.remove_custom_button("Request for Raw Materials", "Create")
-		cur_frm.remove_custom_button("Purchase Order", "Create")
-		cur_frm.remove_custom_button("Project", "Create")
-		cur_frm.remove_custom_button("Payment Request", "Create")
-		cur_frm.remove_custom_button("Payment", "Create")
-		cur_frm.remove_custom_button("Quotation", "Get Items From")
+		const buttonsToRemove = [
+			["Pick List", "Create"],
+			["Delivery Note", "Create"],
+			["Work Order", "Create"],
+			["Sales Invoice", "Create"],
+			["Material Request", "Create"],
+			["Request for Raw Materials", "Create"],
+			["Purchase Order", "Create"],
+			["Project", "Create"],
+			["Payment Request", "Create"],
+			["Payment", "Create"],
+			["Quotation", "Get Items From"]
+        ];
+
+        buttonsToRemove.forEach(([button, action]) => {
+            frm.remove_custom_button(button, action);
+        });
 	},
     refresh: function(frm) {
 		setTimeout(() => {
-			cur_frm.remove_custom_button("Pick List", "Create")
-			cur_frm.remove_custom_button("Delivery Note", "Create")
-			cur_frm.remove_custom_button("Work Order", "Create")
-			cur_frm.remove_custom_button("Sales Invoice", "Create")
-			cur_frm.remove_custom_button("Material Request", "Create")
-			cur_frm.remove_custom_button("Request for Raw Materials", "Create")
-			cur_frm.remove_custom_button("Purchase Order", "Create")
-			cur_frm.remove_custom_button("Project", "Create")
-			cur_frm.remove_custom_button("Payment Request", "Create")
-			cur_frm.remove_custom_button("Payment", "Create")
-			cur_frm.remove_custom_button("Quotation", "Get Items From")
-
+			const buttonsToRemove = [
+				["Pick List", "Create"],
+				["Delivery Note", "Create"],
+				["Work Order", "Create"],
+				["Sales Invoice", "Create"],
+				["Material Request", "Create"],
+				["Request for Raw Materials", "Create"],
+				["Purchase Order", "Create"],
+				["Project", "Create"],
+				["Payment Request", "Create"],
+				["Payment", "Create"],
+				["Quotation", "Get Items From"]
+			];
+            buttonsToRemove.forEach(([button, action]) => {
+                frm.remove_custom_button(button, action);
+            });
 			if(frm.doc.per_delivered === 100){
 				frm.remove_custom_button("Hold", "Status");
 				frm.remove_custom_button("Close", "Status");
@@ -380,7 +402,7 @@ frappe.ui.form.on("Sales Order", {
 
         const delivery_status_info = {
             "Not Delivered": { color: "red", label: "Not Delivered" },
-            "Partially Delivered": { color: "orange", label: "Partially Delivered" },
+            "Partly Delivered": { color: "orange", label: "Partly Delivered" },
             "Fully Delivered": { color: "green", label: "Fully Delivered" }
         };
 

@@ -4,7 +4,10 @@ frappe.listview_settings['Item Price'] = {
         listview.page.add_inner_button(__('Export Item Prices'), function() {
             // Call the backend method
             frappe.call({
-                method: 'libya_customizations.server_script.item_price.export_item_price_data',  // Update with correct path
+                method: 'libya_customizations.server_script.item_price.export_item_price_data',
+                args:{
+                    filters: listview.filter_area.get()
+                },
                 callback: function(response) {
                     if (response.message) {
                         // Create and trigger download link

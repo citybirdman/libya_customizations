@@ -302,7 +302,7 @@ ON
 import json
 
 @frappe.whitelist()
-def create_dn_upon_so(doc):
+def create_dn_from_so(doc):
     doc = json.loads(doc)
     draft_linked_dn = frappe.db.get_all('Delivery Note Item', {'against_sales_order':doc['name'], 'docstatus':0}, 'parent')
     if draft_linked_dn:
@@ -337,7 +337,7 @@ def create_dn_upon_so(doc):
             taxes = doc['taxes'],
             sales_team = doc['sales_team'],
             items = items_to_load
-        )).insert(ignore_permissions=True)
+        )).insert(ignore_permissions=False)
         dn_name = delivery_note.name
         so_name = doc['name']
         # frappe.msgprint(_(f"Delivery Note <b>{dn_name}</b> has been created against Sales Order <b>{so_name}</b>"))

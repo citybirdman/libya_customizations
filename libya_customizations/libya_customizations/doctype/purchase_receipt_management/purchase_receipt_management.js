@@ -9,7 +9,7 @@ frappe.ui.form.on('Purchase Receipt Management', {
                 frappe.model.set_value(cdt, cdn, 'posting_date', null);
             }
         };
-        get_list(frm);
+        get_list(frm, {docstatus: ["!=",2]});
     },
     onload_post_render: function(frm){
         frm.fields_dict.purchase_receipts.grid.grid_buttons[0].children[1].style.display = "none";
@@ -47,7 +47,7 @@ frappe.ui.form.on('Purchase Receipt Management', {
         
         
         frm.add_custom_button('Show All', function() {
-            get_list(frm);
+            get_list(frm, {docstatus: ["!=",2]});
         }, "Filter");
 
         frm.add_custom_button('Show Actual Receipt', function() {
@@ -75,17 +75,25 @@ frappe.ui.form.on('Purchase Receipt Management', {
 
 
 
-function get_list(frm, filters= {}, fields= ["name", "title", "total_qty", "grand_total", "currency", "posting_date", "virtual_receipt", "docstatus"]){
+function get_list(frm, filters= {docstatus: ["!=",2]}, fields= ["name", "title", "total_qty", "grand_total", "currency", "posting_date", "virtual_receipt", "docstatus"]){
     frappe.call({
         method: 'frappe.client.get_list',
         args: {
             doctype: 'Purchase Receipt',
             filters, fields,
-            order_by: "Posting_date DESC"
+            order_by: "docstatus ASC"
         },
         callback: function(response) {
             if (response.message) {
-                const purchaseReceipts = response.message;
+                // const purchaseReceipts = response.message;
+                let purchaseReceipts = response.message.sort((a, b) => {
+                    // Primary sort by docstatus (numeric comparison)
+                    if (a.docstatus === b.docstatus) {
+                        // Secondary sort by posting_date (descending)
+                        return new Date(b.posting_date) - new Date(a.posting_date);
+                    }
+                    return a.docstatus - b.docstatus; // Primary sort (ascending)
+                });
                 frm.clear_table("purchase_receipts");
                 purchaseReceipts.map(function(pr){
                     let item = frappe.model.add_child(frm.doc, "Purchase Receipt Management Detail", "purchase_receipts");
@@ -137,7 +145,9 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
                     posting_date:row.posting_date
                 },
                 callback: function(r){
-                    frappe.msgprint(_("Purchase Receipt Submitted"))
+                    frappe.msgprint(__("Purchase Receipt has been successfully submitted"))
+					frm.reload_doc();
+                    frm.refresh();
                 }
             })
         }
