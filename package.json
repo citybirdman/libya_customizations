@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "cd libya && yarn install",
-    "dev": "cd libya && yarn dev",
-    "build": "cd libya && yarn build"
+    "postinstall": "yarn install",
+    "dev": "yarn dev",
+    "build": "yarn build"
   },
   "keywords": [],
   "author": "",
