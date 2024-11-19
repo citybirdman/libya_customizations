@@ -123,15 +123,38 @@ function get_list(frm, filters= {docstatus: ["!=",2]}, fields= ["name", "title",
 }
 
 frappe.ui.form.on('Purchase Receipt Management Detail', {
-	virtual_receipt(frm, cdt, cdn) {
-	    let row = locals[cdt][cdn];
-	    frappe.call({
-            method:"libya_customizations.libya_customizations.doctype.purchase_receipt_management.purchase_receipt_management.update_is_virtual", 
-            args:{
-                docname: row.purchase_receipt,
-                virtual_receipt: row.virtual_receipt
-            }
-        });
+	virtual_receipt: async function(frm, cdt, cdn) {
+        let row = locals[cdt][cdn];
+        flag = true
+        if(row.virtual_receipt == 0){
+            await frappe.call({
+                method: "libya_customizations.libya_customizations.doctype.purchase_receipt_management.purchase_receipt_management.get_values_for_validation",
+                args:{
+                    purchase_receipt: row.purchase_receipt
+                },
+                callback: function(r){
+                    if(r.message){
+                        r.message.map(function(item){
+                            if((item.future_available_qty - item.qty) < 0){
+                                flag = false
+                                row.virtual_receipt = 1
+                                refresh_field("purchase_receipts")
+                                frappe.throw(__(`${item.qty - item.future_available_qty} units of item ${item.item_code} needed to complete this action<br>`))
+                            }
+                        });
+                    }
+                }
+            })
+        }
+        if(flag){
+            frappe.call({
+                method:"libya_customizations.libya_customizations.doctype.purchase_receipt_management.purchase_receipt_management.update_is_virtual", 
+                args:{
+                    docname: row.purchase_receipt,
+                    virtual_receipt: row.virtual_receipt
+                }
+            });
+        }
 	},
     submit_button(frm,cdt,cdn){
         let row = locals[cdt][cdn];

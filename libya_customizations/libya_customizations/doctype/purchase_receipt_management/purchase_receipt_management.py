@@ -84,138 +84,142 @@ def submit_receipt(docname, posting_date):
     purchase_reciept.submit()
 
 @frappe.whitelist()
-def get_values_for_validation():
-    doc = frappe.get_doc("Sales Order", doc.name)
-    for row in doc.items:
-        sql = frappe.db.sql(f"""
-        SELECT
-        IF(sales_future.future_qty_to_deliver > purchase_future.future_balance, stock_actual.actual_balance - (sales_actual.actual_qty_to_deliver + (sales_future.future_qty_to_deliver - purchase_future.future_balance)), stock_actual.actual_balance-sales_actual.actual_qty_to_deliver) AS actual_available_qty,
-        (stock_actual.actual_balance + purchase_future.future_balance) - (sales_actual.actual_qty_to_deliver + sales_future.future_qty_to_deliver) AS future_available_qty
-    FROM
-        (
-        SELECT
-            SUM(actual_qty) AS actual_balance
-        FROM
-            `tabStock Ledger Entry`
-        WHERE
-            is_cancelled = 0
-        AND
-            item_code = "{row.item_code}"
-        AND
-            warehouse = "{doc.set_warehouse}"
-        ) stock_actual
-    LEFT JOIN
-        (
-        SELECT
-            SUM(purchase_receipt_item.qty) AS future_balance
-        FROM
-            `tabPurchase Receipt Item` purchase_receipt_item
-        INNER JOIN
-            `tabPurchase Receipt` purchase_receipt
-        ON
-            purchase_receipt_item.parent = purchase_receipt.name
-        WHERE
-            purchase_receipt_item.docstatus = 0
-        AND
-            purchase_receipt.docstatus = 0
-        AND
-            purchase_receipt.virtual_receipt = 1
-        AND
-            purchase_receipt_item.item_code = "{row.item_code}"
-        AND
-            purchase_receipt_item.warehouse = "{doc.set_warehouse}"
-        ) purchase_future
-    ON
-        TRUE
-    LEFT JOIN
-        (
-        SELECT
-            SUM(qty_to_deliver) AS actual_qty_to_deliver
-        FROM
-            (
-            SELECT
-                sales_order.name AS sales_order,
-                sales_order.set_warehouse,
-                sales_order_item.item_code,
-                IF(SUM(sales_order_item.qty - sales_order_item.delivered_qty) > 0, SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0) AS qty_to_deliver
-            FROM
-                `tabSales Order Item` sales_order_item
-            INNER JOIN
-                `tabSales Order` sales_order
-            ON
-                sales_order_item.parent = sales_order.name
-            INNER JOIN
-                `tabItem` item
-            ON
-                sales_order_item.item_code = item.name
-            WHERE
-                sales_order.docstatus = 1
-            AND
-                sales_order_item.docstatus = 1
-            AND
-                sales_order.status NOT IN ('Completed', 'Closed')
-            AND
-                sales_order.reservation_status NOT IN ('Reserve against Future Receipts')
-            AND
-                sales_order_item.qty - sales_order_item.delivered_qty > 0
-            AND
-                item.is_stock_item = 1
-            GROUP BY
-                sales_order.name,
-                sales_order.set_warehouse,
-                sales_order_item.item_code
-            ) sales_order_item
-        WHERE
-            item_code = "{row.item_code}"
-        AND
-            set_warehouse = "{doc.set_warehouse}"
-        ) sales_actual
-    ON
-        TRUE
-    LEFT JOIN
-        (
-        SELECT
-            SUM(qty_to_deliver) AS future_qty_to_deliver
-        FROM
-            (
-            SELECT
-                sales_order.name AS sales_order,
-                sales_order.set_warehouse,
-                sales_order_item.item_code,
-                IF(SUM(sales_order_item.qty - sales_order_item.delivered_qty) > 0, SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0) AS qty_to_deliver
-            FROM
-                `tabSales Order Item` sales_order_item
-            INNER JOIN
-                `tabSales Order` sales_order
-            ON
-                sales_order_item.parent = sales_order.name
-            INNER JOIN
-                `tabItem` item
-            ON
-                sales_order_item.item_code = item.name
-            WHERE
-                sales_order.docstatus = 1
-            AND
-                sales_order_item.docstatus = 1
-            AND
-                sales_order.status NOT IN ('Completed', 'Closed')
-            AND
-                sales_order.reservation_status IN ('Reserve against Future Receipts')
-            AND
-                sales_order_item.qty - sales_order_item.delivered_qty > 0
-            AND
-                item.is_stock_item = 1
-            GROUP BY
-                sales_order.name,
-                sales_order.set_warehouse,
-                sales_order_item.item_code
-            ) sales_order_item
-        WHERE
-            item_code = "{row.item_code}"
-        AND
-            set_warehouse = "{doc.set_warehouse}"
-        ) sales_future
-    ON
-        TRUE
-        """, as_dict=True)
-        
+def get_values_for_validation(purchase_receipt):
+	doc = frappe.get_doc("Purchase Receipt", purchase_receipt)
+	entries = []
+	for row in doc.items:
+		sql = frappe.db.sql(f"""
+			SELECT
+				IF(sales_future.future_qty_to_deliver > purchase_future.future_balance, stock_actual.actual_balance - (sales_actual.actual_qty_to_deliver + (sales_future.future_qty_to_deliver - purchase_future.future_balance)), stock_actual.actual_balance-sales_actual.actual_qty_to_deliver) AS actual_available_qty,
+				(stock_actual.actual_balance + purchase_future.future_balance) - (sales_actual.actual_qty_to_deliver + sales_future.future_qty_to_deliver) AS future_available_qty
+			FROM
+				(
+				SELECT
+					COALESCE(SUM(actual_qty), 0) AS actual_balance
+				FROM
+					`tabStock Ledger Entry`
+				WHERE
+					is_cancelled = 0
+				AND
+					item_code = "{row.item_code}"
+				AND
+					warehouse="{doc.set_warehouse}"
+				) stock_actual
+			LEFT JOIN
+				(
+				SELECT
+					COALESCE(SUM(purchase_receipt_item.qty), 0) AS future_balance
+				FROM
+					`tabPurchase Receipt Item` purchase_receipt_item
+				INNER JOIN
+					`tabPurchase Receipt` purchase_receipt
+				ON
+					purchase_receipt_item.parent = purchase_receipt.name
+				WHERE
+					purchase_receipt_item.docstatus = 0
+				AND
+					purchase_receipt.docstatus = 0
+				AND
+					purchase_receipt.virtual_receipt = 1
+				AND
+					purchase_receipt_item.item_code = "{row.item_code}"
+				AND
+					purchase_receipt_item.warehouse = "{doc.set_warehouse}"
+				) purchase_future
+			ON
+				TRUE
+			LEFT JOIN
+				(
+				SELECT
+					COALESCE(SUM(qty_to_deliver), 0) AS actual_qty_to_deliver
+				FROM
+					(
+					SELECT
+						sales_order.name AS sales_order,
+						sales_order.set_warehouse,
+						sales_order_item.item_code,
+						IF(COALESCE(SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0) > 0, COALESCE(SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0), 0) AS qty_to_deliver
+					FROM
+						`tabSales Order Item` sales_order_item
+					INNER JOIN
+						`tabSales Order` sales_order
+					ON
+						sales_order_item.parent = sales_order.name
+					INNER JOIN
+						`tabItem` item
+					ON
+						sales_order_item.item_code = item.name
+					WHERE
+						sales_order.docstatus = 1
+					AND
+						sales_order_item.docstatus = 1
+					AND
+						sales_order.status NOT IN ('Completed', 'Closed')
+					AND
+						sales_order.reservation_status NOT IN ('Reserve against Future Receipts')
+					AND
+						sales_order_item.qty - sales_order_item.delivered_qty > 0
+					AND
+						item.is_stock_item = 1
+					GROUP BY
+						sales_order.name,
+						sales_order.set_warehouse,
+						sales_order_item.item_code
+					) sales_order_item
+				WHERE
+					item_code = "{row.item_code}"
+				AND
+					set_warehouse = "{doc.set_warehouse}"
+				) sales_actual
+			ON
+				TRUE
+			LEFT JOIN
+				(
+				SELECT
+					COALESCE(SUM(qty_to_deliver), 0) AS future_qty_to_deliver
+				FROM
+					(
+					SELECT
+						sales_order.name AS sales_order,
+						sales_order.set_warehouse,
+						sales_order_item.item_code,
+						IF(COALESCE(SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0) > 0, COALESCE(SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0), 0) AS qty_to_deliver
+					FROM
+						`tabSales Order Item` sales_order_item
+					INNER JOIN
+						`tabSales Order` sales_order
+					ON
+						sales_order_item.parent = sales_order.name
+					INNER JOIN
+						`tabItem` item
+					ON
+						sales_order_item.item_code = item.name
+					WHERE
+						sales_order.docstatus = 1
+					AND
+						sales_order_item.docstatus = 1
+					AND
+						sales_order.status NOT IN ('Completed', 'Closed')
+					AND
+						sales_order.reservation_status IN ('Reserve against Future Receipts')
+					AND
+						sales_order_item.qty - sales_order_item.delivered_qty > 0
+					AND
+						item.is_stock_item = 1
+					GROUP BY
+						sales_order.name,
+						sales_order.set_warehouse,
+						sales_order_item.item_code
+					) sales_order_item
+				WHERE
+					item_code = "{row.item_code}"
+				AND
+					set_warehouse = "{doc.set_warehouse}"
+				) sales_future
+			ON
+				TRUE
+		""", as_dict= True)
+		sql[0].qty = row.qty
+		sql[0].item_code = row.item_name
+		entries.append(sql[0])
+	return entries

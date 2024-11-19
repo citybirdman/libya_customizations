@@ -138,11 +138,11 @@ def after_submit_sales_order(doc, method):
         balances = balances[0]
         if doc.reservation_status == "Reserve against Future Receipts" and frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]]):
             if balances.future_available_qty < 0:
-                frappe.msgprint(_(f"{balances.future_available_qty} units needed for {row.item_name}"))
+                frappe.msgprint(_(f"{int(-balances.future_available_qty)} units needed for {row.item_name}"))
                 flag = True
         else:
             if balances.actual_available_qty < 0:
-                frappe.msgprint(_(f"{balances.actual_available_qty} units needed for {row.item_name}"))
+                frappe.msgprint(_(f"{int(-balances.actual_available_qty)} units needed for {row.item_name}"))
                 flag = True
     if flag:
         raise frappe.ValidationError
@@ -150,7 +150,8 @@ def after_submit_sales_order(doc, method):
 def before_save_sales_order(doc, method):
     doc = frappe.get_doc(doc)
     if doc.reservation_status == "Reserve against Future Receipts" and not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]]):
-        frappe.throw(_("You do not have the authority to choose Reserve against Future Receipts!"))
+        frappe.msgprint(_("You do not have the authority to choose <b>Reserve against Future Receipts</b>"), title=_('Error'), indicator='red')
+        raise frappe.ValidationError
 
 def after_update_after_submit_sales_order(doc, method):
     doc = frappe.get_doc(doc)
@@ -159,9 +160,9 @@ def after_update_after_submit_sales_order(doc, method):
 def validate_before_submit_sales_order(doc, method):
     bypass_overdue_check = frappe.db.get_value('Customer', doc.customer, 'bypass_overdue_check')
     user_has_cso = frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
+    credit_days = frappe.db.get_value('Payment Terms Template Detail', {'parent': doc.payment_terms_template}, 'credit_days')
     outstanding = frappe.db.get_value('Sales Invoice', {'docstatus': 1, 'customer': doc.customer, 'posting_date': ['<', frappe.utils.add_days(frappe.utils.nowdate(), - credit_days)]}, 'sum(outstanding_amount)')
     outstanding = outstanding if outstanding else 0
-    credit_days = frappe.db.get_value('Payment Terms Template Detail', {'parent': doc.payment_terms_template}, 'credit_days')
 
     if outstanding > 0 and not (bypass_overdue_check and user_has_cso):
         frappe.msgprint(msg=_(f"There are overdue outstandings valued at {outstanding:,f} against the Customer"), title=_('Error'), indicator='red')
@@ -340,5 +341,5 @@ def create_dn_from_so(doc):
         )).insert(ignore_permissions=False)
         dn_name = delivery_note.name
         so_name = doc['name']
-        # frappe.msgprint(_(f"Delivery Note <b>{dn_name}</b> has been created against Sales Order <b>{so_name}</b>"))
+        # frappe.msgprint(_(f"Delivery Note <b>{dn_name}</b> has been created against Sales Order <b>{so_name}</b>"), title=_('Error'), indicator='red')
     return delivery_note.name

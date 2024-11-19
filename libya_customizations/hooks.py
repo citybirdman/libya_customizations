@@ -136,7 +136,7 @@ after_install = "libya_customizations.install.after_install"
 # Override standard doctype classes
 
 # override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
+# 	"Sales Invoice": "libya_customizations.overrides.sales_invoice.CustomSalesInvoice"
 # }
 
 # Document Events
@@ -149,14 +149,20 @@ doc_events = {
         "on_update": "libya_customizations.server_script.Item.after_update_item"
     },
     "Sales Invoice":{
-        "on_submit":"libya_customizations.server_script.sales_invoice.after_submit_sales_invoice",
-        "before_cancel":"libya_customizations.server_script.sales_invoice.before_cancel_sales_invoice"
+        "on_submit":[
+            "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_so",
+            "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_dn"
+        ],
+        "before_cancel":[
+            "libya_customizations.server_script.sales_invoice.before_cancel_sales_invoice_so",
+            "libya_customizations.server_script.sales_invoice.before_cancel_sales_invoice_dn"
+        ]
     },
     "Sales Order": {
         "on_submit": "libya_customizations.server_script.sales_order.after_submit_sales_order",
         "before_submit": "libya_customizations.server_script.sales_order.validate_before_submit_sales_order",
         "before_save": "libya_customizations.server_script.sales_order.before_save_sales_order",
-        "after_update_after_submit": "libya_customizations.server_script.sales_order.before_update_after_submit_sales_order",
+        "on_update_after_submit": "libya_customizations.server_script.sales_order.after_update_after_submit_sales_order",
     }
 }
 

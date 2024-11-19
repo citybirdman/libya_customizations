@@ -54,8 +54,8 @@ frappe.ui.form.on("Sales Order", {
 			}
 		}
     },
-	validate(frm){
-		if(!frappe.user_roles.includes("Chief Sales Officer") && doc.reservation_status === "Reserve against Future Receipts")
+	reservation_status(frm){
+		if(!frappe.user_roles.includes("Chief Sales Officer") && frm.doc.reservation_status == "Reserve against Future Receipts")
 			frappe.throw(_("You do not have the authority to choose Reserve against Future Receipts!"));
 	},
     customer(frm){
@@ -65,21 +65,22 @@ frappe.ui.form.on("Sales Order", {
                   customer : frm.doc.customer
             },
               callback: function(r){
-                if(r.message){
+                if(r.message && frm.doc.docstatus == 0){
                     frm.set_value(r.message[0]);
                 }
             }
         })
     },
-    before_save(frm){
+    after_save(frm){
         frappe.call({
             method: "libya_customizations.server_script.sales_order.get_customer_info", 
             args:{
                   customer : frm.doc.customer
             },
               callback: function(r){
-                if(r.message){
+                if(r.message && frm.doc.docstatus == 0){
                     frm.set_value(r.message[0]);
+					frm.save();
                 }
             }
         })
