@@ -24,7 +24,7 @@ frappe.ui.form.on("Sales Order", {
 				});
 			});
 
-			if(!["On Hold", "Closed"].includes(frm.doc.status) && frm.doc.per_delivered !== 100 && frm.doc.docstatus == 1){
+			if(frm.doc.per_delivered !== 100 && frm.doc.docstatus == 1 && frm.doc.reservation_status == 'Reserve with Delivery' && !["On Hold", "Closed"].includes(frm.doc.status)){
 				frappe.call({
 					method: "frappe.client.has_permission",
 					args: {
@@ -87,6 +87,29 @@ frappe.ui.form.on("Sales Order", {
     }
 })
 
+frappe.ui.form.on('Sales Order', {
+    before_cancel: function(frm) {
+        frappe.call({
+            method: 'libya_customizations.utils.get_linked_document',
+            args: {
+                linked_doctype: 'Delivery Note Item',
+                docname: frm.doc.name,
+                linked_field: 'against_sales_order',
+				field: 'parent'
+            },
+            callback: function(response) {
+                if (response.message) {
+                    frappe.msgprint({
+                        title: __('Cannot Cancel'),
+                        message: __(`This Sales Order is linked to a Delivery Note ${response.message}`),
+                        indicator: 'red'
+                    });
+                    frappe.validated = false;
+                }
+            }
+        });
+    }
+});
 
 erpnext.utils.advanced_update_child_items = function (opts) {
 	const frm = opts.frm;

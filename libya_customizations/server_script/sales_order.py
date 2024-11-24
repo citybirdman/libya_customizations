@@ -343,3 +343,30 @@ def create_dn_from_so(doc):
         so_name = doc['name']
         # frappe.msgprint(_(f"Delivery Note <b>{dn_name}</b> has been created against Sales Order <b>{so_name}</b>"), title=_('Error'), indicator='red')
     return delivery_note.name
+
+
+
+def before_submit_sales_order(doc, method):
+	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
+	if not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]]):
+		for row in rows:
+			if row['rate'] < row['valuation_rate']:
+				frappe.throw(_(f"<b>Net Rate</b> ({'%0.2f' % row['rate']}) of Item <b>{row['item_name']}</b> is less than <b>Valuation Rate</b>"))
+			elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
+				for row in rows:
+					price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
+					if row['rate'] < price_list_rate:
+						frappe.throw(_(f"<b>Net Rate</b> ({'%0.2f' % row['rate']}) of Item <b>{row['item_name']}</b> is less than <b>Price List Rate</b> ({'%0.2f' % price_list_rate})"))
+
+def validate_item_prices_after_submit(doc, method):
+	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
+	if not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]]):
+		for row in rows:
+			if row['rate'] < row['valuation_rate']:
+				frappe.throw(_(f"<b>Net Rate</b> ({'%0.2f' % row['rate']}) of Item <b>{row['item_name']}</b> is less than <b>Valuation Rate</b>"))
+			elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
+				for row in rows:
+					price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
+					if row['rate'] < price_list_rate:
+						frappe.throw(_(f"<b>Net Rate</b> ({'%0.2f' % row['rate']}) of Item <b>{row['item_name']}</b> is less than <b>Price List Rate</b> ({'%0.2f' % price_list_rate})"))
+                    

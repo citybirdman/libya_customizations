@@ -105,3 +105,29 @@ frappe.ui.form.on("Delivery Note", {
         }
     }
 });
+
+
+
+frappe.ui.form.on('Delivery Note', {
+    before_cancel: function(frm) {
+        frappe.call({
+            method: 'libya_customizations.utils.get_linked_document',
+            args: {
+                linked_doctype: 'Sales Invoice Item',
+                docname: frm.doc.name,
+                linked_field: 'delivery_note',
+				field: 'parent'
+            },
+            callback: function(response) {
+                if (response.message) {
+                    frappe.msgprint({
+                        title: __('Cannot Cancel'),
+                        message: __(`This Sales Order is linked to a Sales Invoice ${response.message}`),
+                        indicator: 'red'
+                    });
+                    frappe.validated = false;
+                }
+            }
+        });
+    }
+});

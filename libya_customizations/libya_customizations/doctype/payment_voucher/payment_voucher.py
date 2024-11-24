@@ -37,8 +37,8 @@ class PaymentVoucher(Document):
 				"custom_remarks": 1,
 				"remarks": self.remark
 			})
-			payment_entry.insert()
-			payment_entry.submit()
+			payment_entry.insert(ignore_permissions=True)
+			payment_entry.submit(ignore_permissions=True)
 		else:
 			accounts = []
 			accounts.append({
@@ -65,8 +65,8 @@ class PaymentVoucher(Document):
 				'custom_voucher_no': self.name,
 				'remark': self.remark,
 				'multi_currency': 1
-			}).insert()
-			journal_entry.submit()
+			}).insert(ignore_permissions=True)
+			journal_entry.submit(ignore_permissions=True)
 		
 		self.on_update_after_submit()
 		
@@ -85,37 +85,37 @@ class PaymentVoucher(Document):
 			frappe.db.set_value(doctype, linked_doc, affected_field, self.remark)
 
 
-	def reconcile_payments(self):
-		for company in frappe.get_all("Company"):
-			company = company.name
-			account = frappe.db.get_value("Company", company, "default_receivable_account")
-			for customer in frappe.get_all("Customer"):
-				outstanding_documents = frappe.call('erpnext.accounts.doctype.payment_entry.payment_entry.get_outstanding_reference_documents', args = {'party_type':'Customer', 'party':customer.name, 'party_account':account}) or 0
-				flag = False
-				if outstanding_documents:
-					total = 0
-					for i in outstanding_documents:
-						if i.outstanding_amount > 0:
-							flag = True
-							break
-				if flag:
-					unallocated_amount = frappe.db.get_value("Payment Entry", [["party", "=", customer.name], ["unallocated_amount", ">", 0], ["docstatus", "=", 1]], "sum(unallocated_amount)") or 0
-					credit_amount = frappe.db.get_value("Journal Entry Account", [["party", "=", customer.name], ["credit", ">", 0], ["reference_name", "=", None], ["docstatus", "=", 1]], "sum(credit)") or 0
-					if unallocated_amount or credit_amount:
-						reconciliation = frappe.get_doc({
-							"doctype": "Process Payment Reconciliation",
-							"party_type": "Customer",
-							"party" : customer.name,
-							"company": company,
-							"receivable_payable_account": account,
-							"default_advance_account": account
-						}).insert()
-						reconciliation.save()
-						reconciliation.submit()
+	# def reconcile_payments(self):
+	# 	for company in frappe.get_all("Company"):
+	# 		company = company.name
+	# 		account = frappe.db.get_value("Company", company, "default_receivable_account")
+	# 		for customer in frappe.get_all("Customer"):
+	# 			outstanding_documents = frappe.call('erpnext.accounts.doctype.payment_entry.payment_entry.get_outstanding_reference_documents', args = {'party_type':'Customer', 'party':customer.name, 'party_account':account}) or 0
+	# 			flag = False
+	# 			if outstanding_documents:
+	# 				total = 0
+	# 				for i in outstanding_documents:
+	# 					if i.outstanding_amount > 0:
+	# 						flag = True
+	# 						break
+	# 			if flag:
+	# 				unallocated_amount = frappe.db.get_value("Payment Entry", [["party", "=", customer.name], ["unallocated_amount", ">", 0], ["docstatus", "=", 1]], "sum(unallocated_amount)") or 0
+	# 				credit_amount = frappe.db.get_value("Journal Entry Account", [["party", "=", customer.name], ["credit", ">", 0], ["reference_name", "=", None], ["docstatus", "=", 1]], "sum(credit)") or 0
+	# 				if unallocated_amount or credit_amount:
+	# 					reconciliation = frappe.get_doc({
+	# 						"doctype": "Process Payment Reconciliation",
+	# 						"party_type": "Customer",
+	# 						"party" : customer.name,
+	# 						"company": company,
+	# 						"receivable_payable_account": account,
+	# 						"default_advance_account": account
+	# 					}).insert(ignore_permissions=True)
+	# 					reconciliation.save(ignore_permissions=True)
+	# 					reconciliation.submit(ignore_permissions=True)
 
-	def reconcile_everything(self):
-		self.reconcile_payments()
-		frappe.call("erpnext.accounts.doctype.process_payment_reconciliation.process_payment_reconciliation.trigger_reconciliation_for_queued_docs")
+	# def reconcile_everything(self):
+	# 	self.reconcile_payments()
+	# 	frappe.call("erpnext.accounts.doctype.process_payment_reconciliation.process_payment_reconciliation.trigger_reconciliation_for_queued_docs")
 
 	def on_trash(self):
 		doctype = 'Journal Entry'
@@ -134,3 +134,36 @@ class PaymentVoucher(Document):
 			d = frappe.get_doc(doctype, dn.name)
 			if d.docstatus == 1:
 				d.cancel()
+
+	def reconcile_payments(self):
+		if self.party_type == 'Customer':
+			company = self.company
+			account = self.paid_to
+			customer = self.party
+			outstanding_documents = frappe.call('erpnext.accounts.doctype.payment_entry.payment_entry.get_outstanding_reference_documents', args = {'party_type':'Customer', 'party':customer, 'party_account':account}) or 0
+			flag = False
+			if outstanding_documents:
+				total = 0
+				for i in outstanding_documents:
+					if i.outstanding_amount > 0:
+						flag = True
+						break
+			if flag:
+				unallocated_amount = frappe.db.get_value("Payment Entry", [["party", "=", customer], ["unallocated_amount", ">", 0], ["docstatus", "=", 1]], "sum(unallocated_amount)") or 0
+				credit_amount = frappe.db.get_value("Journal Entry Account", [["party", "=", customer], ["credit", ">", 0], ["reference_name", "=", None], ["docstatus", "=", 1]], "sum(credit)") or 0
+				cn_amount = frappe.db.get_value("Sales Invoice", [["customer", "=", customer], ["outstanding_amount", "<", 0], ["is_return", "=", 1], ["docstatus", "=", 1]], "sum(outstanding_amount)") or 0
+				if unallocated_amount or credit_amount or cn_amount:
+					reconciliation = frappe.get_doc({
+						"doctype": "Process Payment Reconciliation",
+						"party_type": "Customer",
+						"party" : customer,
+						"company": company,
+						"receivable_payable_account": account,
+						"default_advance_account": account
+					}).insert(ignore_permissions=True)
+					reconciliation.save(ignore_permissions=True)
+					reconciliation.submit(ignore_permissions=True)
+
+	def reconcile_everything(self):
+		self.reconcile_payments()
+		frappe.call("erpnext.accounts.doctype.process_payment_reconciliation.process_payment_reconciliation.trigger_reconciliation_for_queued_docs")

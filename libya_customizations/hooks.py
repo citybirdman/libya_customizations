@@ -43,11 +43,17 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"Sales Order" : "public/sales_order.js",
-			  "Delivery Note" : "public/delivery_note.js"}
+doctype_js = {
+	"Sales Order" : "public/sales_order.js",
+	"Sales Invoice" : "public/sales_invoice.js",
+	"Delivery Note" : "public/delivery_note.js",
+	"Stock Entry" : "public/stock_entry.js",
+	"Account" : "public/account.js"
+}
 
 doctype_list_js = {
     "Sales Order" : "public/sales_order_list.js",
+    "Sales Invoice" : "public/sales_invoice_list.js",
     "Item Price" : "public/item_price_list.js",
 	"Delivery Note" : "public/delivery_note_list.js"
 }
@@ -84,7 +90,7 @@ doctype_list_js = {
 # 	"methods": "libya_customizations.utils.jinja_methods",
 # 	"filters": "libya_customizations.utils.jinja_filters"
 # }
-
+fixtures = [{"doctype": "Server Script", "filters": [["module" , "in" , ("Libya Customizations" )]]}]
 # Installation
 # ------------
 
@@ -144,6 +150,13 @@ after_install = "libya_customizations.install.after_install"
 # Hook on document methods and events
 
 doc_events = {
+    "Journal Entry":{
+        "before_cancel":"libya_customizations.server_script.journal_entry.on_trash"
+    },
+	"Account":{
+		"before_insert":"libya_customizations.server_script.account.fetch_temp_parent_account"
+
+	},
     "Item": {
         "after_insert": "libya_customizations.server_script.Item.after_insert_item",
         "on_update": "libya_customizations.server_script.Item.after_update_item"
@@ -151,18 +164,29 @@ doc_events = {
     "Sales Invoice":{
         "on_submit":[
             "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_so",
-            "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_dn"
+            "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_dn",
+			"libya_customizations.server_script.sales_invoice.reconcile_payments",
+			"libya_customizations.server_script.sales_invoice.reconcile_everything",
+			"libya_customizations.server_script.sales_invoice.create_payment"
         ],
         "before_cancel":[
             "libya_customizations.server_script.sales_invoice.before_cancel_sales_invoice_so",
-            "libya_customizations.server_script.sales_invoice.before_cancel_sales_invoice_dn"
-        ]
+            "libya_customizations.server_script.sales_invoice.before_cancel_sales_invoice_dn",
+			"libya_customizations.server_script.sales_invoice.cancel_linked_payment"
+        ],
+        "before_submit": "libya_customizations.server_script.sales_invoice.before_submit_sales_invoice",
+
+		"on_trash": "libya_customizations.server_script.sales_invoice.delete_linked_payment"
     },
     "Sales Order": {
         "on_submit": "libya_customizations.server_script.sales_order.after_submit_sales_order",
-        "before_submit": "libya_customizations.server_script.sales_order.validate_before_submit_sales_order",
+        "before_submit": [
+            "libya_customizations.server_script.sales_order.validate_before_submit_sales_order",
+            "libya_customizations.server_script.sales_order.before_submit_sales_order"
+        ],
         "before_save": "libya_customizations.server_script.sales_order.before_save_sales_order",
         "on_update_after_submit": "libya_customizations.server_script.sales_order.after_update_after_submit_sales_order",
+		"on_update_after_submit": "libya_customizations.server_script.sales_order.validate_item_prices_after_submit"
     }
 }
 

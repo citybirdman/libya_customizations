@@ -13,14 +13,13 @@
    "fieldname": "purchase_receipts",
    "fieldtype": "Table",
    "label": "Purchase Receipts",
-   "options": "Purchase Receipt Management Detail",
-   "reqd": 1
+   "options": "Purchase Receipt Management Detail"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-11-10 14:16:13.470498",
+ "modified": "2024-11-21 10:07:50.337475",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Purchase Receipt Management",

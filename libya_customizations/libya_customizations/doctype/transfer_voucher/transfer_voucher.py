@@ -33,8 +33,8 @@ class TransferVoucher(Document):
 			'remarks': self.remark
 		})
 		# frappe.throw(repr(self.remark))
-		payment_entry.insert()
-		payment_entry.submit()
+		payment_entry.insert(ignore_permissions=True)
+		payment_entry.submit(ignore_permissions=True)
 
 
 	def on_trash(self):

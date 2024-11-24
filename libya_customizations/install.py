@@ -1,7 +1,7 @@
 import frappe
 from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 def after_install():
-    create_fields_for_all_doctypes()
+    # create_fields_for_all_doctypes()
     edit_customer_doctype()
     edit_account_doctype()
     edit_territory_doctype()
@@ -109,13 +109,13 @@ def create_fields_for_all_doctypes():
     create_custom_fields(custom_fields)
 
 def create_roles():
-    role_name = "Chief Sales Officer"
-    
-    if not frappe.db.exists("Role", role_name):
-        role = frappe.get_doc({
-            "doctype": "Role",
-            "role_name": role_name,
-            "desk_access": 1
-        })
-        role.insert()
-        frappe.db.commit()
+    roles = ["Chief Sales Officer", "Warehouse User", "Sales Coordinator", "Sales Supervisor", "Libya Team"]
+    for role_name in roles:
+        if not frappe.db.exists("Role", role_name):
+            role = frappe.get_doc({
+                "doctype": "Role",
+                "role_name": role_name,
+                "desk_access": 1
+            })
+            role.insert()
+            frappe.db.commit()
