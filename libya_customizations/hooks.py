@@ -90,7 +90,7 @@ doctype_list_js = {
 # 	"methods": "libya_customizations.utils.jinja_methods",
 # 	"filters": "libya_customizations.utils.jinja_filters"
 # }
-fixtures = [{"doctype": "Server Script", "filters": [["module" , "in" , ("Libya Customizations" )]]}]
+fixtures = [{"doctype": "Server Script", "filters": [["module" , "in" , ("Libya Customizations" )]]}, {"doctype": "Custom HTML Block"}]
 # Installation
 # ------------
 
