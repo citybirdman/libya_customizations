@@ -109,7 +109,7 @@ def create_fields_for_all_doctypes():
     create_custom_fields(custom_fields)
 
 def create_roles():
-    roles = ["Chief Sales Officer", "Warehouse User", "Sales Coordinator", "Sales Supervisor", "Libya Team"]
+    roles = ["Chief Sales Officer", "Warehouse User", "Sales Coordinator", "Sales Supervisor", "Libya Team", "Accountant"]
     for role_name in roles:
         if not frappe.db.exists("Role", role_name):
             role = frappe.get_doc({

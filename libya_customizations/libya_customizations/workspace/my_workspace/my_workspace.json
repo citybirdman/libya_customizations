@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"xo-VM3qLUI\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Adding New Elements<br></b></span>\",\"col\":12}},{\"id\":\"vcH8wy21Jj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Customer\",\"col\":4}},{\"id\":\"bZbSlhyUss\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Account\",\"col\":4}},{\"id\":\"VK0yfsLl1d\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Territory\",\"col\":4}},{\"id\":\"b36oi1Jq5M\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"NULRg1ZOXQ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Sales Order\",\"col\":4}},{\"id\":\"T2Za-agCBn\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"Yq0b0Yosd5\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Return\",\"col\":4}},{\"id\":\"ow5KfASC8J\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"New Material Issue\",\"col\":4}},{\"id\":\"kDGUw095yZ\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"New Material Receipt\",\"col\":4}},{\"id\":\"XXV3_fFd6e\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"EfUeeIRxj1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Receipt Voucher\",\"col\":4}},{\"id\":\"DP5TiRWsVX\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Payment Voucher\",\"col\":4}},{\"id\":\"182xlib0NE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Transfer Voucher\",\"col\":4}},{\"id\":\"tU4WSVPTzL\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Debt Voucher\",\"col\":4}},{\"id\":\"YiNkBNkAiP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Clearing Voucher\",\"col\":4}},{\"id\":\"TKRdihMFPP\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"PLVCusNOSs\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Listing The Elements <br></b></span>\",\"col\":12}},{\"id\":\"DygYv3bAdc\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Enabled Customers\",\"col\":4}},{\"id\":\"7tJ2_yWvkX\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Territories\",\"col\":4}},{\"id\":\"QhhTbbob_C\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"oI_XGs6BwG\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Selling Prices\",\"col\":4}},{\"id\":\"tlET9CEw6N\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"c_Nf0DJVkn\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Sales Orders\",\"col\":4}},{\"id\":\"-pEZpJ8xbU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Delivery Notes\",\"col\":4}},{\"id\":\"Rb6geWfVb3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Sales Invoices\",\"col\":4}},{\"id\":\"17Ex1R-A2N\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Returns Invoices\",\"col\":4}},{\"id\":\"A7GUN59-S6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Material Issues\",\"col\":4}},{\"id\":\"F46wjX_L6W\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Material Receipts\",\"col\":4}},{\"id\":\"6dbNOFBczO\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"PnISEID3zR\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Receipt Vouchers\",\"col\":4}},{\"id\":\"erp5HOT_Om\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Payment Vouchers\",\"col\":4}},{\"id\":\"Bu7Gsa5nFj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Transfer Vouchers\",\"col\":4}},{\"id\":\"L6Eb3vhrlW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Debt Vouchers\",\"col\":4}},{\"id\":\"nFBxGQ6F4q\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Clearing Vouchers\",\"col\":4}},{\"id\":\"k7Bv63UfgG\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"gxW19vN1yj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Sales Orders\",\"col\":4}},{\"id\":\"KU_iMDyAYr\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Delivery Notes\",\"col\":4}},{\"id\":\"QWFeHu0P5T\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Sales Invoices\",\"col\":4}},{\"id\":\"0kwgHTgZSR\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Returns Invoices\",\"col\":4}},{\"id\":\"WRi8H6fhPB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Payment Vouchers\",\"col\":4}},{\"id\":\"Fbtmct3az8\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Debt Vouchers\",\"col\":4}},{\"id\":\"GPdH6yWKPk\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Receipt Vouchers\",\"col\":4}},{\"id\":\"XC7Vnz2SwE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Transfer Vouchers\",\"col\":4}},{\"id\":\"mnGGIoLefv\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Transfer Vouchers\",\"col\":4}},{\"id\":\"_oA_1jlLdS\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Material Issues\",\"col\":4}},{\"id\":\"LorF2qtiTx\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Material Receipts\",\"col\":4}},{\"id\":\"XDv6E1GZXX\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"QzHX78UP9t\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Disabled Customers\",\"col\":4}},{\"id\":\"g6JekZK-uc\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Sales Invoices\",\"col\":4}},{\"id\":\"D0jAZt2CRl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Returns Invoices\",\"col\":4}},{\"id\":\"rfeF0zVIqD\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Payment Vouchers\",\"col\":4}},{\"id\":\"eoGHjXCTHA\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Receipt Vouchers\",\"col\":4}},{\"id\":\"rIuwyr9UpY\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Transfer Vouchers\",\"col\":4}},{\"id\":\"yzO4FnkpYp\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Debt Vouchers\",\"col\":4}},{\"id\":\"ebtB6OaghF\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Clearing Vouchers\",\"col\":4}},{\"id\":\"APnrJc9L8j\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Material Issue for Transfer\",\"col\":4}},{\"id\":\"_oKHYT9Llf\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Material Receipt for Transfer\",\"col\":4}},{\"id\":\"mQ6j--a-wH\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"I8hSQSQVJi\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reporting <br></b></span>\",\"col\":12}}]",
+ "content": "[{\"id\":\"xo-VM3qLUI\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Adding New Elements<br></b></span>\",\"col\":12}},{\"id\":\"vcH8wy21Jj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Customer\",\"col\":4}},{\"id\":\"bZbSlhyUss\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Account\",\"col\":4}},{\"id\":\"VK0yfsLl1d\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Territory\",\"col\":4}},{\"id\":\"b36oi1Jq5M\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"NULRg1ZOXQ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Sales Order\",\"col\":4}},{\"id\":\"T2Za-agCBn\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"Yq0b0Yosd5\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Return\",\"col\":4}},{\"id\":\"ow5KfASC8J\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"New Material Issue\",\"col\":4}},{\"id\":\"kDGUw095yZ\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"New Material Receipt\",\"col\":4}},{\"id\":\"XXV3_fFd6e\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"EfUeeIRxj1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Receipt Voucher\",\"col\":4}},{\"id\":\"DP5TiRWsVX\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Payment Voucher\",\"col\":4}},{\"id\":\"182xlib0NE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Transfer Voucher\",\"col\":4}},{\"id\":\"tU4WSVPTzL\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Debt Voucher\",\"col\":4}},{\"id\":\"YiNkBNkAiP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Clearing Voucher\",\"col\":4}},{\"id\":\"TKRdihMFPP\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"PLVCusNOSs\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Listing The Elements <br></b></span>\",\"col\":12}},{\"id\":\"DygYv3bAdc\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Enabled Customers\",\"col\":4}},{\"id\":\"RQPSrhwAlV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Enabled Accounts\",\"col\":4}},{\"id\":\"7tJ2_yWvkX\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Territories\",\"col\":4}},{\"id\":\"QhhTbbob_C\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"oI_XGs6BwG\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Selling Prices\",\"col\":4}},{\"id\":\"tlET9CEw6N\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"c_Nf0DJVkn\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Sales Orders\",\"col\":4}},{\"id\":\"-pEZpJ8xbU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Delivery Notes\",\"col\":4}},{\"id\":\"Rb6geWfVb3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Sales Invoices\",\"col\":4}},{\"id\":\"17Ex1R-A2N\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Returns Invoices\",\"col\":4}},{\"id\":\"A7GUN59-S6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Material Issues\",\"col\":4}},{\"id\":\"F46wjX_L6W\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Material Receipts\",\"col\":4}},{\"id\":\"6dbNOFBczO\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"PnISEID3zR\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Receipt Vouchers\",\"col\":4}},{\"id\":\"erp5HOT_Om\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Payment Vouchers\",\"col\":4}},{\"id\":\"Bu7Gsa5nFj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Transfer Vouchers\",\"col\":4}},{\"id\":\"L6Eb3vhrlW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Debt Vouchers\",\"col\":4}},{\"id\":\"nFBxGQ6F4q\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Submitted Clearing Vouchers\",\"col\":4}},{\"id\":\"k7Bv63UfgG\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"gxW19vN1yj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Sales Orders\",\"col\":4}},{\"id\":\"KU_iMDyAYr\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Delivery Notes\",\"col\":4}},{\"id\":\"QWFeHu0P5T\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Sales Invoices\",\"col\":4}},{\"id\":\"0kwgHTgZSR\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Returns Invoices\",\"col\":4}},{\"id\":\"_oA_1jlLdS\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Material Issues\",\"col\":4}},{\"id\":\"LorF2qtiTx\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Material Receipts\",\"col\":4}},{\"id\":\"wMOiMvFNSl\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"GPdH6yWKPk\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Receipt Vouchers\",\"col\":4}},{\"id\":\"WRi8H6fhPB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Payment Vouchers\",\"col\":4}},{\"id\":\"XC7Vnz2SwE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Transfer Vouchers\",\"col\":4}},{\"id\":\"Fbtmct3az8\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Debt Vouchers\",\"col\":4}},{\"id\":\"mnGGIoLefv\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Draft Clearing Vouchers\",\"col\":4}},{\"id\":\"XDv6E1GZXX\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"QzHX78UP9t\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Disabled Customers\",\"col\":4}},{\"id\":\"nl_o98k6cI\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Disabled Accounts\",\"col\":4}},{\"id\":\"eNOC4AIWPP\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"DW-38_Vf6G\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Sales Orders\",\"col\":4}},{\"id\":\"RhL_N_dwSC\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Delivery Notes\",\"col\":4}},{\"id\":\"g6JekZK-uc\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Sales Invoices\",\"col\":4}},{\"id\":\"D0jAZt2CRl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Returns Invoices\",\"col\":4}},{\"id\":\"APnrJc9L8j\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Material Issues\",\"col\":4}},{\"id\":\"_oKHYT9Llf\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Material Receipts\",\"col\":4}},{\"id\":\"yAquXSttBx\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"eoGHjXCTHA\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Receipt Vouchers\",\"col\":4}},{\"id\":\"rfeF0zVIqD\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Payment Vouchers\",\"col\":4}},{\"id\":\"rIuwyr9UpY\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Transfer Vouchers\",\"col\":4}},{\"id\":\"yzO4FnkpYp\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Debt Vouchers\",\"col\":4}},{\"id\":\"ebtB6OaghF\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cancelled Clearing Vouchers\",\"col\":4}},{\"id\":\"mQ6j--a-wH\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"I8hSQSQVJi\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reporting <br></b></span>\",\"col\":12}}]",
  "creation": "2024-11-14 16:36:09.346747",
  "custom_blocks": [
   {
@@ -26,7 +26,7 @@
  "is_hidden": 0,
  "label": "My Workspace",
  "links": [],
- "modified": "2024-11-24 10:34:59.473033",
+ "modified": "2024-11-24 17:01:38.826509",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "My Workspace",
@@ -55,6 +55,15 @@
  "sequence_id": 1.0,
  "shortcuts": [
   {
+   "color": "Red",
+   "doc_view": "List",
+   "format": "{} Orders",
+   "label": "Cancelled Sales Orders",
+   "link_to": "Sales Order",
+   "stats_filter": "[[\"Sales Order\",\"docstatus\",\"=\",\"2\",false]]",
+   "type": "DocType"
+  },
+  {
    "color": "Orange",
    "doc_view": "List",
    "format": "{} Entries",
@@ -65,11 +74,38 @@
   },
   {
    "color": "Green",
+   "doc_view": "List",
+   "format": "{} Accounts",
+   "label": "Enabled Accounts",
+   "link_to": "Account",
+   "stats_filter": "[[\"Account\",\"is_group\",\"=\",0,false],[\"Account\",\"restrict_account_view\",\"=\",\"No\",false],[\"Account\",\"disabled\",\"=\",0,false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
    "doc_view": "Report Builder",
    "format": "{} Prices",
    "label": "Item Selling Prices",
    "link_to": "Item Price",
    "stats_filter": "[[\"Item Price\",\"price_list\",\"=\",\"Standard Selling\",false],[\"Item Price\",\"selling\",\"=\",1,false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "format": "{} Entries",
+   "label": "Cancelled Material Issues",
+   "link_to": "Stock Entry",
+   "stats_filter": "[[\"Stock Entry\",\"docstatus\",\"=\",\"2\",false],[\"Stock Entry\",\"stock_entry_type\",\"=\",\"Material Issue\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "format": "{} Vouchers",
+   "label": "Draft Clearing Vouchers",
+   "link_to": "Clearing Voucher",
+   "stats_filter": "[[\"Clearing Voucher\",\"docstatus\",\"=\",\"0\",false]]",
    "type": "DocType"
   },
   {
@@ -87,15 +123,6 @@
    "label": "New Account",
    "link_to": "Account",
    "stats_filter": "[]",
-   "type": "DocType"
-  },
-  {
-   "color": "Red",
-   "doc_view": "List",
-   "format": "{} Entries",
-   "label": "Cancelled Material Issue for Transfer",
-   "link_to": "Stock Entry",
-   "stats_filter": "{\"docstatus\":[\"=\",\"2\"],\"stock_entry_type\":[\"=\",\"Material Issue for Transfer\"]}",
    "type": "DocType"
   },
   {
@@ -133,6 +160,15 @@
    "type": "DocType"
   },
   {
+   "color": "Red",
+   "doc_view": "List",
+   "format": "{} Notes",
+   "label": "Cancelled Delivery Notes",
+   "link_to": "Delivery Note",
+   "stats_filter": "[[\"Delivery Note\",\"docstatus\",\"=\",\"2\",false]]",
+   "type": "DocType"
+  },
+  {
    "color": "Grey",
    "doc_view": "New",
    "label": "Payment Voucher",
@@ -147,6 +183,15 @@
    "label": "Draft Material Receipts",
    "link_to": "Stock Entry",
    "stats_filter": "[[\"Stock Entry\",\"docstatus\",\"=\",\"0\",false],[\"Stock Entry\",\"stock_entry_type\",\"=\",\"Material Receipt\",false]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "format": "{} Accounts",
+   "label": "Disabled Accounts",
+   "link_to": "Account",
+   "stats_filter": "[[\"Account\",\"is_group\",\"=\",0,false],[\"Account\",\"restrict_account_view\",\"=\",\"No\",false],[\"Account\",\"disabled\",\"=\",1,false]]",
    "type": "DocType"
   },
   {
@@ -168,6 +213,15 @@
    "type": "DocType"
   },
   {
+   "color": "Red",
+   "doc_view": "List",
+   "format": "{} Entries",
+   "label": "Cancelled Material Receipts",
+   "link_to": "Stock Entry",
+   "stats_filter": "[[\"Stock Entry\",\"docstatus\",\"=\",\"2\",false],[\"Stock Entry\",\"stock_entry_type\",\"=\",\"Material Receipt\",false]]",
+   "type": "DocType"
+  },
+  {
    "color": "Orange",
    "doc_view": "List",
    "format": "{} Orders",
@@ -183,6 +237,15 @@
    "label": "Submitted Debt Vouchers",
    "link_to": "Debt Voucher",
    "stats_filter": "{\"docstatus\":[\"=\",\"1\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "format": "{} Vouchers",
+   "label": "Cancelled Payment Vouchers",
+   "link_to": "Payment Voucher",
+   "stats_filter": "[[\"Payment Voucher\",\"docstatus\",\"=\",\"2\",false]]",
    "type": "DocType"
   },
   {
@@ -287,15 +350,6 @@
    "type": "DocType"
   },
   {
-   "color": "Red",
-   "doc_view": "List",
-   "format": "{} Entries",
-   "label": "Cancelled Material Receipt for Transfer",
-   "link_to": "Stock Entry",
-   "stats_filter": "{\"docstatus\":[\"=\",\"2\"],\"stock_entry_type\":[\"=\",\"Material Receipt for Transfer\"]}",
-   "type": "DocType"
-  },
-  {
    "color": "Green",
    "doc_view": "List",
    "format": "{} Invoices",
@@ -354,15 +408,6 @@
    "label": "Draft Debt Vouchers",
    "link_to": "Debt Voucher",
    "stats_filter": "{\"docstatus\":[\"=\",\"0\"]}",
-   "type": "DocType"
-  },
-  {
-   "color": "Orange",
-   "doc_view": "List",
-   "format": "{} Vouchers",
-   "label": "Cancelled Payment Vouchers",
-   "link_to": "Payment Voucher",
-   "stats_filter": "{\"docstatus\":[\"=\",\"2\"]}",
    "type": "DocType"
   },
   {

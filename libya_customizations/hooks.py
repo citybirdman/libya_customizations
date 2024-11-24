@@ -90,7 +90,7 @@ doctype_list_js = {
 # 	"methods": "libya_customizations.utils.jinja_methods",
 # 	"filters": "libya_customizations.utils.jinja_filters"
 # }
-fixtures = [{"doctype": "Server Script", "filters": [["module" , "in" , ("Libya Customizations" )]]}, {"doctype": "Custom DocPerm", "filters": [["role" , "in" , ['Accountant', 'Sales Supervisor', 'Sales Coordinator', 'Warehouse User', 'Chief Sales Officer']]]}]
+fixtures = [{"doctype": "Server Script", "filters": [["module" , "in" , ("Libya Customizations" )]]}]
 # Installation
 # ------------
 
