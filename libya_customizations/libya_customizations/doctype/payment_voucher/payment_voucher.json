@@ -33,6 +33,7 @@
   "base_received_amount",
   "section_break_26",
   "remark",
+  "status",
   "connections_tab"
  ],
  "fields": [
@@ -248,6 +249,14 @@
    "fieldtype": "Tab Break",
    "label": "Connections",
    "show_dashboard": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nDraft\nSubmitted\nCancelled",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -264,7 +273,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-11-12 10:31:03.916602",
+ "modified": "2024-12-01 09:49:12.368711",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Payment Voucher",

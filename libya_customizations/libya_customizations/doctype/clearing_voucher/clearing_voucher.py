@@ -42,10 +42,10 @@ class ClearingVoucher(Document):
 			'multi_currency': 1
 		})
 		journal_entry.insert(ignore_permissions=True)
-		journal_entry.submit(ignore_permissions=True)
+		journal_entry.submit()
 	
 		self.on_update_after_submit()
-		
+		self.update_status("Submitted")
 		if self.from_party_type == "Customer" or self.to_party_type == "Customer":
 			self.reconcile_everything()
 
@@ -95,6 +95,11 @@ class ClearingVoucher(Document):
 		for dn in lst:
 			frappe.delete_doc(doctype, dn.name, force=True)
 
+	def update_status(self, status):
+		self.set("status", status)
+	def on_cancel(self):
+		self.update_status("Cancelled")
+
 	def before_cancel(self):
 		doctype = 'Journal Entry'
 		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name})
@@ -141,7 +146,7 @@ class ClearingVoucher(Document):
 							"default_advance_account": account
 						}).insert(ignore_permissions=True)
 						reconciliation.save(ignore_permissions=True)
-						reconciliation.submit(ignore_permissions=True)
+						reconciliation.submit()
 
 	def reconcile_everything(self):
 		self.reconcile_payments()

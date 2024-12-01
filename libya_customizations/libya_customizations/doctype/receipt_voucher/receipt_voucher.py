@@ -56,7 +56,7 @@ class ReceiptVoucher(Document):
 				"cannot_be_cancelled": 1
 			})
 			payment_entry.insert(ignore_permissions=True)
-			payment_entry.submit(ignore_permissions=True)
+			payment_entry.submit()
 			self.reconcile_everything()
 		else:
 			accounts = []
@@ -89,8 +89,9 @@ class ReceiptVoucher(Document):
 				'remark': self.remark,
 				'cannot_be_cancelled': 1
 			}).insert(ignore_permissions=True)
-			journal_entry.submit(ignore_permissions=True)
+			journal_entry.submit()
 			self.on_update_after_submit()
+		self.update_status("Submitted")
 
 
 	def on_update_after_submit(self):
@@ -136,13 +137,15 @@ class ReceiptVoucher(Document):
 	# def reconcile_everything(self):
 	# 	self.reconcile_payments()
 	# 	frappe.call("erpnext.accounts.doctype.process_payment_reconciliation.process_payment_reconciliation.trigger_reconciliation_for_queued_docs")
+	def on_cancel(self):
+		self.update_status("Cancelled")
 
 	def reconcile_payments(self):
 		if self.party_type == 'Customer':
 			company = self.company
 			account = self.paid_from
 			customer = self.party
-			outstanding_documents = frappe.call('erpnext.accounts.doctype.payment_entry.payment_entry.get_outstanding_reference_documents', args = {'party_type':'Customer', 'party':customer, 'party_account':account}) or 0
+			outstanding_documents = frappe.call('erpnext.accounts.doctype.payment_entry.payment_entry.get_outstanding_reference_documents', args = {'party_type':'Customer', 'party':customer, 'party_account':account}, validate=True) or 0
 			flag = False
 			if outstanding_documents:
 				total = 0
@@ -163,9 +166,12 @@ class ReceiptVoucher(Document):
 						"receivable_payable_account": account,
 						"default_advance_account": account
 					}).insert(ignore_permissions=True)
-					reconciliation.save(ignore_permissions=True)
-					reconciliation.submit(ignore_permissions=True)
+					reconciliation.save()
+					reconciliation.submit()
 
 	def reconcile_everything(self):
 		self.reconcile_payments()
 		frappe.call("erpnext.accounts.doctype.process_payment_reconciliation.process_payment_reconciliation.trigger_reconciliation_for_queued_docs")
+
+	def update_status(self, status):
+		self.set("status", status)

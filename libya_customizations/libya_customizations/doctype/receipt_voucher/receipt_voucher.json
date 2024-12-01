@@ -33,6 +33,7 @@
   "base_received_amount",
   "section_break_25",
   "remark",
+  "status",
   "connections_tab"
  ],
  "fields": [
@@ -245,6 +246,13 @@
    "fieldtype": "Tab Break",
    "label": "Connections",
    "show_dashboard": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nSubmitted\nCancelled\nDraft"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -261,7 +269,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-11-12 10:31:45.061586",
+ "modified": "2024-11-28 15:49:53.146482",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Receipt Voucher",

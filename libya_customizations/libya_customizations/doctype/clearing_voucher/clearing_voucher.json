@@ -12,7 +12,6 @@
   "posting_date",
   "column_break_3",
   "company",
-  "amended_from",
   "section_break_taxu",
   "from",
   "column_break_uyxq",
@@ -39,7 +38,9 @@
   "base_added_amount",
   "section_break_30",
   "remark",
-  "connections_tab"
+  "status",
+  "connections_tab",
+  "amended_from"
  ],
  "fields": [
   {
@@ -295,6 +296,14 @@
    "fieldtype": "Tab Break",
    "label": "Connections",
    "show_dashboard": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nDraft\nSubmitted\nCancelled",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -306,7 +315,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-11-12 10:36:44.413391",
+ "modified": "2024-12-01 09:56:37.036023",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Clearing Voucher",

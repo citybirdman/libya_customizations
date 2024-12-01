@@ -32,10 +32,14 @@ class TransferVoucher(Document):
 			"custom_remarks": 1,
 			'remarks': self.remark
 		})
-		# frappe.throw(repr(self.remark))
 		payment_entry.insert(ignore_permissions=True)
-		payment_entry.submit(ignore_permissions=True)
+		payment_entry.submit()
+		self.update_status("Submitted")
 
+	def update_status(self, status):
+		self.set("status", status)
+	def on_cancel(self):
+		self.update_status("Cancelled")
 
 	def on_trash(self):
 		doctype = "Payment Entry"

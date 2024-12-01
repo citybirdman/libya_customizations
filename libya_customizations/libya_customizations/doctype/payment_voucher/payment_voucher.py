@@ -69,10 +69,15 @@ class PaymentVoucher(Document):
 			journal_entry.submit(ignore_permissions=True)
 		
 		self.on_update_after_submit()
-		
+		self.update_status("Submitted")
 		if self.payment_to == "Customer":
 			self.reconcile_everything()
-		
+
+	def update_status(self, status):
+		self.set("status", status)
+	def on_cancel(self):
+		self.update_status("Cancelled")
+
 	def on_update_after_submit(self):
 		doctype = 'Journal Entry'
 		affected_field = "remark"

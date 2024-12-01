@@ -13,7 +13,6 @@
   "column_break_3",
   "company",
   "type",
-  "amended_from",
   "section_break_12",
   "from_or_to",
   "party_type",
@@ -27,7 +26,9 @@
   "base_amount",
   "section_break_23",
   "remark",
-  "connections_tab"
+  "status",
+  "connections_tab",
+  "amended_from"
  ],
  "fields": [
   {
@@ -194,6 +195,14 @@
    "fieldtype": "Tab Break",
    "label": "Connections",
    "show_dashboard": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nDraft\nSubmitted\nCancelled",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -205,7 +214,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-11-12 10:35:14.914411",
+ "modified": "2024-12-01 09:52:55.131747",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Debt Voucher",

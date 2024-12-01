@@ -91,18 +91,18 @@ frappe.ui.form.on("Delivery Note", {
             });
         }, 300); 
 
-        const billing_status_info = {
-            "Not Billed": { color: "red", label: "Not Billed" },
-            "Partly Billed": { color: "orange", label: "Partly Billed" },
-            "Fully Billed": { color: "green", label: "Fully Billed" }
-        };
+        // const billing_status_info = {
+        //     "Not Billed": { color: "red", label: "Not Billed" },
+        //     "Partly Billed": { color: "orange", label: "Partly Billed" },
+        //     "Fully Billed": { color: "green", label: "Fully Billed" }
+        // };
 
-        let billing_status = frm.doc.billing_status;
+        // let billing_status = frm.doc.billing_status;
 
-        if (billing_status_info[billing_status] && frm.doc.docstatus === 1 && !["Closed"].includes(frm.doc.status)) {
-			console.log(["Closed"].includes(frm.doc.status))
-            frm.page.set_indicator(billing_status_info[billing_status].label, billing_status_info[billing_status].color);
-        }
+        // if (billing_status_info[billing_status] && frm.doc.docstatus === 1 && !["Closed"].includes(frm.doc.status)) {
+		// 	console.log(["Closed"].includes(frm.doc.status))
+        //     frm.page.set_indicator(billing_status_info[billing_status].label, billing_status_info[billing_status].color);
+        // }
     }
 });
 

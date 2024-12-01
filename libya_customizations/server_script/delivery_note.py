@@ -9,7 +9,7 @@ def create_si_from_dn(doc):
     draft_linked_si = frappe.db.get_all('Sales Invoice Item', {'delivery_note':doc['name'], 'docstatus':0}, 'parent')
     if draft_linked_si:
         si_name = draft_linked_si[0]['parent']
-        frappe.msgprint(msg=_(f"There is a draft Sales Invoice <b>{si_name}</b>, please delete or submit it to move forward"), title=_('Error'), indicator='red') 
+        frappe.msgprint(msg=_("There is a draft Sales Invoice <b>{0}</b>, please delete or submit it to move forward").format(si_name), title=_('Error'), indicator='red') 
         raise frappe.ValidationError
     else:
         items_to_load = []

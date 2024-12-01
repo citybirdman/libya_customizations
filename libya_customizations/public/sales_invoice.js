@@ -41,6 +41,7 @@ frappe.ui.form.on("Sales Invoice", {
                 frm.fields_dict.items.grid.grid_buttons[0].children[1].style.display = "none";
                 frm.fields_dict.items.grid.grid_buttons[0].children[2].style.display = "none";
                 frm.fields_dict.items.grid.grid_buttons[0].children[3].style.display = "none";
+				frm.fields_dict.items.grid.grid_buttons[0].children[0].style.display = "none";
                 frm.fields_dict['items'].grid.wrapper.find('.grid-delete-row').hide();
                 frm.fields_dict.items.wrapper.querySelector(".grid-upload").style.display = "none";
                 frm.fields_dict.items.wrapper.querySelector(".grid-download").style.display = "none";

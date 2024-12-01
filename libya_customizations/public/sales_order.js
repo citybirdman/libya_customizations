@@ -357,9 +357,9 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 			"Item Code":'',
 			"Brand":'',
 			"Item Name":'',
-			"Qty":"",
-			"Available": "",
-			"Rate":'',
+			"Actual Stock":"",
+			"Available Stock": "",
+			"Selling Price":'',
 		}
 		if(frappe.user_roles.includes("Chief Sales Officer")){
 			
@@ -436,7 +436,7 @@ frappe.ui.form.on("Sales Order", {
         // Add the delivery status badge if it matches a key in delivery_status_info
         if (delivery_status_info[delivery_status] && frm.doc.docstatus === 1 && !["On Hold", "Closed"].includes(frm.doc.status)) {
 			console.log(["On Hold", "Closed"].includes(frm.doc.status))
-            frm.page.set_indicator(delivery_status_info[delivery_status].label, delivery_status_info[delivery_status].color);
+            // frm.page.set_indicator(_(delivery_status_info[delivery_status].label), delivery_status_info[delivery_status].color);
         }
     }
 });

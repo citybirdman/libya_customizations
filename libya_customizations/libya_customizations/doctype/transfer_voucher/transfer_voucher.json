@@ -28,7 +28,8 @@
   "target_exchange_rate",
   "base_received_amount",
   "section_break_26",
-  "remark"
+  "remark",
+  "status"
  ],
  "fields": [
   {
@@ -200,6 +201,14 @@
    "fieldname": "remark",
    "fieldtype": "Small Text",
    "label": "Remark"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nDraft\nSubmitted\nCancelled",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -211,7 +220,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-11-12 10:30:17.544048",
+ "modified": "2024-12-01 09:48:50.035050",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Transfer Voucher",

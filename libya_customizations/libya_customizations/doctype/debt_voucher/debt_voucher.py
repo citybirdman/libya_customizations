@@ -10,9 +10,9 @@ class DebtVoucher(Document):
 	def on_submit(self):	
 		if self.type == 'Add':
 			accounts_add = []
-			debt_account = frappe.db.get_value("Company", self.company, "default_debt_add_account")
+			debt_account = frappe.db.get_value("Company", self.company, "write_up_account")
 			if not debt_account:
-				frappe.throw(_("Please Add default Debt Add Account in Company Settings"))
+				frappe.throw(_("Write Up Account is not set in Company Master"))
 			accounts_add.append({
 				'account': debt_account,
 				'exchange_rate': 1,
@@ -39,12 +39,12 @@ class DebtVoucher(Document):
 				'multi_currency': 1
 			})
 			journal_entry.insert(ignore_permissions=True)
-			journal_entry.submit(ignore_permissions=True)
+			journal_entry.submit()
 
 		elif self.type == 'Deduct':
 			debt_account = frappe.db.get_value("Company", self.company, "write_off_account")
 			if not debt_account:
-				frappe.throw(_("Please Add default Write Off Account in Company Settings"))
+				frappe.throw(_("Write Off Account is not set in Company Master"))
 			accounts_deduct = []
 			accounts_deduct.append({
 				'account': self.from_or_to_account,
@@ -72,12 +72,17 @@ class DebtVoucher(Document):
 				'multi_currency': 1
 			})
 			journal_entry.insert(ignore_permissions=True)
-			journal_entry.submit(ignore_permissions=True)
+			journal_entry.submit()
 		
 		self.on_update_after_submit()
-		
+		self.update_status("Submitted")
 		if self.from_or_to == "Customer":
 			self.reconcile_everything()
+
+	def update_status(self, status):
+		self.set("status", status)
+	def on_cancel(self):
+		self.update_status("Cancelled")
 
 	def on_update_after_submit(self):
 		doctype = 'Journal Entry'
@@ -160,8 +165,8 @@ class DebtVoucher(Document):
 						"receivable_payable_account": account,
 						"default_advance_account": account
 					}).insert(ignore_permissions=True)
-					reconciliation.save(ignore_permissions=True)
-					reconciliation.submit(ignore_permissions=True)
+					reconciliation.save()
+					reconciliation.submit()
 
 	def reconcile_everything(self):
 		self.reconcile_payments()

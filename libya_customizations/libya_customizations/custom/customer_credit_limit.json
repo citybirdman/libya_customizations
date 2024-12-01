@@ -9,7 +9,7 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
-   "creation": "2024-11-23 20:08:35.937506",
+   "creation": "2024-11-26 05:55:30.726620",
    "default_value": null,
    "doc_type": "Customer Credit Limit",
    "docstatus": 0,
@@ -17,7 +17,7 @@
    "field_name": "bypass_credit_limit_check",
    "idx": 0,
    "is_system_generated": 0,
-   "modified": "2024-11-23 20:08:35.937506",
+   "modified": "2024-11-26 05:55:30.726620",
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer Credit Limit-bypass_credit_limit_check-permlevel",
@@ -25,14 +25,14 @@
    "property": "permlevel",
    "property_type": "Int",
    "row_name": null,
-   "value": "2"
+   "value": "1"
   },
   {
    "_assign": null,
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
-   "creation": "2024-11-23 20:09:30.027575",
+   "creation": "2024-11-26 05:55:30.690255",
    "default_value": null,
    "doc_type": "Customer Credit Limit",
    "docstatus": 0,
@@ -40,7 +40,7 @@
    "field_name": "credit_limit",
    "idx": 0,
    "is_system_generated": 0,
-   "modified": "2024-11-23 20:09:30.027575",
+   "modified": "2024-11-26 05:55:30.690255",
    "modified_by": "Administrator",
    "module": null,
    "name": "Customer Credit Limit-credit_limit-permlevel",
@@ -48,7 +48,7 @@
    "property": "permlevel",
    "property_type": "Int",
    "row_name": null,
-   "value": "2"
+   "value": "1"
   }
  ],
  "sync_on_migrate": 1

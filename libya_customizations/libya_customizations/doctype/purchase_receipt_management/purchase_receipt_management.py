@@ -81,7 +81,7 @@ def submit_receipt(docname, posting_date):
         frappe.throw("docname cannot be null")
     purchase_reciept = frappe.get_doc("Purchase Receipt", docname)
     purchase_reciept.posting_date = posting_date
-    purchase_reciept.submit(ignore_permissions=True)
+    purchase_reciept.submit()
 
 @frappe.whitelist()
 def get_values_for_validation(purchase_receipt):

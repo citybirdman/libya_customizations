@@ -12,7 +12,6 @@ def after_submit_sales_invoice_so(doc, method):
         doc = frappe.get_doc("Sales Order", docname)
         flag = True
         for row in doc.items:
-            # frappe.throw(f"{row.qty} != {row.bille_d_qty}")
             if row.qty != row.billed_qty:
                 flag = False
                 break
@@ -85,15 +84,15 @@ def before_submit_sales_invoice(doc, method):
     rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.incoming_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
 
     
-    if not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]]):
+    if not (frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]]) or doc.is_return):
         for row in rows:
             if row['rate'] < row['valuation_rate']:
-                frappe.throw(_(f"<b>Net Rate</b> ({'%0.2f' % row['rate']}) of item {row['item_name']} is less than Valuation Rate"))
+                frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Valuation Rate</b>").format('{:0.2f}'.format(row['rate']), row['item_name']))
             elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
                 for row in rows:
                     price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
                     if row['rate'] < price_list_rate:
-                        frappe.throw(_(f"<b>Net Rate</b> ({'%0.2f' % row['rate']}) of item {row['item_name']} is less than Price List Rate ({'%0.2f' % price_list_rate})"))
+                        frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
 
 def create_payment(doc, method):
 	if doc.is_paid and not doc.is_return:

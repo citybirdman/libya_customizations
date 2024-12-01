@@ -153,10 +153,6 @@ doc_events = {
     "Journal Entry":{
         "before_cancel":"libya_customizations.server_script.journal_entry.on_trash"
     },
-	"Account":{
-		"before_insert":"libya_customizations.server_script.account.fetch_temp_parent_account"
-
-	},
     "Item": {
         "after_insert": "libya_customizations.server_script.Item.after_insert_item",
         "on_update": "libya_customizations.server_script.Item.after_update_item"
@@ -185,8 +181,9 @@ doc_events = {
             "libya_customizations.server_script.sales_order.before_submit_sales_order"
         ],
         "before_save": "libya_customizations.server_script.sales_order.before_save_sales_order",
-        "on_update_after_submit": "libya_customizations.server_script.sales_order.after_update_after_submit_sales_order",
-		"on_update_after_submit": "libya_customizations.server_script.sales_order.validate_item_prices_after_submit"
+        "on_update_after_submit": ["libya_customizations.server_script.sales_order.after_update_after_submit_sales_order",
+			"libya_customizations.server_script.sales_order.validate_item_prices_after_submit"
+		]
     }
 }
 
