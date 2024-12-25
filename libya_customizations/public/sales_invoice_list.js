@@ -16,18 +16,13 @@ frappe.listview_settings["Sales Invoice"] = {
     },
     get_indicator: function (doc) {
 		const status_colors = {
-			Draft: "grey",
-			Unpaid: "orange",
-			Paid: "green",
-			Return: "gray",
-			"Credit Note Issued": "gray",
-			"Unpaid and Discounted": "orange",
-			"Partly Paid and Discounted": "yellow",
-			"Overdue and Discounted": "red",
-			Overdue: "red",
-			"Partly Paid": "yellow",
-			"Internal Transfer": "darkgrey",
+			"Draft": "grey",
+			"Credit Return": "gray",
+			"Cash Invoice": "green",
+			"Credit Invoice": "red",
+			"Cash Return": "darkgrey",
+			"Cancelled": "red"
 		};
-		return [__(doc.status), status_colors[doc.status], "status,=," + doc.status];
+		return [__(doc.payment_status), status_colors[doc.payment_status], "payment_status,=," + doc.payment_status];
 	}
 }

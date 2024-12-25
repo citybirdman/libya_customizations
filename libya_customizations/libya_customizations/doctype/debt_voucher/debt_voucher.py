@@ -127,13 +127,13 @@ class DebtVoucher(Document):
 
 	def on_trash(self):
 		doctype = 'Journal Entry'
-		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name})
+		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name}, ignore_permissions=True)
 		for dn in lst:
 			frappe.delete_doc(doctype, dn.name, force=True)
 
 	def before_cancel(self):
 		doctype = 'Journal Entry'
-		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name})
+		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name}, ignore_permissions=True)
 		for dn in lst:
 			d = frappe.get_doc(doctype, dn.name)
 			if d.docstatus == 1:

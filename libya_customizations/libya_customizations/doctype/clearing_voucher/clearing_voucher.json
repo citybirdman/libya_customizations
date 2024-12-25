@@ -12,6 +12,7 @@
   "posting_date",
   "column_break_3",
   "company",
+  "amended_from",
   "section_break_taxu",
   "from",
   "column_break_uyxq",
@@ -39,15 +40,13 @@
   "section_break_30",
   "remark",
   "status",
-  "connections_tab",
-  "amended_from"
+  "connections_tab"
  ],
  "fields": [
   {
    "depends_on": "eval:false",
    "fieldname": "naming_series",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "label": "Series",
    "no_copy": 1,
    "options": "ACC-CLRG-.YYYY.-",
@@ -72,23 +71,16 @@
    "default": "Today",
    "fieldname": "posting_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Posting Date",
    "reqd": 1
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Clearing Voucher",
-   "print_hide": 1,
-   "read_only": 1
   },
   {
    "fieldname": "from",
    "fieldtype": "Autocomplete",
    "label": "From?",
-   "options": "Customer\nSupplier\nAccount"
+   "options": "Customer\nAccount"
   },
   {
    "fieldname": "from_party_type",
@@ -108,6 +100,8 @@
   {
    "fieldname": "from_party_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "From Party Name",
    "read_only": 1
   },
@@ -115,7 +109,7 @@
    "fieldname": "to",
    "fieldtype": "Autocomplete",
    "label": "To?",
-   "options": "Customer\nSupplier\nAccount"
+   "options": "Customer\nAccount"
   },
   {
    "fieldname": "to_party_type",
@@ -135,6 +129,8 @@
   {
    "fieldname": "to_party_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "To Party Name",
    "read_only": 1
   },
@@ -147,6 +143,8 @@
    "depends_on": "eval:doc.from == \"Account\"",
    "fieldname": "from_account",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "From Account",
    "options": "Account",
    "reqd": 1
@@ -208,6 +206,8 @@
    "depends_on": "eval:doc.to == \"Account\"",
    "fieldname": "to_account",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "To Account",
    "options": "Account",
    "read_only_depends_on": "eval:doc.to_a_party",
@@ -275,15 +275,6 @@
    "label": "Remark"
   },
   {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Clearing Voucher",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
    "fieldname": "section_break_taxu",
    "fieldtype": "Section Break"
   },
@@ -298,12 +289,24 @@
    "show_dashboard": 1
   },
   {
+   "allow_on_submit": 1,
    "default": "Draft",
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_standard_filter": 1,
    "label": "Status",
    "options": "\nDraft\nSubmitted\nCancelled",
    "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Clearing Voucher",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -315,7 +318,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-12-01 09:56:37.036023",
+ "modified": "2024-12-16 11:57:58.800051",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Clearing Voucher",

@@ -1,0 +1,62 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"2XP0iAlj1T\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Accounts</span>\",\"col\":12}},{\"id\":\"uy707rsyiV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Account Statement Summary\",\"col\":3}},{\"id\":\"7faXA44QTL\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"LN_90D5p9E\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Sales</b></span>\",\"col\":12}},{\"id\":\"1gfq2ODFbe\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer Statement Summary\",\"col\":3}},{\"id\":\"rKfVkb0WNZ\",\"type\":\"spacer\",\"data\":{\"col\":12}}]",
+ "creation": "2024-12-14 12:11:46.539797",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "dashboard",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Reports",
+ "links": [],
+ "modified": "2024-12-14 15:48:29.270657",
+ "modified_by": "Administrator",
+ "module": "Libya Customizations",
+ "name": "Reports",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Chief Sales Officer"
+  },
+  {
+   "role": "Sales Supervisor"
+  },
+  {
+   "role": "Sales Coordinator"
+  },
+  {
+   "role": "Warehouse User"
+  },
+  {
+   "role": "Accountant"
+  }
+ ],
+ "sequence_id": 32.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "icon": "dashboard",
+   "label": "Customer Statement Summary",
+   "link_to": "Customer Statement Summary",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "icon": "dashboard",
+   "label": "Account Statement Summary",
+   "link_to": "Account Statement Summary",
+   "type": "Report"
+  }
+ ],
+ "title": "Reports"
+}

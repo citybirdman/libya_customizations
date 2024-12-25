@@ -38,7 +38,7 @@ class PaymentVoucher(Document):
 				"remarks": self.remark
 			})
 			payment_entry.insert(ignore_permissions=True)
-			payment_entry.submit(ignore_permissions=True)
+			payment_entry.submit()
 		else:
 			accounts = []
 			accounts.append({
@@ -66,7 +66,7 @@ class PaymentVoucher(Document):
 				'remark': self.remark,
 				'multi_currency': 1
 			}).insert(ignore_permissions=True)
-			journal_entry.submit(ignore_permissions=True)
+			journal_entry.submit()
 		
 		self.on_update_after_submit()
 		self.update_status("Submitted")
@@ -126,7 +126,7 @@ class PaymentVoucher(Document):
 		doctype = 'Journal Entry'
 		if self.payment_to == "Supplier":
 			doctype = "Payment Entry"
-		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name})
+		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name}, ignore_permissions=True)
 		for dn in lst:
 			frappe.delete_doc(doctype, dn.name, force=True)
 
@@ -134,7 +134,7 @@ class PaymentVoucher(Document):
 		doctype = 'Journal Entry'
 		if self.payment_to == "Supplier":
 			doctype = "Payment Entry"
-		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name})
+		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name}, ignore_permissions=True)
 		for dn in lst:
 			d = frappe.get_doc(doctype, dn.name)
 			if d.docstatus == 1:
@@ -167,7 +167,7 @@ class PaymentVoucher(Document):
 						"default_advance_account": account
 					}).insert(ignore_permissions=True)
 					reconciliation.save(ignore_permissions=True)
-					reconciliation.submit(ignore_permissions=True)
+					reconciliation.submit()
 
 	def reconcile_everything(self):
 		self.reconcile_payments()

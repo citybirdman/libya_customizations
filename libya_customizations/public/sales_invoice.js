@@ -54,5 +54,12 @@ frappe.ui.form.on("Sales Invoice", {
         }else{
             frm.set_value("update_stock", 0)
         }
+        
+        if(frm.doc.custom_payment_value || frm.doc.payment_account){
+            frm.set_value("custom_is_payment_value_checked", 1)
+        }
+    },
+    custom_payment_value_is_different: function(frm){
+        frm.set_value("custom_payment_value", 0)
     }
 })

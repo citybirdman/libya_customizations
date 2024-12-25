@@ -27,16 +27,20 @@
   "received_amount",
   "target_exchange_rate",
   "base_received_amount",
+  "section_break_btyf",
+  "charge_account",
+  "column_break_vtin",
+  "banking_charges",
   "section_break_26",
   "remark",
-  "status"
+  "status",
+  "connections_tab"
  ],
  "fields": [
   {
    "depends_on": "eval:false",
    "fieldname": "naming_series",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "label": "Series",
    "no_copy": 1,
    "options": "ACC-TXFR-.YYYY.-",
@@ -61,6 +65,8 @@
    "default": "Today",
    "fieldname": "posting_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Posting Date",
    "reqd": 1
   },
@@ -80,6 +86,8 @@
   {
    "fieldname": "paid_from",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Account Paid From",
    "options": "Account",
    "reqd": 1
@@ -139,6 +147,8 @@
   {
    "fieldname": "paid_to",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Account Paid To",
    "options": "Account",
    "reqd": 1
@@ -203,12 +213,46 @@
    "label": "Remark"
   },
   {
+   "allow_on_submit": 1,
    "default": "Draft",
    "fieldname": "status",
    "fieldtype": "Select",
+   "hidden": 1,
+   "in_standard_filter": 1,
    "label": "Status",
    "options": "\nDraft\nSubmitted\nCancelled",
    "read_only": 1
+  },
+  {
+   "fieldname": "connections_tab",
+   "fieldtype": "Tab Break",
+   "label": "Connections",
+   "show_dashboard": 1
+  },
+  {
+   "fieldname": "section_break_btyf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "banking_charges",
+   "fieldtype": "Currency",
+   "label": "Banking Charges",
+   "mandatory_depends_on": "eval:doc.charge_account",
+   "non_negative": 1,
+   "options": "paid_to_account_currency",
+   "precision": "3"
+  },
+  {
+   "fieldname": "charge_account",
+   "fieldtype": "Link",
+   "label": "Charge Account",
+   "link_filters": "[[\"Account\",\"disabled\",\"=\",0],[\"Account\",\"is_group\",\"=\",0],[\"Account\",\"root_type\",\"=\",\"Expense\"]]",
+   "mandatory_depends_on": "eval:doc.banking_charges",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_vtin",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -220,7 +264,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-12-01 09:48:50.035050",
+ "modified": "2024-12-16 16:31:43.383568",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Transfer Voucher",

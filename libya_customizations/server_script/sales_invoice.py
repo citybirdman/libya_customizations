@@ -1,5 +1,22 @@
 import frappe
 from frappe import _
+from frappe import json
+
+def unreconcile_linked_payments(doc):
+	linked_docs = frappe.call("erpnext.accounts.doctype.unreconcile_payment.unreconcile_payment.get_linked_payments_for_doc", company = doc.company, doctype= "Sales Invoice", docname=doc.name)
+	selection_map = []
+	for elem in linked_docs:
+			selection_map = [{
+				"company": elem.company,
+				"voucher_type": elem.voucher_type,
+				"voucher_no": elem.voucher_no,
+				"against_voucher_type": "Sales Invoice",
+				"against_voucher_no": doc.name,
+			}]
+			try:
+				frappe.call("erpnext.accounts.doctype.unreconcile_payment.unreconcile_payment.create_unreconcile_doc_for_selection", selections=json.dumps(selection_map))
+			except:
+				continue
 
 def after_submit_sales_invoice_so(doc, method):
     if not (doc.is_return or doc.update_stock or doc.is_opening == "Yes"):
@@ -95,17 +112,24 @@ def before_submit_sales_invoice(doc, method):
                         frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
 
 def create_payment(doc, method):
+	doc = frappe.get_doc(doc)
+	unreconcile_linked_payments(doc)
+	if doc.custom_payment_value_is_different and doc.custom_payment_value:
+		amount = doc.custom_payment_value
+	else:
+		amount = abs(doc.grand_total)
 	if doc.is_paid and not doc.is_return:
+		print(amount)
 		references = []
 		references.append({
 			'reference_doctype': 'Sales Invoice',
 			'reference_name': doc.name,
 			'total_amount': doc.grand_total,
 			'outstanding_amount': doc.outstanding_amount,
-			'allocated_amount': doc.grand_total,
+			'allocated_amount': amount,
 			'due_date': doc.due_date,
 			'exchange_rate': doc.conversion_rate
-        }) 
+        })      
 		payment_entry = frappe.get_doc({
 			"doctype": "Payment Entry",
 			"payment_type": "Receive",
@@ -113,8 +137,8 @@ def create_payment(doc, method):
 			"party": doc.customer,
 			"company": doc.company,
 			"posting_date": doc.posting_date,
-			"paid_amount": abs(doc.grand_total),
-			"received_amount": abs(doc.grand_total),
+			"paid_amount": amount,
+			"received_amount": amount,
 			"paid_from": doc.debit_to,
 			"paid_to": doc.payment_account,
 			"target_exchange_rate": doc.conversion_rate,
@@ -135,14 +159,14 @@ def create_payment(doc, method):
 		accounts.append({
 			'account': doc.payment_account,
 			'exchange_rate': doc.conversion_rate,
-			'credit_in_account_currency': abs(doc.grand_total)
+			'credit_in_account_currency': amount
         })
 		accounts.append({
 			'account': doc.debit_to,
 			'party_type': 'Customer',
 			'party': doc.customer,
 			'exchange_rate': doc.conversion_rate,
-			'debit_in_account_currency': abs(doc.grand_total),
+			'debit_in_account_currency': amount,
 			'reference_type': 'Sales Invoice',
 			'reference_name': doc.name
 		})
@@ -160,6 +184,57 @@ def create_payment(doc, method):
 			'multi_currency': 1,
 			'cannot_be_cancelled': 1
 		}).insert(ignore_permissions=True)
+		journal_entry.submit()
+	doc.custom_is_payment_value_checked =1
+	frappe.db.set_value(doc.doctype, doc.name, "custom_is_payment_value_checked", 1)
+            
+def create_write_off(doc, method):
+	if doc.custom_payment_value_is_different and doc.custom_payment_value:
+		if abs(doc.grand_total) - doc.custom_payment_value <= 0:
+			frappe.throw(_("Payment Value should be less than the grand total, if you need to fully pay the invoice just uncheck <b>Custom Payment Value Is Differect</b>"))
+		debit_account = frappe.db.get_value("Company", doc.company, "write_up_account") if doc.is_return else doc.debit_to
+		credit_account = doc.debit_to if doc.is_return else frappe.db.get_value("Company", doc.company, "write_off_account")
+		credit_party_type = None if doc.is_return else "Customer"
+		credit_party = None if doc.is_return else doc.customer
+		debit_party_type = "Customer" if doc.is_return else None
+		debit_party = doc.customer if doc.is_return else None
+		credit_reference_type = None if doc.is_return else "Sales Invoice"
+		credit_reference_name = None if doc.is_return else doc.name
+		debit_reference_type = "Sales Invoice" if doc.is_return else None
+		debit_reference_name = doc.name if doc.is_return else None
+            
+		journal_entry_obj = {
+			"voucher_type": "Write Off Entry",
+			"company": doc.company,
+			"posting_date": doc.posting_date,
+			"doctype": "Journal Entry",
+			'custom_voucher_type': 'Sales Invoice',
+			'custom_voucher_no': doc.name,
+			'multi_currency': 1,
+			'cannot_be_cancelled': 1,
+			"accounts": [{
+				"account": debit_account,
+				"party_type": credit_party_type,
+				"party": credit_party,
+				"debit_in_account_currency": 0,
+				"debit": 0,
+				"credit_in_account_currency": (abs(doc.grand_total) - doc.custom_payment_value),
+				"credit": (abs(doc.grand_total) - doc.custom_payment_value),
+				"reference_type": credit_reference_type,
+				"reference_name": credit_reference_name
+			}, {
+				"account": credit_account,
+                "party_type": debit_party_type,
+				"party": debit_party,
+				"debit_in_account_currency": (abs(doc.grand_total) - doc.custom_payment_value),
+				"debit": (abs(doc.grand_total) - doc.custom_payment_value),
+				"credit_in_account_currency": 0,
+				"credit": 0,
+                "reference_type": debit_reference_type,
+				"reference_name": debit_reference_name
+			}]
+		}
+		journal_entry = frappe.get_doc(journal_entry_obj).insert(ignore_permissions=True)
 		journal_entry.submit()
 
 def reconcile_payments(doc, method):
@@ -191,6 +266,9 @@ def reconcile_payments(doc, method):
 			reconciliation.submit()
 
 def reconcile_everything(doc, method):
+	frappe.call("erpnext.accounts.doctype.process_payment_reconciliation.process_payment_reconciliation.trigger_reconciliation_for_queued_docs")
+
+def trigger_reconcile_everything():
 	frappe.call("erpnext.accounts.doctype.process_payment_reconciliation.process_payment_reconciliation.trigger_reconciliation_for_queued_docs")
 
 def cancel_linked_payment(doc, method):

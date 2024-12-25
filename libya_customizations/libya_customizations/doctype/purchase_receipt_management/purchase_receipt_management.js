@@ -176,3 +176,82 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
         }
     }
 });
+
+frappe.ui.form.on('Purchase Receipt Management Detail', {
+    edit_list_prices: function(frm, cdt, cdn){
+            // Call the function to open the dialog
+            openPurchaseReceiptDialog(frm, cdt, cdn);
+        }
+    });
+    
+    // Function to open the dialog
+    async function openPurchaseReceiptDialog(frm, cdt, cdn) {
+        let data = await fetchPurchaseReceiptData(locals[cdt][cdn].purchase_receipt);
+        console.log(data)
+        let dialog = new frappe.ui.Dialog({
+        title: __('Purchase Receipt Details'),
+        fields: [
+            {
+                label: __('Purchase Receipt Data'),
+                fieldtype: 'Table',
+                fieldname: 'purchase_receipt_table',
+                fields: [
+                    { label: __('Item Code'), fieldtype: 'Link', options:"Item",fieldname: 'item_code', read_only:1 , in_list_view:1, colsize: 3, columns: 3},
+                    { label: __('Item Name'), fieldtype: 'Data', fieldname: 'item_name', in_list_view:0, read_only:1 },
+                    { label: __('Brand'), fieldtype: 'Data', fieldname: 'brand', in_list_view:1, read_only:1, colsize: 1, columns: 1 },
+                    { label: __('Receipt Qty'), fieldtype: 'Float', fieldname: 'receipt_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1 },
+                    { label: __('Receipt Valuation Rate'), fieldtype: 'Float', fieldname: 'receipt_valuation_rate', in_list_view:1, precision: 2, read_only:1, colsize: 1, columns: 1},
+                    { label: __('Stock Qty'), fieldtype: 'Float', fieldname: 'stock_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1},
+                    { label: __('Stock Valuation Rate'), fieldtype: 'Float', fieldname: 'stock_valuation_rate', in_list_view:1 , precision: 2, read_only:1, colsize: 1, columns: 1},
+                    { label: __('Selling Price'), fieldtype: 'Currency', fieldname: 'selling_price', in_list_view:1, precision: 0, colsize: 1, columns: 1},
+                    { label: __('Price Name'), fieldtype: 'Data', fieldname: 'price_name', hidden:1 },
+                ],
+                data: data,
+                get_data: ()=>{return data}
+            }
+        ],
+        primary_action_label: __('Edit Prices'),
+        primary_action: function(values) {
+            prices = values.purchase_receipt_table.map(row => ({name:row.price_name, price: row.selling_price, item_code: row.item_code, item_name:row.item_name}))
+            prices = prices.filter(row=>row.name)
+            
+            frm.call({
+                method:"edit_item_price",
+                args: {values:prices}
+            })
+            dialog.hide();
+        }
+    });
+    dialog.$wrapper.find('.modal-dialog').removeClass("modal-lg").addClass("modal-xl");
+    Array.from(dialog.fields_dict.purchase_receipt_table.grid.grid_buttons[0].children).map(function(child, i){
+            if( child.classList.contains("grid-add-row")){
+                    dialog.fields_dict.purchase_receipt_table.grid.grid_buttons[0].children[i].style.display = "none";
+        }
+    })
+    dialog.fields_dict.purchase_receipt_table.wrapper.onchange = function(){
+        	Array.from(dialog.fields_dict.purchase_receipt_table.grid.grid_buttons[0].children).map(function(child, i){
+            		if( child.classList.contains("grid-add-row")){
+                			dialog.fields_dict.purchase_receipt_table.grid.grid_buttons[0].children[i].style.display = "none";
+                		}
+                	})
+                }
+    // Show the dialog
+    frm.fields_dict.purchase_receipts.grid.wrapper[0].querySelector(".grid-collapse-row").click();
+    dialog.show();
+}
+
+
+// Function to fetch the custom SQL data
+async function fetchPurchaseReceiptData(purchase_receipt) {
+    let data = []
+    await cur_frm.call({
+        method: 'get_purchase_receipt_data',
+        args: {purchase_receipt},
+        callback: function(response) {
+            if (response && response.message) {
+                data = response.message
+            }
+        }
+    });
+    return data;
+}

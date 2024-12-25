@@ -34,6 +34,37 @@ class TransferVoucher(Document):
 		})
 		payment_entry.insert(ignore_permissions=True)
 		payment_entry.submit()
+
+		if self.banking_charges:
+			accounts = []
+			accounts.append({
+				'account': self.paid_to,
+				'exchange_rate': self.source_exchange_rate,
+				'credit_in_account_currency': abs(self.banking_charges),
+				'branch': 'Main'
+			})
+			accounts.append({
+				'account': self.charge_account,
+				'exchange_rate': self.target_exchange_rate,
+				'debit_in_account_currency': abs(self.banking_charges),
+				'branch': 'Main'
+			})
+			journal_entry = frappe.get_doc({
+				'doctype': 'Journal Entry',
+				'company': self.company,
+				'posting_date': self.posting_date,
+				'accounts': accounts,
+				'voucher_type': self.paid_to_account_type + ' Entry',
+				'cheque_no': self.name,
+				'cheque_date': self.posting_date,
+				'custom_voucher_type': 'Receipt Voucher',
+				'custom_voucher_no': self.name,
+				'user_remark': self.remark,
+				'multi_currency': 1,
+				'remark': self.remark,
+				'cannot_be_cancelled': 1
+			}).insert(ignore_permissions=True)
+			journal_entry.submit()
 		self.update_status("Submitted")
 
 	def update_status(self, status):
@@ -43,13 +74,13 @@ class TransferVoucher(Document):
 
 	def on_trash(self):
 		doctype = "Payment Entry"
-		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name})
+		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name}, ignore_permissions=True)
 		for dn in lst:
 			frappe.delete_doc(doctype, dn.name, force=True)
 
 	def before_cancel(self):
 		doctype = "Payment Entry"
-		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name})
+		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name}, ignore_permissions=True)
 		for dn in lst:
 			d = frappe.get_doc(doctype, dn.name)
 			if d.docstatus == 1:

@@ -90,7 +90,28 @@ doctype_list_js = {
 # 	"methods": "libya_customizations.utils.jinja_methods",
 # 	"filters": "libya_customizations.utils.jinja_filters"
 # }
-fixtures = [{"doctype": "Server Script", "filters": [["module" , "in" , ("Libya Customizations" )]]}, {"doctype": "Custom HTML Block"}]
+fixtures = [
+    {
+        "doctype": "Server Script",
+        "filters": [["module" , "in" , ("Libya Customizations" )]]
+    },
+    {
+        "doctype": "Custom Field",
+        "filters": [["module" , "in" , ("Libya Customizations" )]]
+    },
+    {
+        "doctype": "Custom HTML Block"
+    },
+    {
+        "doctype": "Workflow"
+    },
+    {
+        "doctype": "Restrict Account View"
+    },
+    {
+        "doctype": "Property Setter"
+    }
+]
 # Installation
 # ------------
 
@@ -141,9 +162,9 @@ after_install = "libya_customizations.install.after_install"
 # ---------------
 # Override standard doctype classes
 
-# override_doctype_class = {
-# 	"Sales Invoice": "libya_customizations.overrides.sales_invoice.CustomSalesInvoice"
-# }
+override_doctype_class = {
+	"Sales Order": "libya_customizations.overrides.sales_order.CustomSalesOrder"
+}
 
 # Document Events
 # ---------------
@@ -157,13 +178,15 @@ doc_events = {
         "after_insert": "libya_customizations.server_script.Item.after_insert_item",
         "on_update": "libya_customizations.server_script.Item.after_update_item"
     },
+    "Purchase Invoice":{
+        "on_update_after_submit": "libya_customizations.server_script.purchase_invoice.on_update_after_submit" 
+    },
     "Sales Invoice":{
         "on_submit":[
             "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_so",
             "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_dn",
 			"libya_customizations.server_script.sales_invoice.reconcile_payments",
-			"libya_customizations.server_script.sales_invoice.reconcile_everything",
-			"libya_customizations.server_script.sales_invoice.create_payment"
+			"libya_customizations.server_script.sales_invoice.reconcile_everything"
         ],
         "before_cancel":[
             "libya_customizations.server_script.sales_invoice.before_cancel_sales_invoice_so",
@@ -172,7 +195,13 @@ doc_events = {
         ],
         "before_submit": "libya_customizations.server_script.sales_invoice.before_submit_sales_invoice",
 
-		"on_trash": "libya_customizations.server_script.sales_invoice.delete_linked_payment"
+		"on_trash": "libya_customizations.server_script.sales_invoice.delete_linked_payment",
+        "on_update_after_submit": [
+			"libya_customizations.server_script.sales_invoice.create_payment",
+			"libya_customizations.server_script.sales_invoice.create_write_off",
+			"libya_customizations.server_script.sales_invoice.reconcile_payments",
+			"libya_customizations.server_script.sales_invoice.reconcile_everything"
+		]
     },
     "Sales Order": {
         "on_submit": "libya_customizations.server_script.sales_order.after_submit_sales_order",
@@ -182,14 +211,25 @@ doc_events = {
         ],
         "before_save": "libya_customizations.server_script.sales_order.before_save_sales_order",
         "on_update_after_submit": ["libya_customizations.server_script.sales_order.after_update_after_submit_sales_order",
-			"libya_customizations.server_script.sales_order.validate_item_prices_after_submit"
+			"libya_customizations.server_script.sales_order.validate_item_prices_after_submit",
+			"libya_customizations.server_script.sales_order.validate_before_submit_sales_order"
 		]
+    },
+    "Purchase Receipt": {
+        "on_submit": "libya_customizations.server_script.purchase_receipt.on_submit",
+         "on_update_after_submit": "libya_customizations.server_script.purchase_receipt.on_update_after_submit"
     }
 }
 
 # Scheduled Tasks
 # ---------------
-
+scheduler_events = {
+    "cron": {
+        "0 */8 * * *": [
+            "libya_customizations.server_script.sales_invoice.trigger_reconcile_payments"
+        ]
+    }
+}
 # scheduler_events = {
 # 	"all": [
 # 		"libya_customizations.tasks.all"

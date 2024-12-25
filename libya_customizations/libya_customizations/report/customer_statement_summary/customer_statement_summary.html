@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كشف حساب عميل</title>
+    <style>
+        body {
+            margin: 20px;
+            line-height: 1.8;
+            
+        }
+
+        * {
+            box-sizing: border-box;
+			font-family: "Noto Kufi Arabic", Arial, sans-serif;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            direction: rtl;
+        }
+
+        .table, .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .table td {
+            word-wrap: break-word;
+            overflow: hidden;
+            text-align: left; /* Ensure proper alignment for Arabic */
+            line-height: 1.5; /* Prevent text overlap */
+            min-height: 20px; /* Ensure consistent cell height */
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center; /* Ensure proper alignment for Arabic */
+            line-height: 1.5; /* Prevent text overlap */
+        }
+
+        .table th:nth-child(1) { width: 10%; }
+        .table th:nth-child(2) { width: 11%; }
+        .table th:nth-child(3) { width: 17%; }
+        .table th:nth-child(4) { width: 9%; }
+        .table th:nth-child(5) { width: 9%; }
+        .table th:nth-child(6) { width: 9%; }
+        .table th:nth-child(7) { width: 35%; }
+
+        .balance-cell {
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <h2>كشف حساب عميل</h2>
+        <p><b>{{ data[0].customer_name }}</b></p>
+        <p><b>من:</b> {{ filters.from_date }}</p>
+        <p><b>إلى:</b> {{ filters.to_date }}</p>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>التاريخ</th>
+                <th>نوع المستند</th>
+                <th>رقم المستند</th>
+                <th>المدين</th>
+                <th>الدائن</th>
+                <th>الرصيد</th>
+                <th>الملاحظات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+                <tr>
+                    <td>{{ row.posting_date }}</td>
+                    <td>{{ row.translated_voucher_type }}</td>
+                    <td>{{ row.voucher_no }}</td>
+                    <td>{{ format_currency(row.debit) }}</td>
+                    <td>{{ format_currency(row.credit) }}</td>
+                    <td class="balance-cell">{{ format_currency(row.balance) }}</td>
+                    <td>{{ row.remarks }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>نشكركم على حسن تعاونكم، ونرجو منكم مراجعة البيان وإبلاغنا في حال وجود أي استفسارات أو ملاحظات</p>
+        <p class="text-center text-muted">تمت الطباعة في {%= frappe.datetime.str_to_user(frappe.datetime.get_datetime_as_string()) %}</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Custom HTML Block",
+  "html": "<!DOCTYPE html>\n<div class=\"widget shortcut-widget-box\" style=\"margin-left:0; padding-left: 0;\">\n\t<div class=\"widget-head\">\n\t\t<div class=\"widget-label\">\n\t\t\t<div class=\"widget-title\"><span class=\"ellipsis\" title=\"Customer\">فاتورة مردودات مبيعات جديدة</span>\n\t\t\t<svg class=\"icon ml-2 icon-xs\" style=\"stroke: grey\">\n\t\t        <use class=\"\" href=\"#icon-arrow-up-right\"></use>\n            </svg>\n    </div>\n\t\t\t<div class=\"widget-subtitle\"></div>\n\t\t</div>\n\t\t<div class=\"widget-control\"></div>\n\t</div>\n\t<div class=\"widget-body\"></div>\n\t<div class=\"widget-footer\"></div>\n</div><div class=\"divider\"></div>",
+  "modified": "2024-11-24 17:39:14.923509",
+  "name": "New Sales Return Invoice",
+  "private": 0,
+  "roles": [],
+  "script": "root_element.addEventListener(\"click\", async function(e) {\n    const newdoc = frappe.model.get_new_doc('Sales Invoice');\n\n    await frappe.run_serially([\n        () => frappe.model.with_doctype('Sales Invoice'),\n        () => frappe.model.set_default_values(newdoc)\n    ]);\n\n    newdoc.is_return = 1;\n    newdoc.update_stock = 1;\n    newdoc.posting_time = '00:00:02';\n    newdoc.set_posting_time = 1;\n    newdoc.update_billed_amount_in_sales_order = 0;\n    newdoc.update_billed_amount_in_delivery_note = 0;\n\n    frappe.model.sync(newdoc);\n    frappe.set_route('Form', newdoc.doctype, newdoc.name);\n});",
+  "style": null
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Custom HTML Block",
+  "html": "<!DOCTYPE html>\n<div class=\"widget shortcut-widget-box\" style=\"margin-left:0; padding-left: 0;\">\n\t<div class=\"widget-head\">\n\t\t<div class=\"widget-label\">\n\t\t\t<div class=\"widget-title\"><span class=\"ellipsis\" title=\"Customer\">إذن استلام مواد جديد</span>\n\t\t\t<svg class=\"icon ml-2 icon-xs\" style=\"stroke: grey\">\n\t\t        <use class=\"\" href=\"#icon-arrow-up-right\"></use>\n            </svg>\n    </div>\n\t\t\t<div class=\"widget-subtitle\"></div>\n\t\t</div>\n\t\t<div class=\"widget-control\"></div>\n\t</div>\n\t<div class=\"widget-body\"></div>\n\t<div class=\"widget-footer\"></div>\n</div><div class=\"divider\"></div>",
+  "modified": "2024-11-28 13:17:30.303930",
+  "name": "New Material Receipt",
+  "private": 0,
+  "roles": [],
+  "script": "root_element.addEventListener(\"click\", async function(e) {\n    const newdoc = frappe.model.get_new_doc('Stock Entry');\n\n    await frappe.run_serially([\n        () => frappe.model.with_doctype('Stock Entry'),\n        () => frappe.model.set_default_values(newdoc)\n    ]);\n    \n    newdoc.stock_entry_type = \"Material Receipt\"\n    newdoc.posting_time = '00:00:04';\n    frappe.model.sync(newdoc);\n    frappe.set_route('Form', newdoc.doctype, newdoc.name);\n});",
+  "style": null
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Custom HTML Block",
+  "html": "<!DOCTYPE html>\n<div class=\"widget shortcut-widget-box\" style=\"margin-left:0; padding-left: 0;\">\n\t<div class=\"widget-head\">\n\t\t<div class=\"widget-label\">\n\t\t\t<div class=\"widget-title\"><span class=\"ellipsis\" title=\"Customer\">إذن صرف مواد جديد</span>\n\t\t\t<svg class=\"icon ml-2 icon-xs\" style=\"stroke: grey\">\n\t\t        <use class=\"\" href=\"#icon-arrow-up-right\"></use>\n            </svg>\n    </div>\n\t\t\t<div class=\"widget-subtitle\"></div>\n\t\t</div>\n\t\t<div class=\"widget-control\"></div>\n\t</div>\n\t<div class=\"widget-body\"></div>\n\t<div class=\"widget-footer\"></div>\n</div><div class=\"divider\"></div>",
+  "modified": "2024-11-28 13:24:47.642225",
+  "name": "New Material Issue",
+  "private": 0,
+  "roles": [],
+  "script": "root_element.addEventListener(\"click\", async function(e) {\n    const newdoc = frappe.model.get_new_doc('Stock Entry');\n\n    await frappe.run_serially([\n        () => frappe.model.with_doctype('Stock Entry'),\n        () => frappe.model.set_default_values(newdoc)\n    ]);\n    \n    newdoc.stock_entry_type = \"Material Issue\"\n    frappe.model.sync(newdoc);\n    frappe.set_route('Form', newdoc.doctype, newdoc.name);\n});",
+  "style": null
+ }
+]

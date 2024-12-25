@@ -15,7 +15,7 @@ class ReceiptVoucher(Document):
 		doctype = 'Journal Entry'
 		if self.receipt_from == "Customer":
 			doctype = "Payment Entry"
-		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name})
+		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name}, ignore_permissions=True)
 		for dn in lst:
 			frappe.delete_doc(doctype, dn.name, force=True)
 
@@ -23,7 +23,7 @@ class ReceiptVoucher(Document):
 		doctype = 'Journal Entry'
 		if self.receipt_from == "Customer":
 			doctype = "Payment Entry"
-		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name})
+		lst = frappe.db.get_list(doctype, filters={'custom_voucher_no': self.name}, ignore_permissions=True)
 		for dn in lst:
 			d = frappe.get_doc(doctype, dn.name)
 			if d.docstatus == 1:
@@ -72,6 +72,40 @@ class ReceiptVoucher(Document):
 				'account': self.paid_to,
 				'exchange_rate': self.target_exchange_rate,
 				'debit_in_account_currency': abs(self.received_amount),
+				'branch': 'Main'
+			})
+			journal_entry = frappe.get_doc({
+				'doctype': 'Journal Entry',
+				'company': self.company,
+				'posting_date': self.posting_date,
+				'accounts': accounts,
+				'voucher_type': self.paid_to_account_type + ' Entry',
+				'cheque_no': self.name,
+				'cheque_date': self.posting_date,
+				'custom_voucher_type': 'Receipt Voucher',
+				'custom_voucher_no': self.name,
+				'user_remark': self.remark,
+				'multi_currency': 1,
+				'remark': self.remark,
+				'cannot_be_cancelled': 1
+			}).insert(ignore_permissions=True)
+			journal_entry.submit()
+			self.on_update_after_submit()
+		
+		if self.banking_charges:
+			accounts = []
+			accounts.append({
+				'account': self.paid_to,
+				'exchange_rate': self.source_exchange_rate,
+				'credit_in_account_currency': abs(self.banking_charges),
+				'branch': 'Main'
+			})
+			accounts.append({
+				'account': self.paid_from,
+				'party_type': self.party_type,
+				'party': self.party,
+				'exchange_rate': self.target_exchange_rate,
+				'debit_in_account_currency': abs(self.banking_charges),
 				'branch': 'Main'
 			})
 			journal_entry = frappe.get_doc({

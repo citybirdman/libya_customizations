@@ -1,0 +1,165 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"Dl9EwaMadN\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/account/\\\"><b>Accounts</b></a></span>\",\"col\":8}},{\"id\":\"_NACENRjq1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Account\",\"col\":4}},{\"id\":\"_l05wpykL1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Accounts - Enabled\",\"col\":6}},{\"id\":\"mbeSToy-6x\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Accounts - Disabled\",\"col\":6}},{\"id\":\"0QyvXsxnxJ\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/receipt-voucher/\\\"><b>Receipt Vouchers</b></a></span>\",\"col\":8}},{\"id\":\"xqFegWzzLn\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Receipt Voucher\",\"col\":4}},{\"id\":\"xp7Hlkqfsx\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Receipt Voucher No - Submitted\",\"col\":4}},{\"id\":\"ngZ_b9SnlK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Receipt Voucher No - Draft\",\"col\":4}},{\"id\":\"HXSau9WlYn\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Receipt Voucher No - Cancelled\",\"col\":4}},{\"id\":\"fvW-dX4pNV\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/payment-voucher/\\\"><b>Payment Vouchers</b></a></span>\",\"col\":8}},{\"id\":\"3S8k1cd_Uv\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Payment Voucher\",\"col\":4}},{\"id\":\"5L1ewnd5WV\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Payment Voucher No - Submitted\",\"col\":4}},{\"id\":\"c727ndwKMc\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Payment Voucher No - Draft\",\"col\":4}},{\"id\":\"UcDZ1XVJfi\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Payment Voucher No - Cancelled\",\"col\":4}},{\"id\":\"nE3kMNt8OF\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/transfer-voucher/\\\"><b>Transfer Vouchers</b></a></span>\",\"col\":8}},{\"id\":\"_B5RsZVCVD\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Transfer Voucher\",\"col\":4}},{\"id\":\"noNiBRiyN8\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Transfer Voucher No - Submitted\",\"col\":4}},{\"id\":\"XuLLyK8hQx\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Transfer Voucher No - Draft\",\"col\":4}},{\"id\":\"Fw9wV235bh\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Transfer Voucher No - Cancelled\",\"col\":4}},{\"id\":\"_hhCsanMHr\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/debt-voucher/\\\"><b>Debt Vouchers</b></a></span>\",\"col\":8}},{\"id\":\"MfExOKqF05\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Debt Voucher\",\"col\":4}},{\"id\":\"jfxOzpRB6p\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Debt Voucher No - Submitted\",\"col\":4}},{\"id\":\"XtkCggfXYh\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Debt Voucher No - Draft\",\"col\":4}},{\"id\":\"nteALZ5HOW\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Debt Voucher No - Cancelled\",\"col\":4}},{\"id\":\"cgBYU9SgLM\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app-clearing-voucher/\\\"><b>Clearing Vouchers</b></a></span>\",\"col\":8}},{\"id\":\"8RShAdc8Vl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Clearing Voucher\",\"col\":4}},{\"id\":\"ARwVdKUdd6\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Clearing Voucher No - Submitted\",\"col\":4}},{\"id\":\"RoCl4phsHf\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Clearing Voucher No - Draft\",\"col\":4}},{\"id\":\"r-bBHcaM-m\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Clearing Voucher No - Cancelled\",\"col\":4}},{\"id\":\"1zS8iRgs2Z\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/sales-invoice/\\\"><b>Invoices</b></a></span>\",\"col\":12}},{\"id\":\"mBpqiywkZu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Invoice No - Submitted\",\"col\":4}},{\"id\":\"U4ANfVSg8u\",\"type\":\"spacer\",\"data\":{\"col\":4}},{\"id\":\"Pq1hnoEigd\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Return No - Submitted\",\"col\":4}}]",
+ "creation": "2024-12-07 09:57:15.085431",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "accounting",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Accounts",
+ "links": [],
+ "modified": "2024-12-25 10:06:38.074602",
+ "modified_by": "Administrator",
+ "module": "Libya Customizations",
+ "name": "Accounts",
+ "number_cards": [
+  {
+   "label": "Accounts - Disabled",
+   "number_card_name": "Accounts - Disabled"
+  },
+  {
+   "label": "Sales Return No - Submitted",
+   "number_card_name": "Sales Return No - Submitted"
+  },
+  {
+   "label": "Transfer Voucher No - Submitted",
+   "number_card_name": "Transfer Voucher No - Submitted"
+  },
+  {
+   "label": "Accounts - Enabled",
+   "number_card_name": "Accounts - Enabled"
+  },
+  {
+   "label": "Clearing Voucher No - Submitted",
+   "number_card_name": "Clearing Voucher No - Submitted"
+  },
+  {
+   "label": "Sales Invoice No - Submitted",
+   "number_card_name": "Sales Invoice No - Submitted"
+  },
+  {
+   "label": "Debt Voucher No - Draft",
+   "number_card_name": "Debt Voucher No - Draft"
+  },
+  {
+   "label": "Receipt Voucher No - Submitted",
+   "number_card_name": "Receipt Voucher No - Submitted"
+  },
+  {
+   "label": "Clearing Voucher No - Draft",
+   "number_card_name": "Clearing Voucher No - Draft"
+  },
+  {
+   "label": "Receipt Voucher No - Draft",
+   "number_card_name": "Receipt Voucher No - Draft"
+  },
+  {
+   "label": "Debt Voucher No - Cancelled",
+   "number_card_name": "Debt Voucher No - Cancelled"
+  },
+  {
+   "label": "Transfer Voucher No - Draft",
+   "number_card_name": "Transfer Voucher No - Draft"
+  },
+  {
+   "label": "Receipt Voucher No - Cancelled",
+   "number_card_name": "Receipt Voucher No - Cancelled"
+  },
+  {
+   "label": "Transfer Voucher No - Cancelled",
+   "number_card_name": "Transfer Voucher No - Cancelled"
+  },
+  {
+   "label": "Clearing Voucher No - Cancelled",
+   "number_card_name": "Clearing Voucher No - Cancelled"
+  },
+  {
+   "label": "Payment Voucher No - Submitted",
+   "number_card_name": "Payment Voucher No - Submitted"
+  },
+  {
+   "label": "Debt Voucher No - Submitted",
+   "number_card_name": "Debt Voucher No - Submitted"
+  },
+  {
+   "label": "Payment Voucher No - Draft",
+   "number_card_name": "Payment Voucher No - Draft"
+  },
+  {
+   "label": "Payment Voucher No - Cancelled",
+   "number_card_name": "Payment Voucher No - Cancelled"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Accountant"
+  },
+  {
+   "role": "Chief Sales Officer"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "sequence_id": 31.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Debt Voucher",
+   "link_to": "Debt Voucher",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Account",
+   "link_to": "Account",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Transfer Voucher",
+   "link_to": "Transfer Voucher",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Receipt Voucher",
+   "link_to": "Receipt Voucher",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Payment Voucher",
+   "link_to": "Payment Voucher",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Clearing Voucher",
+   "link_to": "Clearing Voucher",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Accounts"
+}
