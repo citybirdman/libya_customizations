@@ -39,10 +39,26 @@ def on_submit(doc, metod):
             "amount": doc.inspection_amount
         })
         
+    if(doc.foreign_bank_charges_amount):
+        landed_costs.append({
+            "expense_account":doc.foreign_bank_charges_account,
+            "account_currency": doc.foreign_bank_charges_account_currency,
+            "exchange_rate": doc.foreign_bank_charges_exchange_rate,
+            "description": "Foreign Bank Charges",
+            "amount": doc.foreign_bank_charges_amount
+        })
+        
+    if(doc.local_bank_charges_amount):
+        landed_costs.append({
+            "expense_account":doc.local_bank_charges_account,
+            "description": "Local Bank Charges",
+            "amount": doc.local_bank_charges_amount
+        })
+             
     landed_costs.append({
-            "expense_account":doc.clearence_account,
-            "description": "Clearence",
-            "amount": doc.clearence_amount
+		"expense_account":doc.clearence_account,
+		"description": "Clearence",
+		"amount": doc.clearence_amount
         })
     
     landed_costs.append({
@@ -65,6 +81,7 @@ def on_update_after_submit(doc, method):
             "expense_account":doc.freight_account,
             "account_currency": doc.freight_account_currency,
             "exchange_rate": doc.freight_exchange_rate,
+            "description": "Freight",
             "amount": doc.freight_amount
         })
     if(doc.inspection_amount):
@@ -72,16 +89,35 @@ def on_update_after_submit(doc, method):
             "expense_account":doc.inspection_account,
             "account_currency": doc.inspection_account_currency,
             "exchange_rate": doc.inspection_exchange_rate,
+            "description": "Inspection",
             "amount": doc.inspection_amount
         })
 
+    if(doc.foreign_bank_charges_amount):
+        frappe.db.set_value("Landed Cost Taxes and Charges", {"parent":landed_cost_voucher_name, "expense_account": doc.foreign_bank_charges_account}, {
+            "expense_account":doc.foreign_bank_charges_account,
+            "account_currency": doc.foreign_bank_charges_account_currency,
+            "exchange_rate": doc.foreign_bank_charges_exchange_rate,
+            "description": "Foreign Bank Charges",
+            "amount": doc.foreign_bank_charges_amount
+        })
+
+    if(doc.local_bank_charges_amount):
+        frappe.db.set_value("Landed Cost Taxes and Charges", {"parent":landed_cost_voucher_name, "expense_account": doc.local_bank_charges_account}, {
+            "expense_account":doc.local_bank_charges_account,
+            "description": "Local Bank Charges",
+            "amount": doc.local_bank_charges_amount
+        })
+
     frappe.db.set_value("Landed Cost Taxes and Charges", {"parent":landed_cost_voucher_name, "expense_account": doc.clearence_account}, {
-            "expense_account":doc.clearence_account,
-            "amount": doc.clearence_amount
+		"expense_account":doc.clearence_account,
+		"description": "Clearence",
+		"amount": doc.clearence_amount
         })
     
     frappe.db.set_value("Landed Cost Taxes and Charges", {"parent":landed_cost_voucher_name, "expense_account": doc.transport_account}, {
         "expense_account":doc.transport_account,
+		"description": "Transport",
         "amount": doc.transport_amount
     })
     
