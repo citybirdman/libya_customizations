@@ -22,7 +22,7 @@
         }
 
         .header h2 {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             margin: 0;
         }
@@ -77,17 +77,26 @@
             font-size: 14px;
         }
     </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet"> -->
 </head>
 <body>
     <div class="header">
-        <h2>كشف حساب عام</h2>
-        <p><b>{{ data[0].account_name }}</b></p>
-        <p><b>من:</b> {{ filters.from_date }}</p>
-        <p><b>إلى:</b> {{ filters.to_date }}</p>
+        <h4>كشف حساب عام</h4>
     </div>
+	<table class="table">
+		<tbody>
+			<tr>
+				<td style="background-color: #f2f2f2;"><b>اسم الحساب</b></td>
+				<td>{{ data[0].account_name }}</td>
+				<td style="background-color: #f2f2f2;"><b>من</b></td>
+				<td>{{ filters.from_date }}</td>
+				<td style="background-color: #f2f2f2;"><b>إلى</b></td>
+				<td>{{ filters.to_date }}</td>
+			</tr>
+		</tbody>
+	</table>	
     <table class="table">
         <thead>
             <tr>
@@ -104,8 +113,8 @@
             {% for row in data %}
                 <tr>
                     <td>{{ row.posting_date }}</td>
-                    <td>{{ row.translated_voucher_type }}</td>
-                    <td>{{ row.voucher_no }}</td>
+                    <td style="white-space: nowrap;">{{ row.translated_voucher_type }}</td>
+                    <td style="white-space: nowrap;">{{ row.voucher_no }}</td>
                     <td>{{ format_currency(row.debit) }}</td>
                     <td>{{ format_currency(row.credit) }}</td>
                     <td class="balance-cell">{{ format_currency(row.balance) }}</td>

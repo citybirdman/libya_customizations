@@ -2,7 +2,7 @@ frappe.ui.form.on("Stock Entry", {
     onload(frm) {
         // Handle item grid button visibility changes
         frm.fields_dict.items.wrapper.onchange = function() {
-            frm.fields_dict.items.wrapper.querySelectorAll(".btn-open-row").forEach(btn => btn.remove());
+			frm.fields_dict.items.wrapper.querySelectorAll(".btn-open-row").forEach(btn => btn.remove());
             // const gridButtons = frm.fields_dict.items.grid.grid_buttons[0].children;
             // gridButtons[1].style.display = "none"; // Edit button
             // gridButtons[2].style.display = "none"; // Delete button
@@ -14,9 +14,11 @@ frappe.ui.form.on("Stock Entry", {
     },
 
     onload_post_render(frm) {
-        // Remove unnecessary buttons on load
+		// Remove unnecessary buttons on load
+		if(frm.is_new())
+			frm.set_value("expense_account", null)
         const buttonsToRemove = [
-            ["Material Request", "Create"],
+			["Material Request", "Create"],
 			["Purchase Invoice", "Get Items From"],
 			["Material Request", "Get Items From"],
 			["Transit Entry", "Get Items From"],
@@ -75,3 +77,13 @@ frappe.ui.form.on('Stock Entry', {
 	    frm.trigger('calculate_total_qty');
 	}
 });
+
+frappe.ui.form.on("Stock Entry", {
+	before_save: function(frm, cdt, cdn) {
+		 if (frm.doc.expense_account) {
+			 $.each(frm.doc.items || [], function(i, row) {
+				 frappe.model.set_value(row.doctype, row.name, 'expense_account', frm.doc.expense_account);
+			 });
+		 }   
+	 }
+ });

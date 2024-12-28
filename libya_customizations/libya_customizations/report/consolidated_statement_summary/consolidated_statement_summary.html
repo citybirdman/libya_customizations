@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كشف حساب عميل</title>
+    <title>كشف حساب مجمع</title>
     <style>
         body {
             margin: 20px;
@@ -83,13 +83,13 @@
 </head>
 <body>
     <div class="header">
-        <h3>كشف حساب عميل</h3>
+        <h4>كشف حساب مجمع</h4>
     </div>
 	<table class="table">
 		<tbody>
 			<tr>
-				<td style="background-color: #f2f2f2;"><b>اسم العميل</b></td>
-				<td>{{ data[0].customer_name }}</td>
+				<td style="background-color: #f2f2f2;"><b>اسم الحساب/العميل</b></td>
+				<td>{{ data[0].account_name + " / " + data[0].customer_name}}</td>
 				<td style="background-color: #f2f2f2;"><b>من</b></td>
 				<td>{{ filters.from_date }}</td>
 				<td style="background-color: #f2f2f2;"><b>إلى</b></td>
@@ -113,8 +113,8 @@
             {% for row in data %}
                 <tr>
                     <td>{{ row.posting_date }}</td>
-                    <td>{{ row.translated_voucher_type }}</td>
-                    <td>{{ row.voucher_no }}</td>
+                    <td style="white-space: nowrap;">{{ row.translated_voucher_type }}</td>
+                    <td style="white-space: nowrap;">{{ row.voucher_no }}</td>
                     <td>{{ format_currency(row.debit) }}</td>
                     <td>{{ format_currency(row.credit) }}</td>
                     <td class="balance-cell">{{ format_currency(row.balance) }}</td>

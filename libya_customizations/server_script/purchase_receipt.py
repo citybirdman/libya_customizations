@@ -1,5 +1,5 @@
 import frappe
-def on_submit(doc, metod):
+def on_submit(doc, method):
     doctype = doc.doctype
     docname = doc.name
     landed_cost_voucher = frappe.new_doc("Landed Cost Voucher")
@@ -68,69 +68,74 @@ def on_submit(doc, metod):
     	})
 
     landed_cost_voucher.get_items_from_purchase_receipts()
-    landed_cost_voucher.taxes = landed_costs
-    landed_cost_voucher.insert(ignore_permissions=True)
+    landed_cost_voucher.update({
+        "taxes": landed_costs
+	})
+    # landed_cost_voucher.insert(ignore_permissions=True)
     landed_cost_voucher.submit()
 
 
 def on_update_after_submit(doc, method):
     landed_cost_voucher_name = frappe.db.get_value("Landed Cost Purchase Receipt", {"receipt_document_type": "Purchase Receipt", "receipt_document": doc.name}, "parent")
+    doctype = "Landed Cost Voucher"
+    status = 0
+    d = frappe.get_doc(doctype, landed_cost_voucher_name)
+    tables = [item for item in d.as_dict().values() if isinstance(item, list)]
+    frappe.db.set_value(doctype, d.name, "docstatus", status)
+    
+    for row in tables:
+        for child in row:
+            frappe.db.set_value(child.doctype, child.name, "docstatus", status)
+    d.reload()
+    landed_costs = []
 
     if(doc.freight_amount):
-        frappe.db.set_value("Landed Cost Taxes and Charges", {"parent":landed_cost_voucher_name, "expense_account": doc.freight_account}, {
+        landed_costs.append({
             "expense_account":doc.freight_account,
             "account_currency": doc.freight_account_currency,
             "exchange_rate": doc.freight_exchange_rate,
             "description": "Freight",
             "amount": doc.freight_amount
         })
+        
     if(doc.inspection_amount):
-        frappe.db.set_value("Landed Cost Taxes and Charges", {"parent":landed_cost_voucher_name, "expense_account": doc.inspection_account}, {
+        landed_costs.append({
             "expense_account":doc.inspection_account,
             "account_currency": doc.inspection_account_currency,
             "exchange_rate": doc.inspection_exchange_rate,
             "description": "Inspection",
             "amount": doc.inspection_amount
         })
-
+        
     if(doc.foreign_bank_charges_amount):
-        frappe.db.set_value("Landed Cost Taxes and Charges", {"parent":landed_cost_voucher_name, "expense_account": doc.foreign_bank_charges_account}, {
+        landed_costs.append({
             "expense_account":doc.foreign_bank_charges_account,
             "account_currency": doc.foreign_bank_charges_account_currency,
             "exchange_rate": doc.foreign_bank_charges_exchange_rate,
             "description": "Foreign Bank Charges",
             "amount": doc.foreign_bank_charges_amount
         })
-
+        
     if(doc.local_bank_charges_amount):
-        frappe.db.set_value("Landed Cost Taxes and Charges", {"parent":landed_cost_voucher_name, "expense_account": doc.local_bank_charges_account}, {
+        landed_costs.append({
             "expense_account":doc.local_bank_charges_account,
             "description": "Local Bank Charges",
             "amount": doc.local_bank_charges_amount
         })
-
-    frappe.db.set_value("Landed Cost Taxes and Charges", {"parent":landed_cost_voucher_name, "expense_account": doc.clearence_account}, {
-		"expense_account":doc.clearence_account,
-		"description": "Clearence",
-		"amount": doc.clearence_amount
+            
+    landed_costs.append({
+        "expense_account":doc.clearence_account,
+        "description": "Clearence",
+        "amount": doc.clearence_amount
         })
     
-    frappe.db.set_value("Landed Cost Taxes and Charges", {"parent":landed_cost_voucher_name, "expense_account": doc.transport_account}, {
+    landed_costs.append({
         "expense_account":doc.transport_account,
-		"description": "Transport",
+        "description": "Transport",
         "amount": doc.transport_amount
-    })
-    
-    docs = [landed_cost_voucher_name]
-    doctype = "Landed Cost Voucher"
-    status = 0
-    for d in docs:
-        d = frappe.get_doc(doctype, d)
-        tables = [item for item in d.as_dict().values() if isinstance(item, list)]
-        frappe.db.set_value(doctype, d.name, "docstatus", status)
-        
-        for row in tables:
-            for child in row:
-                frappe.db.set_value(child.doctype, child.name, "docstatus", status)
-        d.save()
-        d.submit()
+        })
+
+    # d = frappe.get_doc(doctype, dd)
+    d.taxes = []
+    d.set("taxes", landed_costs)
+    d.submit()

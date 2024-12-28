@@ -63,3 +63,26 @@ frappe.ui.form.on("Sales Invoice", {
         frm.set_value("custom_payment_value", 0)
     }
 })
+
+frappe.ui.form.on("Sales Invoice", {
+    is_paid: function(frm) {
+        if (!frm.doc.is_paid) {
+            frm.set_value("payment_account", null);
+            frm.set_value("custom_payment_value_is_different", 0);
+            frm.set_value("custom_payment_value", 0);
+            frm.set_value("custom_is_payment_value_checked", 0);
+            frm.refresh_field("payment_account");
+            frm.refresh_field("custom_payment_value_is_different");
+            frm.refresh_field("custom_payment_value");
+            frm.refresh_field("custom_is_payment_value_checked");
+        }
+    },
+    custom_payment_value_is_different: function(frm) {
+        if (!frm.doc.custom_payment_value_is_different) {
+            frm.set_value("custom_payment_value", 0);
+            frm.set_value("custom_is_payment_value_checked", 0);
+            frm.refresh_field("custom_payment_value");
+            frm.refresh_field("custom_is_payment_value_checked");
+        }
+    }
+});

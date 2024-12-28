@@ -4,7 +4,7 @@
   "doctype": "Workflow",
   "document_type": "Sales Invoice",
   "is_active": 1,
-  "modified": "2024-12-25 10:27:38.936187",
+  "modified": "2024-12-28 14:38:35.474434",
   "name": "Sales Return Process",
   "override_status": 0,
   "send_email_alert": 0,
@@ -94,10 +94,25 @@
     "parent": "Sales Return Process",
     "parentfield": "states",
     "parenttype": "Workflow",
-    "state": "Pending Cancellation",
+    "state": "Pending Cancellation (Accounting)",
     "update_field": null,
     "update_value": null,
-    "workflow_builder_id": "5"
+    "workflow_builder_id": null
+   },
+   {
+    "allow_edit": "System Manager",
+    "avoid_status_override": 0,
+    "doc_status": "1",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "parent": "Sales Return Process",
+    "parentfield": "states",
+    "parenttype": "Workflow",
+    "state": "Pending Cancellation (Warehouse)",
+    "update_field": null,
+    "update_value": null,
+    "workflow_builder_id": null
    },
    {
     "allow_edit": "System Manager",
@@ -243,37 +258,109 @@
     "action": "Cancel for Review",
     "allow_self_approval": 1,
     "allowed": "Sales Coordinator",
-    "condition": "doc.is_return",
-    "next_state": "Pending Cancellation",
+    "condition": "doc.is_return and doc.is_paid",
+    "next_state": "Pending Cancellation (Accounting)",
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
     "state": "Returned",
-    "workflow_builder_id": "action-6"
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Cancel for Review",
+    "allow_self_approval": 1,
+    "allowed": "Sales Coordinator",
+    "condition": "doc.is_return and doc.is_paid",
+    "next_state": "Pending Cancellation (Warehouse)",
+    "parent": "Sales Return Process",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Pending Cancellation (Accounting)",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Cancel for Review",
+    "allow_self_approval": 1,
+    "allowed": "Sales Coordinator",
+    "condition": "doc.is_return and not doc.is_paid",
+    "next_state": "Pending Cancellation (Warehouse)",
+    "parent": "Sales Return Process",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Returned",
+    "workflow_builder_id": null
    },
    {
     "action": "Cancel for Review",
     "allow_self_approval": 1,
     "allowed": "Sales Supervisor",
-    "condition": "doc.is_return",
-    "next_state": "Pending Cancellation",
+    "condition": "doc.is_return and doc.is_paid",
+    "next_state": "Pending Cancellation (Accounting)",
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
     "state": "Returned",
-    "workflow_builder_id": "action-7"
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Cancel for Review",
+    "allow_self_approval": 1,
+    "allowed": "Accountant",
+    "condition": "doc.is_return and doc.is_paid",
+    "next_state": "Pending Cancellation (Warehouse)",
+    "parent": "Sales Return Process",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Pending Cancellation (Accounting)",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Cancel for Review",
+    "allow_self_approval": 1,
+    "allowed": "Sales Supervisor",
+    "condition": "doc.is_return and not doc.is_paid",
+    "next_state": "Pending Cancellation (Warehouse)",
+    "parent": "Sales Return Process",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Returned",
+    "workflow_builder_id": null
    },
    {
     "action": "Cancel for Review",
     "allow_self_approval": 1,
     "allowed": "Chief Sales Officer",
-    "condition": "doc.is_return",
-    "next_state": "Pending Cancellation",
+    "condition": "doc.is_return and doc.is_paid",
+    "next_state": "Pending Cancellation (Accounting)",
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
     "state": "Returned",
-    "workflow_builder_id": "action-8"
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Cancel for Review",
+    "allow_self_approval": 1,
+    "allowed": "Accountant",
+    "condition": "doc.is_return and doc.is_paid",
+    "next_state": "Pending Cancellation (Warehouse)",
+    "parent": "Sales Return Process",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Pending Cancellation (Accounting)",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Cancel for Review",
+    "allow_self_approval": 1,
+    "allowed": "Chief Sales Officer",
+    "condition": "doc.is_return and not doc.is_paid",
+    "next_state": "Pending Cancellation (Warehouse)",
+    "parent": "Sales Return Process",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Returned",
+    "workflow_builder_id": null
    },
    {
     "action": "Cancel",
@@ -284,8 +371,8 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
-    "state": "Pending Cancellation",
-    "workflow_builder_id": "action-9"
+    "state": "Pending Cancellation (Warehouse)",
+    "workflow_builder_id": null
    },
    {
     "action": "Reject Cancellation",
@@ -296,7 +383,19 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
-    "state": "Pending Cancellation",
+    "state": "Pending Cancellation (Warehouse)",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Reject Cancellation",
+    "allow_self_approval": 1,
+    "allowed": "Accountant",
+    "condition": "doc.is_return and doc.is_paid",
+    "next_state": "Rejected Cancellation",
+    "parent": "Sales Return Process",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "state": "Pending Cancellation (Accounting)",
     "workflow_builder_id": null
    },
    {

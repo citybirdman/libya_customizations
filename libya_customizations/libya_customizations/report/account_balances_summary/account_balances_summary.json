@@ -38,6 +38,7 @@
  "doctype": "Report",
  "filters": [
   {
+   "default": "Today",
    "fieldname": "to_date",
    "fieldtype": "Date",
    "label": "To Date",
@@ -45,11 +46,11 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 2,
+ "idx": 6,
  "is_standard": "Yes",
  "letter_head": "itar",
  "letterhead": null,
- "modified": "2024-12-24 11:00:38.990240",
+ "modified": "2024-12-26 08:30:16.794056",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Account Balances Summary",
@@ -61,15 +62,6 @@
  "report_type": "Query Report",
  "roles": [
   {
-   "role": "Accounts User"
-  },
-  {
-   "role": "Auditor"
-  },
-  {
-   "role": "Accounts Manager"
-  },
-  {
    "role": "Accountant"
   },
   {
@@ -80,9 +72,6 @@
   },
   {
    "role": "Sales Coordinator"
-  },
-  {
-   "role": "Warehouse User"
   }
  ],
  "timeout": 0

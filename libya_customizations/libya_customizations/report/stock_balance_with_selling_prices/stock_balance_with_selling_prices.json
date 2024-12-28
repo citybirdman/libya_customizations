@@ -1,0 +1,101 @@
+{
+ "add_total_row": 1,
+ "columns": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "\u0643\u0648\u062f \u0627\u0644\u0635\u0646\u0641",
+   "options": "",
+   "width": 100
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "\u0627\u0633\u0645 \u0627\u0644\u0635\u0646\u0641",
+   "width": 400
+  },
+  {
+   "fieldname": "brand",
+   "fieldtype": "Link",
+   "label": "\u0627\u0644\u0639\u0644\u0627\u0645\u0629 \u0627\u0644\u062a\u062c\u0627\u0631\u064a\u0629",
+   "options": "Brand",
+   "width": 150
+  },
+  {
+   "fieldname": "actual_qty",
+   "fieldtype": "Int",
+   "label": "\u0627\u0644\u0631\u0635\u064a\u062f \u0627\u0644\u0641\u0639\u0644\u064a",
+   "width": 140
+  },
+  {
+   "fieldname": "qty_to_deliver",
+   "fieldtype": "Int",
+   "label": "\u0643\u0645\u064a\u0629 \u0642\u064a\u062f \u0627\u0644\u062a\u0633\u0644\u064a\u0645",
+   "width": 140
+  },
+  {
+   "fieldname": "available_qty",
+   "fieldtype": "Int",
+   "label": "\u0627\u0644\u0631\u0635\u064a\u062f \u0627\u0644\u0645\u062a\u0627\u062d",
+   "width": 140
+  },
+  {
+   "fieldname": "price_list_rate",
+   "fieldtype": "Currency",
+   "label": "\u0633\u0639\u0631 \u0627\u0644\u0628\u064a\u0639",
+   "width": 140
+  }
+ ],
+ "creation": "2024-12-25 21:48:33.465965",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [
+  {
+   "default": "Today",
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "mandatory": 1,
+   "wildcard_filter": 0
+  },
+  {
+   "default": "Actual Balances",
+   "fieldname": "filter_based_on",
+   "fieldtype": "Select",
+   "label": "Filter Based On",
+   "mandatory": 1,
+   "options": "Actual Balances\nAvailable Balances",
+   "wildcard_filter": 0
+  }
+ ],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "itar",
+ "letterhead": null,
+ "modified": "2024-12-26 08:31:12.415365",
+ "modified_by": "Administrator",
+ "module": "Libya Customizations",
+ "name": "Stock Balance with Selling Prices",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "WITH\nstock_ledger_entry AS (\n\tSELECT\n\t\titem_code,\n\t\tSUM(actual_qty) AS actual_qty\n\tFROM\n\t\t`tabStock Ledger Entry`\n\tWHERE\n\t\tis_cancelled = 0\n\tAND\n\t\tposting_date <= %(to_date)s\n\tGROUP BY\n\t\titem_code\n\tHAVING\n\t\tSUM(actual_qty) > 0\n),\nsales_order_item AS (\n\tSELECT\n\t\titem_code,\n\t\tSUM(qty_to_deliver) AS qty_to_deliver\n\tFROM\n\t\t(\n\t\tSELECT\n\t\t\tsales_order.name AS sales_order,\n\t\t\tsales_order_item.item_code,\n\t\t\tIF(SUM(sales_order_item.qty - sales_order_item.delivered_qty) > 0, SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0) AS qty_to_deliver\n\t\tFROM\n\t\t\t`tabSales Order Item` sales_order_item\n\t\tINNER JOIN\n\t\t\t`tabSales Order` sales_order\n\t\tON\n\t\t\tsales_order_item.parent = sales_order.name\n\t\tWHERE\n\t\t\tsales_order.docstatus = 1\n\t\tAND\n\t\t\tsales_order_item.docstatus = 1\n\t\tAND\n\t\t\tsales_order.status NOT IN ('Completed', 'Closed')\n\t\tAND\n\t\t\tsales_order_item.qty - sales_order_item.delivered_qty > 0\n\t\tAND\n\t\t\tsales_order.transaction_date <= %(to_date)s\n\t\tGROUP BY\n\t\t\tsales_order.name,\n\t\t\tsales_order_item.item_code\n\t\t) sales_order_item\n\tGROUP BY\n\t\titem_code\n),\nitem_price AS (\n\tSELECT\n\t\titem_code,\n\t\tprice_list_rate\n\tFROM\n\t\t`tabItem Price`\n\tWHERE\n\t\tselling = 1\n\tAND\n\t\tprice_list IN (\n\t\t\tSELECT\n\t\t\t\tvalue\n\t\t\tFROM\n\t\t\t\t`tabSingles`\n\t\t\tWHERE\n\t\t\t\tdoctype = 'Selling Settings'\n\t\t\tAND\n\t\t\t\tfield = 'selling_price_list'\n\t\t)\n)\nSELECT\n\tstock_ledger_entry.item_code,\n\titem.item_name,\n\titem.brand,\n\tstock_ledger_entry.actual_qty,\n\tIFNULL(sales_order_item.qty_to_deliver, 0) AS qty_to_deliver,\n\tstock_ledger_entry.actual_qty - IFNULL(sales_order_item.qty_to_deliver, 0) AS available_qty,\n\titem_price.price_list_rate\nFROM\n\tstock_ledger_entry\nINNER JOIN\n\t`tabItem` item\nON\n\tstock_ledger_entry.item_code = item.name\nLEFT JOIN\n\titem_price\nON\n\tstock_ledger_entry.item_code = item_price.item_code\nLEFT JOIN\n\tsales_order_item\nON\n\tstock_ledger_entry.item_code = sales_order_item.item_code\nAND\n\titem.is_stock_item = 1\nAND\n\tstock_ledger_entry.actual_qty > 0\nAND\n\t(CASE\n\t\tWHEN %(filter_based_on)s = 'Actual Balances' THEN stock_ledger_entry.actual_qty > 0\n        WHEN %(filter_based_on)s = 'Available Balances' THEN stock_ledger_entry.actual_qty - IFNULL(sales_order_item.qty_to_deliver, 0) > 0\n\tELSE\n\t\tFALSE\n\tEND)\nORDER BY\n    item.brand",
+ "ref_doctype": "Stock Ledger Entry",
+ "report_name": "Stock Balance with Selling Prices",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Warehouse User"
+  },
+  {
+   "role": "Chief Sales Officer"
+  },
+  {
+   "role": "Sales Supervisor"
+  },
+  {
+   "role": "Sales Coordinator"
+  }
+ ],
+ "timeout": 0
+}

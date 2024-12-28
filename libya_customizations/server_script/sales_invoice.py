@@ -113,129 +113,142 @@ def before_submit_sales_invoice(doc, method):
 
 def create_payment(doc, method):
 	doc = frappe.get_doc(doc)
-	unreconcile_linked_payments(doc)
-	if doc.custom_payment_value_is_different and doc.custom_payment_value:
-		amount = doc.custom_payment_value
-	else:
-		amount = abs(doc.grand_total)
-	if doc.is_paid and not doc.is_return:
-		print(amount)
-		references = []
-		references.append({
-			'reference_doctype': 'Sales Invoice',
-			'reference_name': doc.name,
-			'total_amount': doc.grand_total,
-			'outstanding_amount': doc.outstanding_amount,
-			'allocated_amount': amount,
-			'due_date': doc.due_date,
-			'exchange_rate': doc.conversion_rate
-        })      
-		payment_entry = frappe.get_doc({
-			"doctype": "Payment Entry",
-			"payment_type": "Receive",
-			"party_type": "Customer",
-			"party": doc.customer,
-			"company": doc.company,
-			"posting_date": doc.posting_date,
-			"paid_amount": amount,
-			"received_amount": amount,
-			"paid_from": doc.debit_to,
-			"paid_to": doc.payment_account,
-			"target_exchange_rate": doc.conversion_rate,
-			"paid_to_account_currency": doc.currency,
-			"source_exchange_rate": doc.conversion_rate,
-			"paid_from_account_currency": doc.currency,
-			"reference_no": doc.name,
-			"custom_voucher_type": "Sales Invoice",
-			"custom_voucher_no": doc.name,
-			"reference_date": doc.posting_date,
-			"references": references,
-			'cannot_be_cancelled': 1
-		})
-		payment_entry.insert(ignore_permissions=True)
-		payment_entry.submit()
-	elif doc.is_paid and doc.is_return:
-		accounts = []
-		accounts.append({
-			'account': doc.payment_account,
-			'exchange_rate': doc.conversion_rate,
-			'credit_in_account_currency': amount
-        })
-		accounts.append({
-			'account': doc.debit_to,
-			'party_type': 'Customer',
-			'party': doc.customer,
-			'exchange_rate': doc.conversion_rate,
-			'debit_in_account_currency': amount,
-			'reference_type': 'Sales Invoice',
-			'reference_name': doc.name
-		})
-		payment_account_type = frappe.db.get_value('Account', doc.payment_account, 'account_type')
-		journal_entry = frappe.get_doc({
-			'doctype': 'Journal Entry',
-			'company': doc.company,
-			'posting_date': doc.posting_date,
-			'accounts': accounts,
-			'voucher_type': payment_account_type + ' Entry',
-			'cheque_no': doc.name,
-			'cheque_date': doc.posting_date,
-			'custom_voucher_type': 'Sales Invoice',
-			'custom_voucher_no': doc.name,
-			'multi_currency': 1,
-			'cannot_be_cancelled': 1
-		}).insert(ignore_permissions=True)
-		journal_entry.submit()
-	doc.custom_is_payment_value_checked =1
-	frappe.db.set_value(doc.doctype, doc.name, "custom_is_payment_value_checked", 1)
+	linked_payment_entries = frappe.db.get_list('Payment Entry', filters={'custom_voucher_no': doc.name}, ignore_permissions=True)
+	linked_journal_entries = frappe.db.get_list('Journal Entry', filters={'custom_voucher_no': doc.name}, ignore_permissions=True)
+	if not linked_payment_entries and not linked_journal_entries:
+		unreconcile_linked_payments(doc)
+		if doc.custom_payment_value_is_different and doc.custom_payment_value:
+			amount = doc.custom_payment_value
+		else:
+			amount = abs(doc.grand_total)
+		if doc.is_paid and not doc.is_return:
+			print(amount)
+			references = []
+			references.append({
+				'reference_doctype': 'Sales Invoice',
+				'reference_name': doc.name,
+				'total_amount': doc.grand_total,
+				'outstanding_amount': doc.outstanding_amount,
+				'allocated_amount': amount,
+				'due_date': doc.due_date,
+				'exchange_rate': doc.conversion_rate
+			})      
+			payment_entry = frappe.get_doc({
+				"doctype": "Payment Entry",
+				"payment_type": "Receive",
+				"party_type": "Customer",
+				"party": doc.customer,
+				"company": doc.company,
+				"posting_date": doc.posting_date,
+				"paid_amount": amount,
+				"received_amount": amount,
+				"paid_from": doc.debit_to,
+				"paid_to": doc.payment_account,
+				"target_exchange_rate": doc.conversion_rate,
+				"paid_to_account_currency": doc.currency,
+				"source_exchange_rate": doc.conversion_rate,
+				"paid_from_account_currency": doc.currency,
+				"reference_no": doc.name,
+				"custom_voucher_type": "Sales Invoice",
+				"custom_voucher_no": doc.name,
+				"reference_date": doc.posting_date,
+				"references": references,
+				"custom_remarks": 1,
+				'remarks': f'استلام مقابل فاتورة مبيعات نقدية رقم {doc.name}',
+				'cannot_be_cancelled': 1
+			})
+			payment_entry.insert(ignore_permissions=True)
+			payment_entry.submit()
+		elif doc.is_paid and doc.is_return:
+			accounts = []
+			accounts.append({
+				'account': doc.payment_account,
+				'exchange_rate': doc.conversion_rate,
+				'credit_in_account_currency': amount
+			})
+			accounts.append({
+				'account': doc.debit_to,
+				'party_type': 'Customer',
+				'party': doc.customer,
+				'exchange_rate': doc.conversion_rate,
+				'debit_in_account_currency': amount,
+				'reference_type': 'Sales Invoice',
+				'reference_name': doc.name
+			})
+			payment_account_type = frappe.db.get_value('Account', doc.payment_account, 'account_type')
+			journal_entry = frappe.get_doc({
+				'doctype': 'Journal Entry',
+				'company': doc.company,
+				'posting_date': doc.posting_date,
+				'accounts': accounts,
+				'voucher_type': payment_account_type + ' Entry',
+				'cheque_no': doc.name,
+				'cheque_date': doc.posting_date,
+				'custom_voucher_type': 'Sales Invoice',
+				'custom_voucher_no': doc.name,
+				'user_remark': f'دفع مقابل فاتورة مردودات نقدية رقم {doc.name}',
+				'remark': f'دفع مقابل فاتورة مردودات نقدية رقم {doc.name}',
+				'multi_currency': 1,
+				'cannot_be_cancelled': 1
+			}).insert(ignore_permissions=True)
+			journal_entry.submit()
+		doc.custom_is_payment_value_checked =1
+		frappe.db.set_value(doc.doctype, doc.name, "custom_is_payment_value_checked", 1)
             
 def create_write_off(doc, method):
-	if doc.custom_payment_value_is_different and doc.custom_payment_value:
-		if abs(doc.grand_total) - doc.custom_payment_value <= 0:
-			frappe.throw(_("Payment Value should be less than the grand total, if you need to fully pay the invoice just uncheck <b>Custom Payment Value Is Differect</b>"))
-		debit_account = frappe.db.get_value("Company", doc.company, "write_up_account") if doc.is_return else doc.debit_to
-		credit_account = doc.debit_to if doc.is_return else frappe.db.get_value("Company", doc.company, "write_off_account")
-		credit_party_type = None if doc.is_return else "Customer"
-		credit_party = None if doc.is_return else doc.customer
-		debit_party_type = "Customer" if doc.is_return else None
-		debit_party = doc.customer if doc.is_return else None
-		credit_reference_type = None if doc.is_return else "Sales Invoice"
-		credit_reference_name = None if doc.is_return else doc.name
-		debit_reference_type = "Sales Invoice" if doc.is_return else None
-		debit_reference_name = doc.name if doc.is_return else None
-            
-		journal_entry_obj = {
-			"voucher_type": "Write Off Entry",
-			"company": doc.company,
-			"posting_date": doc.posting_date,
-			"doctype": "Journal Entry",
-			'custom_voucher_type': 'Sales Invoice',
-			'custom_voucher_no': doc.name,
-			'multi_currency': 1,
-			'cannot_be_cancelled': 1,
-			"accounts": [{
-				"account": debit_account,
-				"party_type": credit_party_type,
-				"party": credit_party,
-				"debit_in_account_currency": 0,
-				"debit": 0,
-				"credit_in_account_currency": (abs(doc.grand_total) - doc.custom_payment_value),
-				"credit": (abs(doc.grand_total) - doc.custom_payment_value),
-				"reference_type": credit_reference_type,
-				"reference_name": credit_reference_name
-			}, {
-				"account": credit_account,
-                "party_type": debit_party_type,
-				"party": debit_party,
-				"debit_in_account_currency": (abs(doc.grand_total) - doc.custom_payment_value),
-				"debit": (abs(doc.grand_total) - doc.custom_payment_value),
-				"credit_in_account_currency": 0,
-				"credit": 0,
-                "reference_type": debit_reference_type,
-				"reference_name": debit_reference_name
-			}]
-		}
-		journal_entry = frappe.get_doc(journal_entry_obj).insert(ignore_permissions=True)
-		journal_entry.submit()
+	linked_payment_entries = frappe.db.get_list('Payment Entry', filters={'custom_voucher_no': doc.name}, ignore_permissions=True)
+	linked_journal_entries = frappe.db.get_list('Journal Entry', filters={'custom_voucher_no': doc.name}, ignore_permissions=True)
+	if not linked_payment_entries and not linked_journal_entries:
+		if doc.custom_payment_value_is_different and doc.custom_payment_value:
+			if abs(doc.grand_total) - doc.custom_payment_value <= 0:
+				frappe.throw(_("<b>Payment Value</b> should be less than the grand total, if you need to fully pay the invoice, please uncheck <b>Payment Value Is Differect</b>"))
+			debit_account = frappe.db.get_value("Company", doc.company, "write_off_account") if doc.is_return else doc.debit_to
+			credit_account = doc.debit_to if doc.is_return else frappe.db.get_value("Company", doc.company, "write_off_account")
+			credit_party_type = None if doc.is_return else "Customer"
+			credit_party = None if doc.is_return else doc.customer
+			debit_party_type = "Customer" if doc.is_return else None
+			debit_party = doc.customer if doc.is_return else None
+			credit_reference_type = None if doc.is_return else "Sales Invoice"
+			credit_reference_name = None if doc.is_return else doc.name
+			debit_reference_type = "Sales Invoice" if doc.is_return else None
+			debit_reference_name = doc.name if doc.is_return else None
+			wo_remark = f'إضافة دين مقابل فاتورة مردودات نقدية رقم {doc.name}' if doc.is_return else f'إعفاء دين مقابل فاتورة مبيعات نقدية رقم {doc.name}'
+
+			journal_entry_obj = {
+				"voucher_type": "Write Off Entry",
+				"company": doc.company,
+				"posting_date": doc.posting_date,
+				"doctype": "Journal Entry",
+				'custom_voucher_type': 'Sales Invoice',
+				'custom_voucher_no': doc.name,
+				'multi_currency': 1,
+				'user_remark': wo_remark,
+				'remark': wo_remark,
+				'cannot_be_cancelled': 1,
+				"accounts": [{
+					"account": debit_account,
+					"party_type": credit_party_type,
+					"party": credit_party,
+					"debit_in_account_currency": 0,
+					"debit": 0,
+					"credit_in_account_currency": (abs(doc.grand_total) - doc.custom_payment_value),
+					"credit": (abs(doc.grand_total) - doc.custom_payment_value),
+					"reference_type": credit_reference_type,
+					"reference_name": credit_reference_name
+				}, {
+					"account": credit_account,
+					"party_type": debit_party_type,
+					"party": debit_party,
+					"debit_in_account_currency": (abs(doc.grand_total) - doc.custom_payment_value),
+					"debit": (abs(doc.grand_total) - doc.custom_payment_value),
+					"credit_in_account_currency": 0,
+					"credit": 0,
+					"reference_type": debit_reference_type,
+					"reference_name": debit_reference_name
+				}]
+			}
+			journal_entry = frappe.get_doc(journal_entry_obj).insert(ignore_permissions=True)
+			journal_entry.submit()
 
 def reconcile_payments(doc, method):
 	company = doc.company
@@ -273,22 +286,25 @@ def trigger_reconcile_everything():
 
 def cancel_linked_payment(doc, method):
 	if doc.is_paid:
-		if doc.is_return:
-			doctype = 'Journal Entry'
-		else:
-			doctype = "Payment Entry"
-		entries = frappe.db.get_list(doctype, filters={'custom_voucher_no': doc.name})
-		for entry in entries:
-			e = frappe.get_doc(doctype, entry.name)
-			if e.docstatus == 1:
-				e.cancel()
+		doctypes = ['Payment Entry', 'Journal Entry']
+		for doctype in doctypes:
+			entries = frappe.db.get_list(doctype, filters={'custom_voucher_no': doc.name}, ignore_permissions=True)
+			for entry in entries:
+				e = frappe.get_doc(doctype, entry.name)
+				if e.docstatus == 1:
+					e.cancel()
 
 def delete_linked_payment(doc, method):
 	if doc.is_paid:
-		if doc.is_return:
-			doctype = 'Journal Entry'
-		else:
-			doctype = "Payment Entry"
-		entries = frappe.db.get_list(doctype, filters={'custom_voucher_no': doc.name})
-		for entry in entries:
-			frappe.delete_doc(doctype, entry.name, force=True)
+		doctypes = ['Payment Entry', 'Journal Entry']
+		for doctype in doctypes:
+			entries = frappe.db.get_list(doctype, filters={'custom_voucher_no': doc.name}, ignore_permissions=True)
+			for entry in entries:
+				frappe.delete_doc(doctype, entry.name, force=True)
+
+def delete_linked_payment_log(doc, method):
+	ref_logs = frappe.db.get_list('Process Payment Reconciliation Log Allocations', filters={'reference_type': 'Sales Invoice', 'reference_name':doc.name}, pluck='parent', ignore_permissions=True)
+	inv_logs = frappe.db.get_list('Process Payment Reconciliation Log Allocations', filters={'invoice_type': 'Sales Invoice', 'invoice_number':doc.name}, pluck='parent', ignore_permissions=True)
+	logs = list(set(ref_logs + inv_logs))
+	for log in logs:
+		frappe.delete_doc('Process Payment Reconciliation Log', log, force=True)

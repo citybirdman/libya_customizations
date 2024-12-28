@@ -179,7 +179,7 @@ doc_events = {
         "on_update": "libya_customizations.server_script.Item.after_update_item"
     },
     "Purchase Invoice":{
-        "on_update_after_submit": "libya_customizations.server_script.purchase_invoice.on_update_after_submit" 
+        "before_update_after_submit": "libya_customizations.server_script.purchase_invoice.before_update_after_submit" 
     },
     "Sales Invoice":{
         "on_submit":[
@@ -195,7 +195,10 @@ doc_events = {
         ],
         "before_submit": "libya_customizations.server_script.sales_invoice.before_submit_sales_invoice",
 
-		"on_trash": "libya_customizations.server_script.sales_invoice.delete_linked_payment",
+		"on_trash": [
+			"libya_customizations.server_script.sales_invoice.delete_linked_payment_log",
+			"libya_customizations.server_script.sales_invoice.delete_linked_payment"
+		],
         "on_update_after_submit": [
 			"libya_customizations.server_script.sales_invoice.create_payment",
 			"libya_customizations.server_script.sales_invoice.create_write_off",
