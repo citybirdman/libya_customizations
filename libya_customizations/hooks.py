@@ -110,6 +110,9 @@ fixtures = [
     },
     {
         "doctype": "Property Setter"
+    },
+    {
+        "doctype": "Translation"
     }
 ]
 # Installation
