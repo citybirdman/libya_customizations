@@ -226,13 +226,13 @@ doc_events = {
 
 # Scheduled Tasks
 # ---------------
-scheduler_events = {
-    "cron": {
-        "0 */8 * * *": [
-            "libya_customizations.server_script.sales_invoice.trigger_reconcile_payments"
-        ]
-    }
-}
+# scheduler_events = {
+#     "cron": {
+#         "0 */8 * * *": [
+#             "libya_customizations.server_script.sales_invoice.trigger_reconcile_payments"
+#         ]
+#     }
+# }
 # scheduler_events = {
 # 	"all": [
 # 		"libya_customizations.tasks.all"
