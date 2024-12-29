@@ -113,6 +113,9 @@ fixtures = [
     },
     {
         "doctype": "Translation"
+    },
+    {
+        "doctype": "Document Naming Rule"
     }
 ]
 # Installation
