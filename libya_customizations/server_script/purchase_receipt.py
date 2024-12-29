@@ -71,7 +71,7 @@ def on_submit(doc, method):
     landed_cost_voucher.update({
         "taxes": landed_costs
 	})
-    # landed_cost_voucher.insert(ignore_permissions=True)
+    landed_cost_voucher.insert(ignore_permissions=True)
     landed_cost_voucher.submit()
 
 
@@ -138,4 +138,5 @@ def on_update_after_submit(doc, method):
     # d = frappe.get_doc(doctype, dd)
     d.taxes = []
     d.set("taxes", landed_costs)
+    d.save(ignore_permissions=True)
     d.submit()

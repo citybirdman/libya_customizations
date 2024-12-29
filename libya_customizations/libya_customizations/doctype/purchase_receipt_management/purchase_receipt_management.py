@@ -81,6 +81,7 @@ def submit_receipt(docname, posting_date):
         frappe.throw("docname cannot be null")
     purchase_receipt = frappe.get_doc("Purchase Receipt", docname)
     purchase_receipt.posting_date = posting_date
+    purchase_receipt.virtual_receipt = 0
     purchase_receipt.flags.ignore_permissions=True
     purchase_receipt.submit()
 

@@ -73,7 +73,7 @@
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Posting Date",
-   "read_only_depends_on": "eval:doc.actual_receipt || doc.virtual_receipt"
+   "read_only_depends_on": "eval:doc.actual_receipt"
   },
   {
    "columns": 1,
@@ -92,7 +92,7 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval:!doc.actual_receipt && !doc.virtual_receipt",
+   "depends_on": "eval:!doc.actual_receipt",
    "fieldname": "submit_button",
    "fieldtype": "Button",
    "label": "Submit",
@@ -107,7 +107,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-12-17 15:21:10.839768",
+ "modified": "2024-12-29 21:57:08.750964",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Purchase Receipt Management Detail",
