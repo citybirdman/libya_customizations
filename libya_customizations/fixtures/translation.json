@@ -57354,5 +57354,44 @@
   "name": "g1pvirje10",
   "source_text": "Edit Prices",
   "translated_text": "تعديل الأسعار"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2024-12-30 10:24:54.030319",
+  "name": "4ekkm6dab0",
+  "source_text": "Receipt Qty",
+  "translated_text": "كمية الشحنة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2024-12-30 10:25:20.697320",
+  "name": "711so0bvtj",
+  "source_text": "Receipt Valuation Rate",
+  "translated_text": "تكلفة الشحنة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2024-12-30 10:25:38.769134",
+  "name": "dk56917plj",
+  "source_text": "Stock Valuation Rate",
+  "translated_text": "تكلفة المخزون"
  }
 ]
