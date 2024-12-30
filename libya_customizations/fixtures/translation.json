@@ -57263,5 +57263,31 @@
   "name": "o0cvvgp5no",
   "source_text": "Pending Cancellation (Accounting)",
   "translated_text": "قيد الإلغاء (الحسابات)"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2024-12-30 08:19:57.826628",
+  "name": "26otqf6162",
+  "source_text": "Purchase Receipt has been successfully submitted",
+  "translated_text": "تم تسجيل إذن استلام المشتريات بنجاح"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2024-12-30 08:25:43.484627",
+  "name": "k5g9njjqup",
+  "source_text": "Edit Selling Prices",
+  "translated_text": "تعديل أسعار البيع"
  }
 ]

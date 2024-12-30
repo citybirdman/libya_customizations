@@ -178,7 +178,7 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
 });
 
 frappe.ui.form.on('Purchase Receipt Management Detail', {
-    edit_list_prices: function(frm, cdt, cdn){
+    edit_selling_prices: function(frm, cdt, cdn){
             // Call the function to open the dialog
             openPurchaseReceiptDialog(frm, cdt, cdn);
         }

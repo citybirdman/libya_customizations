@@ -233,7 +233,7 @@ def get_purchase_receipt_data(purchase_receipt):
 				SELECT
 					name,
 					posting_date,
-					(freight_amount * freight_exchange_rate + inspection_amount * inspection_exchange_rate + clearence_amount + transport_amount + foreign_banking_charges_amount * foreign_banking_charges_exchange_rate + local_banking_charges_amount) / base_grand_total AS landed_cost_prorata       
+					(freight_amount * freight_exchange_rate + inspection_amount * inspection_exchange_rate + clearence_amount + transport_amount + foreign_bank_charges_amount * foreign_bank_charges_exchange_rate + local_bank_charges_amount) / base_grand_total AS landed_cost_prorata       
 				FROM
 					`tabPurchase Receipt`
 				WHERE

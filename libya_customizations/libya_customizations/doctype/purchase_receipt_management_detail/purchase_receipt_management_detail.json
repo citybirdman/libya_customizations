@@ -15,7 +15,7 @@
   "posting_date",
   "submit_button",
   "actual_receipt",
-  "edit_list_prices"
+  "edit_selling_prices"
  ],
  "fields": [
   {
@@ -99,15 +99,15 @@
    "read_only_depends_on": "eval:doc.actual_receipt || doc.virtual_receipt"
   },
   {
-   "fieldname": "edit_list_prices",
+   "fieldname": "edit_selling_prices",
    "fieldtype": "Button",
-   "label": "Edit List Prices"
+   "label": "Edit Selling Prices"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-12-29 21:57:08.750964",
+ "modified": "2024-12-30 08:11:17.175543",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Purchase Receipt Management Detail",
