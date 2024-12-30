@@ -7,7 +7,8 @@ frappe.ui.form.on("Sales Adjustment Request", "customer", function(frm) {
             filters: {
                 customer: frm.doc.customer,
 				is_return: 0,
-				docstatus: 1
+				docstatus: 1,
+				is_opening: 'No'
            }
         };
     });
