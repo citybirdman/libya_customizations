@@ -57393,5 +57393,18 @@
   "name": "dk56917plj",
   "source_text": "Stock Valuation Rate",
   "translated_text": "تكلفة المخزون"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2024-12-30 23:00:12.455975",
+  "name": "3ttk43b1si",
+  "source_text": "% Qty Billed",
+  "translated_text": "الكمية الموفوترة %"
  }
 ]
