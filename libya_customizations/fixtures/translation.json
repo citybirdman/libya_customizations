@@ -57315,5 +57315,44 @@
   "name": "jnrbgipfte",
   "source_text": "Import Item Prices",
   "translated_text": "استيراد أسعار الأصناف"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2024-12-30 09:46:16.744885",
+  "name": "ptqr1e7hr1",
+  "source_text": "Purchase Receipt Details",
+  "translated_text": "بيانات قيد استلام المشتريات"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2024-12-30 09:48:38.158129",
+  "name": "dbvosakrcg",
+  "source_text": "Purchase Receipt Data",
+  "translated_text": "بيانات قيد استلام المشتريات"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2024-12-30 09:49:03.553781",
+  "name": "g1pvirje10",
+  "source_text": "Edit Prices",
+  "translated_text": "تعديل الأسعار"
  }
 ]
