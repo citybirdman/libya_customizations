@@ -57289,5 +57289,31 @@
   "name": "k5g9njjqup",
   "source_text": "Edit Selling Prices",
   "translated_text": "تعديل أسعار البيع"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2024-12-30 08:32:49.372271",
+  "name": "9q9ejqdano",
+  "source_text": "Export Item Prices",
+  "translated_text": "تصدير أسعار الأصناف"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2024-12-30 08:33:37.573348",
+  "name": "jnrbgipfte",
+  "source_text": "Import Item Prices",
+  "translated_text": "استيراد أسعار الأصناف"
  }
 ]
