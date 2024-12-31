@@ -57,7 +57,7 @@ class TransferVoucher(Document):
 				'voucher_type': self.paid_to_account_type + ' Entry',
 				'cheque_no': self.name,
 				'cheque_date': self.posting_date,
-				'custom_voucher_type': 'Receipt Voucher',
+				'custom_voucher_type': 'Transfer Voucher',
 				'custom_voucher_no': self.name,
 				'user_remark': self.remark,
 				'multi_currency': 1,
