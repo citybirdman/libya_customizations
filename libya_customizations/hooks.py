@@ -207,7 +207,6 @@ doc_events = {
 		],
         "on_update_after_submit": [
 			"libya_customizations.server_script.sales_invoice.create_payment",
-			"libya_customizations.server_script.sales_invoice.create_write_off",
 			"libya_customizations.server_script.sales_invoice.reconcile_payments",
 			"libya_customizations.server_script.sales_invoice.reconcile_everything"
 		]

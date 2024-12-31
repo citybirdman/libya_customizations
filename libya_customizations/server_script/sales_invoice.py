@@ -194,61 +194,59 @@ def create_payment(doc, method):
 			journal_entry.submit()
 		doc.custom_is_payment_value_checked =1
 		frappe.db.set_value(doc.doctype, doc.name, "custom_is_payment_value_checked", 1)
-            
-def create_write_off(doc, method):
-	linked_payment_entries = frappe.db.get_list('Payment Entry', filters={'custom_voucher_no': doc.name}, ignore_permissions=True)
-	linked_journal_entries = frappe.db.get_list('Journal Entry', filters={'custom_voucher_no': doc.name}, ignore_permissions=True)
-	if not linked_payment_entries and not linked_journal_entries:
-		if doc.custom_payment_value_is_different and doc.custom_payment_value:
-			if abs(doc.grand_total) - doc.custom_payment_value <= 0:
-				frappe.throw(_("<b>Payment Value</b> should be less than the grand total, if you need to fully pay the invoice, please uncheck <b>Payment Value Is Differect</b>"))
-			debit_account = frappe.db.get_value("Company", doc.company, "write_off_account") if doc.is_return else doc.debit_to
-			credit_account = doc.debit_to if doc.is_return else frappe.db.get_value("Company", doc.company, "write_off_account")
-			credit_party_type = None if doc.is_return else "Customer"
-			credit_party = None if doc.is_return else doc.customer
-			debit_party_type = "Customer" if doc.is_return else None
-			debit_party = doc.customer if doc.is_return else None
-			credit_reference_type = None if doc.is_return else "Sales Invoice"
-			credit_reference_name = None if doc.is_return else doc.name
-			debit_reference_type = "Sales Invoice" if doc.is_return else None
-			debit_reference_name = doc.name if doc.is_return else None
-			wo_remark = f'إضافة دين مقابل فاتورة مردودات نقدية رقم {doc.name}' if doc.is_return else f'إعفاء دين مقابل فاتورة مبيعات نقدية رقم {doc.name}'
+		create_write_off(doc, method)
 
-			journal_entry_obj = {
-				"voucher_type": "Write Off Entry",
-				"company": doc.company,
-				"posting_date": doc.posting_date,
-				"doctype": "Journal Entry",
-				'custom_voucher_type': 'Sales Invoice',
-				'custom_voucher_no': doc.name,
-				'multi_currency': 1,
-				'user_remark': wo_remark,
-				'remark': wo_remark,
-				'cannot_be_cancelled': 1,
-				"accounts": [{
-					"account": debit_account,
-					"party_type": credit_party_type,
-					"party": credit_party,
-					"debit_in_account_currency": 0,
-					"debit": 0,
-					"credit_in_account_currency": (abs(doc.grand_total) - doc.custom_payment_value),
-					"credit": (abs(doc.grand_total) - doc.custom_payment_value),
-					"reference_type": credit_reference_type,
-					"reference_name": credit_reference_name
-				}, {
-					"account": credit_account,
-					"party_type": debit_party_type,
-					"party": debit_party,
-					"debit_in_account_currency": (abs(doc.grand_total) - doc.custom_payment_value),
-					"debit": (abs(doc.grand_total) - doc.custom_payment_value),
-					"credit_in_account_currency": 0,
-					"credit": 0,
-					"reference_type": debit_reference_type,
-					"reference_name": debit_reference_name
-				}]
-			}
-			journal_entry = frappe.get_doc(journal_entry_obj).insert(ignore_permissions=True)
-			journal_entry.submit()
+def create_write_off(doc, method):
+	if doc.custom_payment_value_is_different and doc.custom_payment_value:
+		if abs(doc.grand_total) - doc.custom_payment_value <= 0:
+			frappe.throw(_("<b>Payment Value</b> should be less than the grand total, if you need to fully pay the invoice, please uncheck <b>Payment Value Is Differect</b>"))
+		debit_account = frappe.db.get_value("Company", doc.company, "write_off_account") if doc.is_return else doc.debit_to
+		credit_account = doc.debit_to if doc.is_return else frappe.db.get_value("Company", doc.company, "write_off_account")
+		credit_party_type = None if doc.is_return else "Customer"
+		credit_party = None if doc.is_return else doc.customer
+		debit_party_type = "Customer" if doc.is_return else None
+		debit_party = doc.customer if doc.is_return else None
+		credit_reference_type = None if doc.is_return else "Sales Invoice"
+		credit_reference_name = None if doc.is_return else doc.name
+		debit_reference_type = "Sales Invoice" if doc.is_return else None
+		debit_reference_name = doc.name if doc.is_return else None
+		wo_remark = f'إضافة دين مقابل فاتورة مردودات نقدية رقم {doc.name}' if doc.is_return else f'إعفاء دين مقابل فاتورة مبيعات نقدية رقم {doc.name}'
+
+		journal_entry_obj = {
+			"voucher_type": "Write Off Entry",
+			"company": doc.company,
+			"posting_date": doc.posting_date,
+			"doctype": "Journal Entry",
+			'custom_voucher_type': 'Sales Invoice',
+			'custom_voucher_no': doc.name,
+			'multi_currency': 1,
+			'user_remark': wo_remark,
+			'remark': wo_remark,
+			'cannot_be_cancelled': 1,
+			"accounts": [{
+				"account": debit_account,
+				"party_type": credit_party_type,
+				"party": credit_party,
+				"debit_in_account_currency": 0,
+				"debit": 0,
+				"credit_in_account_currency": (abs(doc.grand_total) - doc.custom_payment_value),
+				"credit": (abs(doc.grand_total) - doc.custom_payment_value),
+				"reference_type": credit_reference_type,
+				"reference_name": credit_reference_name
+			}, {
+				"account": credit_account,
+				"party_type": debit_party_type,
+				"party": debit_party,
+				"debit_in_account_currency": (abs(doc.grand_total) - doc.custom_payment_value),
+				"debit": (abs(doc.grand_total) - doc.custom_payment_value),
+				"credit_in_account_currency": 0,
+				"credit": 0,
+				"reference_type": debit_reference_type,
+				"reference_name": debit_reference_name
+			}]
+		}
+		journal_entry = frappe.get_doc(journal_entry_obj).insert(ignore_permissions=True)
+		journal_entry.submit()
 
 def reconcile_payments(doc, method):
 	company = doc.company
