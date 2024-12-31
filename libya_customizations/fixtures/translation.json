@@ -57406,5 +57406,31 @@
   "name": "3ttk43b1si",
   "source_text": "% Qty Billed",
   "translated_text": "الكمية الموفوترة %"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2024-12-31 02:18:34.725031",
+  "name": "e2n7r4d5l1",
+  "source_text": "Charge Account",
+  "translated_text": "حساب المصروف"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-01-01 00:29:44.809020",
+  "name": "9nick7804s",
+  "source_text": "Stock Balance Summary",
+  "translated_text": "كشف أرصدة مخزون"
  }
 ]
