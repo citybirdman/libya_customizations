@@ -87,11 +87,11 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 0,
+ "idx": 4,
  "is_standard": "Yes",
  "letter_head": "itar",
  "letterhead": null,
- "modified": "2024-12-28 00:00:24.415992",
+ "modified": "2025-01-01 00:33:08.491463",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Item Ledger Summary",
@@ -111,6 +111,9 @@
   },
   {
    "role": "Sales Coordinator"
+  },
+  {
+   "role": "Warehouse User"
   },
   {
    "role": "System Manager"
