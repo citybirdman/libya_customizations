@@ -115,7 +115,16 @@ fixtures = [
         "doctype": "Translation"
     },
     {
+        "doctype": "Workflow Action Master"
+    },
+    {
         "doctype": "Document Naming Rule"
+    },
+    {
+        "doctype": "Number Card"
+    },
+    {
+        "doctype": "Workflow State"
     }
 ]
 # Installation
