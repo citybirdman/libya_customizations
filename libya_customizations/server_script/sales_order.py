@@ -171,8 +171,8 @@ def validate_before_submit_sales_order(doc, method):
 		if outstanding > 0 and not (bypass_overdue_check or user_has_cso):
 			frappe.msgprint(msg=_("There are overdue outstandings valued at {0} against the Customer").format('{:0,.2f}'.format(outstanding)), title=_('Error'), indicator='red')
 			raise frappe.ValidationError
-		elif outstanding > 0 and (bypass_overdue_check or user_has_cso):
-			frappe.msgprint(msg=_("There are overdue outstandings valued at {0} against the Customer").format('{:0,.2f}'.format(outstanding)), title=_('Warning'), indicator='orange')
+		# elif outstanding > 0 and (bypass_overdue_check or user_has_cso):
+		# 	frappe.msgprint(msg=_("There are overdue outstandings valued at {0} against the Customer").format('{:0,.2f}'.format(outstanding)), title=_('Warning'), indicator='orange')
 	else:
 		frappe.msgprint(msg=_(f"There is no payment terms assigned to Customer in Customer Master"), title=_('Error'), indicator='red')
 		raise frappe.ValidationError
