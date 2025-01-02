@@ -23,6 +23,11 @@ frappe.listview_settings["Sales Invoice"] = {
 			"Cash Return": "darkgrey",
 			"Cancelled": "red"
 		};
-		return [__(doc.payment_status), status_colors[doc.payment_status], "payment_status,=," + doc.payment_status];
+        if(doc.is_opening == "Yes"){
+            return [__("Opening"), "orange", "is_opening,=," + doc.is_opening]
+        }
+        else{
+            return [__(doc.payment_status), status_colors[doc.payment_status], "payment_status,=," + doc.payment_status];
+        }
 	}
 }
