@@ -351,13 +351,13 @@
   "doctype_event": "Before Save (Submitted Document)",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2024-12-25 09:27:05.123050",
+  "modified": "2025-01-03 17:01:12.141120",
   "module": "Libya Customizations",
   "name": "Update Payment Status in Sales Invoice (After Submit)",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Sales Invoice",
-  "script": "if not doc.is_paid and not doc.is_return:\n    doc.payment_status = \"Credit Invoice\"\nelif doc.is_paid and not doc.is_return:\n    doc.payment_status = \"Cash Invoice\"\nelif doc.is_return and not doc.is_paid:\n    doc.payment_status = \"Credit Return\"\nelif doc.is_paid and doc.is_return:\n    doc.payment_status = \"Cash Return\"",
+  "script": "if doc.is_opening == 'Yes':\n    doc.payment_status = \"Opening\"\nelif not doc.is_paid and not doc.is_return:\n    doc.payment_status = \"Credit Invoice\"\nelif doc.is_paid and not doc.is_return:\n    doc.payment_status = \"Cash Invoice\"\nelif doc.is_return and not doc.is_paid:\n    doc.payment_status = \"Credit Return\"\nelif doc.is_paid and doc.is_return:\n    doc.payment_status = \"Cash Return\"",
   "script_type": "DocType Event"
  },
  {
