@@ -86,10 +86,12 @@ doctype_list_js = {
 # ----------
 
 # add methods and filters to jinja environment
-# jinja = {
-# 	"methods": "libya_customizations.utils.jinja_methods",
+jinja = {
+	"methods": [
+		"libya_customizations.server_script.apis.get_customer_credit_balance"
+		]
 # 	"filters": "libya_customizations.utils.jinja_filters"
-# }
+}
 fixtures = [
     {
         "doctype": "Server Script",
