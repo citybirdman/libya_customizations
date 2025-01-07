@@ -47,13 +47,13 @@
   "doctype_event": "Before Insert",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2024-12-25 09:27:06.030672",
+  "modified": "2025-01-04 11:19:59.132553",
   "module": "Libya Customizations",
   "name": "Sales Invoice - Permission Query",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Sales Invoice",
-  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions=\"is_opening='No'\"\n\nif not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabSales Invoice`.name NOT IN (SELECT amended_from FROM `tabSales Invoice` WHERE amended_from IS NOT NULL)\"\n\nif frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"Warehouse User\"]]):\n    conditions = \"is_return=1 AND workflow_state IN ('Pending Submission', 'Returned', 'Rejected Submission', 'Pending Cancellation', 'Discarded', 'Rejected Cancellation')\"",
+  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions=\"is_opening='No'\"\n\nif not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabSales Invoice`.name NOT IN (SELECT amended_from FROM `tabSales Invoice` WHERE amended_from IS NOT NULL)\"\n\n# if frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"Warehouse User\"]]):\n#     conditions = \"is_return=1 AND workflow_state IN ('Pending Submission', 'Returned', 'Rejected Submission', 'Pending Cancellation', 'Discarded', 'Rejected Cancellation')\"",
   "script_type": "Permission Query"
  },
  {
@@ -283,25 +283,6 @@
   "reference_doctype": "Sales Invoice",
   "script": "delivery_note = doc.items[0].delivery_note\nif doc.is_opening == \"Yes\":\n    doc.remarks = \"فاتورة إفتتاحية\"\nelse:\n    if doc.is_return:\n        doc.remarks = \"فاتورة مردودات آجلة مبيعات\"\n    else:\n        doc.remarks = f\"فاتورة مبيعات آجلة من إذن تسليم رقم {delivery_note}\"",
   "script_type": "DocType Event"
- },
- {
-  "allow_guest": 0,
-  "api_method": null,
-  "cron_format": null,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Server Script",
-  "doctype_event": "Before Insert",
-  "enable_rate_limit": 0,
-  "event_frequency": "All",
-  "modified": "2024-12-25 09:27:07.169782",
-  "module": "Libya Customizations",
-  "name": "Filtering Sales Returns for Warehouse User",
-  "rate_limit_count": 5,
-  "rate_limit_seconds": 86400,
-  "reference_doctype": "Sales Invoice",
-  "script": "if frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"Warehouse User\"]]):\n    conditions = \"docstatus=1 AND is_return=1 AND workflow_state IN ('Pending for Review', 'Return')\"",
-  "script_type": "Permission Query"
  },
  {
   "allow_guest": 0,

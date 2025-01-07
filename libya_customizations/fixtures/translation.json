@@ -57432,5 +57432,57 @@
   "name": "9nick7804s",
   "source_text": "Stock Balance Summary",
   "translated_text": "كشف أرصدة مخزون"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-01-05 13:18:22.631227",
+  "name": "ms0621s2ta",
+  "source_text": "Include Party Balance In Print",
+  "translated_text": "اظهار رصيد الجهة في الطباعة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-01-07 10:07:29.400299",
+  "name": "52raulj7vt",
+  "source_text": "Update Depend on Prorosed",
+  "translated_text": "تعديل وفقا للمقترح"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-01-07 10:08:47.907737",
+  "name": "epvmigsneh",
+  "source_text": "Proposed Price",
+  "translated_text": "السعر المقترح"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-01-07 10:15:13.186698",
+  "name": "14jmtruuto",
+  "source_text": "Available Items with Selling Prices",
+  "translated_text": "الأصناف المتاحة مع أسعار البيع"
  }
 ]

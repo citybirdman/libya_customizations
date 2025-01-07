@@ -39,6 +39,7 @@
   "card_holder_name",
   "column_break_aoiy",
   "banking_charges",
+  "include_party_balance_in_print",
   "section_break_25",
   "remark",
   "status",
@@ -321,6 +322,13 @@
   {
    "fieldname": "column_break_aoiy",
    "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "include_party_balance_in_print",
+   "fieldtype": "Check",
+   "label": "Include Party Balance In Print"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -337,7 +345,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-12-16 16:11:31.278137",
+ "modified": "2025-01-05 13:19:27.483622",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Receipt Voucher",

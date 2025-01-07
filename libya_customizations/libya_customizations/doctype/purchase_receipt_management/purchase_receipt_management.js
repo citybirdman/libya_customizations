@@ -192,18 +192,38 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
         title: __('Purchase Receipt Details'),
         fields: [
             {
+                label: __('Profitability'),
+                fieldtype: "Int",
+                fieldname: "prof",
+                onchange: ()=>{
+                    const prof = cur_dialog.get_value("prof");
+                    cur_dialog.fields_dict.purchase_receipt_table.grid.data.map(function(row){row.p_price = Math.ceil(row.stock_valuation_rate * (prof+100)/100)});
+                    cur_dialog.fields_dict.purchase_receipt_table.grid.refresh()
+                }
+            },
+            {
+                label: __('Update Depend on Prorosed'),
+                fieldtype: "Button",
+                fieldname: "cpl",
+                click: ()=>{
+                    cur_dialog.fields_dict.purchase_receipt_table.grid.data.map(function(row){row.selling_price = row.p_price});
+                    cur_dialog.fields_dict.purchase_receipt_table.grid.refresh()
+                }
+            },
+            {
                 label: __('Purchase Receipt Data'),
                 fieldtype: 'Table',
                 fieldname: 'purchase_receipt_table',
                 fields: [
                     { label: __('Item Code'), fieldtype: 'Link', options:"Item",fieldname: 'item_code', read_only:1 , in_list_view:1, colsize: 3, columns: 3},
                     { label: __('Item Name'), fieldtype: 'Data', fieldname: 'item_name', in_list_view:0, read_only:1 },
-                    { label: __('Brand'), fieldtype: 'Data', fieldname: 'brand', in_list_view:1, read_only:1, colsize: 1, columns: 1 },
+                    { label: __('Brand'), fieldtype: 'Data', fieldname: 'brand', read_only:1 },
                     { label: __('Receipt Qty'), fieldtype: 'Float', fieldname: 'receipt_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1 },
                     { label: __('Receipt Valuation Rate'), fieldtype: 'Float', fieldname: 'receipt_valuation_rate', in_list_view:1, precision: 2, read_only:1, colsize: 1, columns: 1},
                     { label: __('Stock Qty'), fieldtype: 'Float', fieldname: 'stock_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1},
                     { label: __('Stock Valuation Rate'), fieldtype: 'Float', fieldname: 'stock_valuation_rate', in_list_view:1 , precision: 2, read_only:1, colsize: 1, columns: 1},
                     { label: __('Selling Price'), fieldtype: 'Currency', fieldname: 'selling_price', in_list_view:1, precision: 0, colsize: 1, columns: 1},
+                    { label: __('Proposed Price'), fieldtype: 'Data', fieldname: 'p_price', in_list_view:1, read_only:1, colsize: 1, columns: 1 },
                     { label: __('Price Name'), fieldtype: 'Data', fieldname: 'price_name', hidden:1 },
                 ],
                 data: data,
