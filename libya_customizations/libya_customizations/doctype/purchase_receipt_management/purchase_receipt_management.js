@@ -17,11 +17,11 @@ frappe.ui.form.on('Purchase Receipt Management', {
         frm.fields_dict.purchase_receipts.grid.grid_buttons[0].children[3].style.display = "none";
         frm.fields_dict['purchase_receipts'].grid.wrapper.find('.grid-delete-row').hide();
         frm.fields_dict.purchase_receipts.wrapper.querySelector(".grid-upload").style.display = "none";
-        
+
     },
     refresh: function(frm) {
         frm.disable_save();
-        
+
         cur_frm.fields_dict.purchase_receipts.grid.add_custom_button("Export", ()=>{
         const children = cur_frm.fields_dict.purchase_receipts.grid.get_selected_children()
         const names = children.map(row=>row.purchase_receipt)
@@ -44,8 +44,8 @@ frappe.ui.form.on('Purchase Receipt Management', {
             }
         });
     })
-        
-        
+
+
         frm.add_custom_button('Show All', function() {
             get_list(frm, {docstatus: ["!=",2]});
         }, "Filter");
@@ -60,12 +60,12 @@ frappe.ui.form.on('Purchase Receipt Management', {
         frm.add_custom_button('Show Virtual Receipt', function() {
             get_list(frm, {docstatus: 0, virtual_receipt: 1});
         }, "Filter");
-        
-        
+
+
     },
-    
+
     purchase_receipts_on_form_rendered: function(frm) {
-        frm.fields_dict['purchase_receipts'].grid.on('change', function(e, row) {
+        frm.fields_dict['purchase_receipts'].$wrapper.on('change', function(e, row) {
             if (row.doc.virtual_receipt) {
                 frappe.model.set_value(row.doctype, row.name, 'posting_date', null);
             }
@@ -187,7 +187,6 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
     // Function to open the dialog
     async function openPurchaseReceiptDialog(frm, cdt, cdn) {
         let data = await fetchPurchaseReceiptData(locals[cdt][cdn].purchase_receipt);
-        console.log(data)
         let dialog = new frappe.ui.Dialog({
         title: __('Purchase Receipt Details'),
         fields: [
@@ -202,10 +201,10 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
                 }
             },
             {
-                label: __('Update Depend on Prorosed'),
+                label: __('Update based on Proposed'),
                 fieldtype: "Button",
                 fieldname: "cpl",
-                click: ()=>{
+                click: (e)=>{
                     cur_dialog.fields_dict.purchase_receipt_table.grid.data.map(function(row){row.selling_price = row.p_price});
                     cur_dialog.fields_dict.purchase_receipt_table.grid.refresh()
                 }
@@ -215,12 +214,12 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
                 fieldtype: 'Table',
                 fieldname: 'purchase_receipt_table',
                 fields: [
-                    { label: __('Item Code'), fieldtype: 'Link', options:"Item",fieldname: 'item_code', read_only:1 , in_list_view:1, colsize: 3, columns: 3},
-                    { label: __('Item Name'), fieldtype: 'Data', fieldname: 'item_name', in_list_view:0, read_only:1 },
+                    { label: __('Item Code'), fieldtype: 'Link', options:"Item",fieldname: 'item_code', read_only:1},
+                    { label: __('Item Name'), fieldtype: 'Data', fieldname: 'item_name', read_only:1 , in_list_view:1, colsize: 3, columns: 3 },
                     { label: __('Brand'), fieldtype: 'Data', fieldname: 'brand', read_only:1 },
-                    { label: __('Receipt Qty'), fieldtype: 'Float', fieldname: 'receipt_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1 },
+                    { label: __('Receipt Qty'), fieldtype: 'Int', fieldname: 'receipt_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1 },
                     { label: __('Receipt Valuation Rate'), fieldtype: 'Float', fieldname: 'receipt_valuation_rate', in_list_view:1, precision: 2, read_only:1, colsize: 1, columns: 1},
-                    { label: __('Stock Qty'), fieldtype: 'Float', fieldname: 'stock_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1},
+                    { label: __('Stock Qty'), fieldtype: 'Int', fieldname: 'stock_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1},
                     { label: __('Stock Valuation Rate'), fieldtype: 'Float', fieldname: 'stock_valuation_rate', in_list_view:1 , precision: 2, read_only:1, colsize: 1, columns: 1},
                     { label: __('Selling Price'), fieldtype: 'Currency', fieldname: 'selling_price', in_list_view:1, precision: 0, colsize: 1, columns: 1},
                     { label: __('Proposed Price'), fieldtype: 'Data', fieldname: 'p_price', in_list_view:1, read_only:1, colsize: 1, columns: 1 },
@@ -258,6 +257,28 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
     // Show the dialog
     frm.fields_dict.purchase_receipts.grid.wrapper[0].querySelector(".grid-collapse-row").click();
     dialog.show();
+    dialog.$wrapper.on("keydown", function(e){
+        if (e.key === 'Enter') {
+           e.preventDefault();
+        }
+    })
+    dialog.fields_dict.cpl.$wrapper.on("keydown", function(e){
+        if (e.key === 'Enter') {
+           e.preventDefault();
+        }
+    })
+   dialog.fields_dict.prof.$wrapper.on('keydown', function(e) {
+        if (e.key === 'Enter') {
+           document.activeElement.blur()
+        }
+    });
+    dialog.fields_dict.purchase_receipt_table.$wrapper.keyup(function(e) {
+        if(e.key === "Enter")
+            e.preventDefault()
+        let row_idx = Number(document.activeElement.parentElement.parentElement.parentElement.parentElement.querySelector(".row-index span").innerText) -1
+        dialog.fields_dict.purchase_receipt_table.grid.data[row_idx].selling_price = e.target.value
+    });
+    
 }
 
 
