@@ -57454,9 +57454,9 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "ar",
-  "modified": "2025-01-07 10:07:29.400299",
+  "modified": "2025-01-10 14:37:52.181758",
   "name": "52raulj7vt",
-  "source_text": "Update Depend on Prorosed",
+  "source_text": "Update based on Proposed",
   "translated_text": "تعديل وفقا للمقترح"
  },
  {
@@ -57484,5 +57484,31 @@
   "name": "14jmtruuto",
   "source_text": "Available Items with Selling Prices",
   "translated_text": "الأصناف المتاحة مع أسعار البيع"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-01-10 14:41:26.254044",
+  "name": "5egao2mtsm",
+  "source_text": "Non-Priced Items",
+  "translated_text": "أصناف غير مسعرة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-01-10 14:41:39.449299",
+  "name": "l92hskm2ab",
+  "source_text": "Non-Profitable Items",
+  "translated_text": "أصناف غير مربحة"
  }
 ]
