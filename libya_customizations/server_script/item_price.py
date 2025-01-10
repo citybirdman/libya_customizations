@@ -8,7 +8,7 @@ import json
 def export_item_price_data(filters):
     # Define the fields for "Item Price" export
     doctype = "Item Price"
-    fields = ["name", "item_code", "item_name", "brand", "price_list_rate"]
+    fields = ["name", "item_code", "item_name", "brand", "price_list_rate", "stock_valuation_rate"]
     filters = json.loads(filters)
     names = frappe.get_all("Item Price", filters)
     # Initialize the workbook and add header row
@@ -53,3 +53,28 @@ def import_item_price_data(file_url):
     for row in data[1:]:
         frappe.db.set_value("Item Price", row[0], "price_list_rate", row[4])
     return data[1:]
+
+@frappe.whitelist()
+def update_stock_valuation_rate():
+    sql = """
+        UPDATE
+            `tabItem Price` ip
+        SET
+            ip.stock_valuation_rate = (
+                SELECT
+                    SUM(b.stock_value) / SUM(b.actual_qty) AS avg_rate
+                FROM
+                    `tabBin` b
+                WHERE
+                    b.actual_qty > 0 AND b.item_code = ip.item_code
+                GROUP BY
+                    b.item_code
+            )
+        WHERE
+            EXISTS (
+                SELECT 1
+                FROM `tabBin` b
+                WHERE b.actual_qty > 0 AND b.item_code = ip.item_code
+            )
+    """
+    frappe.db.sql(sql)
