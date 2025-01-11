@@ -10,6 +10,7 @@ frappe.listview_settings['Item Price'] = {
 
         // Add the "Not Priced Items" button
         listview.page.add_inner_button(__('Non-Priced Items'), function () {
+            listview.filter_area.clear();
             listview.filter_area.add([
                 ['Item Price', 'price_list_rate', '=', 0],
                 ['Item Price', 'stock_valuation_rate', '>', 0],
