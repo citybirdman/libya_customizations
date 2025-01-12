@@ -5,10 +5,17 @@ from frappe.utils import get_site_path
 import json
 
 @frappe.whitelist()
+def increase_item_price(filters, percent):
+    filters = json.loads(filters)
+    items = frappe.get_all("Item Price", filters, ["price_list_rate", "name"])
+    for item in items:
+        frappe.db.set_value("Item Price", item.name, "price_list_rate", item.price_list_rate*(100+int(percent))/100)
+
+@frappe.whitelist()
 def export_item_price_data(filters):
     # Define the fields for "Item Price" export
     doctype = "Item Price"
-    fields = ["name", "item_code", "item_name", "brand", "price_list_rate", "stock_valuation_rate"]
+    fields = ["name", "item_code", "item_name", "brand", "price_list_rate", "stock_valuation_rate", "total_qty"]
     filters = json.loads(filters)
     names = frappe.get_all("Item Price", filters)
     # Initialize the workbook and add header row
@@ -63,6 +70,16 @@ def update_stock_valuation_rate():
             ip.stock_valuation_rate = (
                 SELECT
                     SUM(b.stock_value) / SUM(b.actual_qty) AS avg_rate
+                FROM
+                    `tabBin` b
+                WHERE
+                    b.actual_qty > 0 AND b.item_code = ip.item_code
+                GROUP BY
+                    b.item_code
+            ),
+            ip.total_qty = (
+                SELECT
+                    SUM(b.actual_qty)
                 FROM
                     `tabBin` b
                 WHERE
