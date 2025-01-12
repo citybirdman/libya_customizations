@@ -3,19 +3,20 @@ from openpyxl import Workbook
 from frappe.utils.file_manager import save_file
 from frappe.utils import get_site_path
 import json
+import math
 
 @frappe.whitelist()
 def increase_item_price(filters, percent):
     filters = json.loads(filters)
-    items = frappe.get_all("Item Price", filters, ["price_list_rate", "name"])
+    items = frappe.get_all("Item Price", filters, ["stock_valuation_rate", "name"])
     for item in items:
-        frappe.db.set_value("Item Price", item.name, "price_list_rate", item.price_list_rate*(100+int(percent))/100)
+        frappe.db.set_value("Item Price", item.name, "price_list_rate", math.ceil(item.stock_valuation_rate*(100+int(percent))/100))
 
 @frappe.whitelist()
 def export_item_price_data(filters):
     # Define the fields for "Item Price" export
     doctype = "Item Price"
-    fields = ["name", "item_code", "item_name", "brand", "price_list_rate", "stock_valuation_rate", "total_qty"]
+    fields = ["name", "item_code", "item_name", "brand", "price_list_rate", "stock_valuation_rate", "stock_qty"]
     filters = json.loads(filters)
     names = frappe.get_all("Item Price", filters)
     # Initialize the workbook and add header row
@@ -77,7 +78,7 @@ def update_stock_valuation_rate():
                 GROUP BY
                     b.item_code
             ),
-            ip.total_qty = (
+            ip.stock_qty = (
                 SELECT
                     SUM(b.actual_qty)
                 FROM

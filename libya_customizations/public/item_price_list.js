@@ -17,7 +17,7 @@ frappe.listview_settings['Item Price'] = {
 				['Item Price', 'selling', '=', 1]
             ]);
             listview.refresh();
-        });
+        }, "Filters");
 
         // Add the "Items with Price Condition" button
         listview.page.add_inner_button(__('Non-Profitable Items'), function () {
@@ -52,10 +52,43 @@ frappe.listview_settings['Item Price'] = {
                     }
                 }
             });
-        });
+        }, "Filters");
 
         // Check if the user has the 'Chief Sales Officer' role
         if (frappe.user_roles.includes('Chief Sales Officer')) {
+            // add the "Increase filtered items"
+            listview.page.add_inner_button(__('Increase Item Prices'), function () {
+                // Call the backend method
+                let dialog = new frappe.ui.Dialog({
+                    title: __('Increase Item Prices by Percentage'),
+                    fields: [
+                        {
+                            fieldtype: 'Percent',
+                            fieldname: 'increase_percent',
+                            label: __('Increase Percent'),
+                            reqd: 1
+                        }
+                    ],
+                    primary_action_label: __('Apply'),
+                    primary_action(values) {
+                        // Call the custom function with the entered percentage
+                        frappe.call({
+                            method: 'libya_customizations.server_script.item_price.increase_item_price',
+                            args: {
+                                percent: values.increase_percent,
+                                filters: listview.filter_area.get()
+                            },
+                            callback:()=>{
+                                cur_list.refresh();
+                            }
+                        });
+                        dialog.hide();
+                    }
+                });
+            
+                dialog.show();
+            });
+
             // Add the "Export Item Prices" button
             listview.page.add_inner_button(__('Export Item Prices'), function () {
                 // Call the backend method
@@ -78,7 +111,7 @@ frappe.listview_settings['Item Price'] = {
                         }
                     }
                 });
-            });
+            }, "Import & Export");
 
             // Add the "Import Item Prices" button
             listview.page.add_inner_button(__('Import Item Prices'), function () {
@@ -103,7 +136,7 @@ frappe.listview_settings['Item Price'] = {
                     }
                 });
                 dialog.show();
-            });
+            }, "Import & Export");
         }
     }
 };
