@@ -129,6 +129,7 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 			schedule_date: d.schedule_date,
 			conversion_factor: d.conversion_factor,
 			qty: d.qty,
+			brand: d.brand,
 			rate: d.rate,
 			uom: d.uom,
 			fg_item: d.fg_item,
@@ -142,6 +143,13 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 			fieldname: "docname",
 			read_only: 1,
 			hidden: 1,
+		},
+		{
+			fieldtype: "Link",
+			fieldname: "brand",
+			options: "Brand",
+			read_only: 1,
+			label: __("Brand"),
 		},
 		{
 			fieldtype: "Link",
@@ -319,7 +327,7 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 		update_items: function () {
 			const trans_items = this.get_values()["trans_items"].filter((item) => !!item.item_code);
 			frappe.call({
-				method: "erpnext.controllers.accounts_controller.update_child_qty_rate",
+				method: "libya_customizations.utils.update_child_qty_rate",
 				freeze: true,
 				args: {
 					parent_doctype: frm.doc.doctype,
@@ -336,6 +344,37 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 		},
 		primary_action_label: __("Update"),
 	});
+
+	dialog.fields_dict.trans_items.grid.wrapper.on('change', '[data-fieldname="item_code"]', function(e) {
+        let row = $(this).closest('.grid-row');
+		console.log(row)
+        let item_code = $(this).val();
+
+        if (item_code) {
+            // Fetch the item name from the server
+            frappe.call({
+                method: 'frappe.client.get_value',
+                args: {
+                    'doctype': 'Item',
+                    'filters': { 'name': item_code },
+                    'fieldname': 'brand'
+                },
+                callback: function(r) {
+                    if (r.message) {
+                        // Update the item_name field in the table
+                        let row_name = row.attr('data-name');
+                        dialog.fields_dict.trans_items.grid.grid_rows_by_docname[row_name].doc.brand = r.message.brand;
+                        dialog.fields_dict.trans_items.grid.refresh();
+                    }
+                }
+            });
+        } else {
+            // Clear the item_name field if no item is selected
+            let row_name = row.attr('data-name');
+            dialog.fields_dict.trans_items.grid.grid_rows_by_docname[row_name].doc.brand = '';
+            dialog.fields_dict.trans_items.grid.refresh();
+        }
+    });
 
 	dialog.show();
 
