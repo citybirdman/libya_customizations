@@ -57510,5 +57510,31 @@
   "name": "l92hskm2ab",
   "source_text": "Non-Profitable Items",
   "translated_text": "أصناف غير مربحة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-01-19 22:45:43.327594",
+  "name": "e2q9geral4",
+  "source_text": "Item Performance Report",
+  "translated_text": "تقرير أداء الأصناف"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-01-19 22:48:37.939080",
+  "name": "mr8qu07e4h",
+  "source_text": "Miscellaneous",
+  "translated_text": "متنوع"
  }
 ]
