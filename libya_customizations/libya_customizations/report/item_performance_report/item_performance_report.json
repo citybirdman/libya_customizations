@@ -78,11 +78,11 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 0,
+ "idx": 3,
  "is_standard": "Yes",
  "letter_head": "itar",
  "letterhead": null,
- "modified": "2025-01-19 22:43:54.734177",
+ "modified": "2025-01-21 09:12:25.687833",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Item Performance Report",
@@ -94,10 +94,10 @@
  "report_type": "Query Report",
  "roles": [
   {
-   "role": "Chief Sales Officer"
+   "role": "System Manager"
   },
   {
-   "role": "System Manager"
+   "role": "Chief Executive Manager"
   }
  ],
  "timeout": 0
