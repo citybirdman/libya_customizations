@@ -82,7 +82,7 @@
  "is_standard": "Yes",
  "letter_head": "itar",
  "letterhead": null,
- "modified": "2025-01-21 09:12:25.687833",
+ "modified": "2025-01-21 09:42:46.097745",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Item Performance Report",
@@ -97,7 +97,7 @@
    "role": "System Manager"
   },
   {
-   "role": "Chief Executive Manager"
+   "role": "Chief Executive Officer"
   }
  ],
  "timeout": 0
