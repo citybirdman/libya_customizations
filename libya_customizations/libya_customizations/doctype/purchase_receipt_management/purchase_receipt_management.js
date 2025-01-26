@@ -210,6 +210,26 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
                 }
             },
             {
+                fieldtype: "Column Break",
+                fieldname: "column_break_1"
+            },
+            {
+                label: __('Price List'),
+                fieldtype: "Link",
+                options:"Price List",
+                fieldname: "price_list",
+                get_query: () => {
+                    return {
+                        filters: {
+                            selling: 1,
+                        },
+                    };
+                }
+            },
+            {
+                fieldtype: 'Section Break'
+            },
+            {
                 label: __('Purchase Receipt Data'),
                 fieldtype: 'Table',
                 fieldname: 'purchase_receipt_table',
@@ -233,11 +253,10 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
         primary_action: function(values) {
             prices = values.purchase_receipt_table.map(row => ({name:row.price_name, price: row.selling_price, item_code: row.item_code, item_name:row.item_name}))
             prices = prices.filter(row=>row.name)
-            
-            frm.call({
-                method:"edit_item_price",
-                args: {values:prices}
-            })
+            let args = {values:prices}
+            if(values.price_list)
+                args.selling_price_list = values.price_list;
+            frm.call({method:"edit_item_price", args})
             dialog.hide();
         }
     });

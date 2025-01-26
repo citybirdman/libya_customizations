@@ -339,3 +339,69 @@ def update_child_qty_rate(parent_doctype, trans_items, parent_doctype_name, chil
 
 			if parent.per_picked == 0:
 				parent.create_stock_reservation_entries()
+
+
+
+
+# excel sheets
+from frappe.utils.xlsxutils import INVALID_TITLE_REGEX, ILLEGAL_CHARACTERS_RE, handle_html
+from openpyxl import Workbook
+from openpyxl.styles import PatternFill, Font
+from io import BytesIO
+
+def make_xlsx(data, sheet_name, wb=None, column_widths=None):
+    column_widths = column_widths or []
+    if wb is None:
+        wb = Workbook()
+
+    # Sanitize sheet name
+    sheet_name_sanitized = INVALID_TITLE_REGEX.sub(" ", sheet_name)
+    ws = wb.create_sheet(sheet_name_sanitized, 0)
+
+    # Define green fill for the first row
+    green_fill = PatternFill(start_color="90EE90", end_color="90EE90", fill_type="solid")  # Light green
+
+    # Apply green fill to the first row
+
+    # Set bold font for the first row
+    row1 = ws.row_dimensions[1]
+    row1.font = Font(name="Calibri", bold=True)
+
+    # Process data and write to the sheet
+    for row in data:
+        clean_row = []
+        for item in row:
+            if isinstance(item, str) and (sheet_name not in ["Data Import Template", "Data Export"]):
+                value = handle_html(item)
+            else:
+                value = item
+
+            if isinstance(item, str) and next(ILLEGAL_CHARACTERS_RE.finditer(value), None):
+                # Remove illegal characters from the string
+                value = ILLEGAL_CHARACTERS_RE.sub("", value)
+
+            clean_row.append(value)
+
+        ws.append(clean_row)
+
+    for cell in ws[1]:
+        cell.fill = green_fill
+    # Auto-fit column widths
+    for col in ws.columns:
+        max_length = 0
+        column = col[0].column_letter  # Get the column letter (e.g., "A", "B", etc.)
+        for cell in col:
+            try:
+                # Calculate the length of the cell content
+                if len(str(cell.value)) > max_length:
+                    max_length = len(str(cell.value))
+            except:
+                pass
+        # Set the column width to fit the longest content, add padding
+        adjusted_width = (max_length + 2) * 1.2  # Add some padding
+        ws.column_dimensions[column].width = adjusted_width
+
+    # Save the workbook to a BytesIO object
+    xlsx_file = BytesIO()
+    wb.save(xlsx_file)
+    return xlsx_file

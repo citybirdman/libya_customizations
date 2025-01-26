@@ -325,7 +325,7 @@ def get_purchase_receipt_data(purchase_receipt):
 	return result
 
 @frappe.whitelist()
-def edit_item_price(values):
+def edit_item_price(values, selling_price_list = None):
 	values = json.loads(values)
 	for row in values:
 		# frappe.throw(row['name'])
@@ -333,17 +333,17 @@ def edit_item_price(values):
 		if (plr or plr == 0) and plr != row['price']:
 			frappe.db.set_value("Item Price", row['name'], "price_list_rate", row['price'])
 		if not plr and plr != 0:
-			selling_price_list = frappe.db.sql("""
-					SELECT
-							value
-						FROM
-							`tabSingles`
-						WHERE
-							doctype = 'Selling Settings'
-						AND
-							field = 'selling_price_list'
-			""")[0][0]
-			# frappe.throw(repr(selling_price_list))
+			if not selling_price_list:
+				selling_price_list = frappe.db.sql("""
+						SELECT
+								value
+							FROM
+								`tabSingles`
+							WHERE
+								doctype = 'Selling Settings'
+							AND
+								field = 'selling_price_list'
+				""")[0][0]
 			item_price = frappe.get_doc({
 				"doctype": "Item Price",
 				"item_code": row['item_code'],
