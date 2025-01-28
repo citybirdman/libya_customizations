@@ -1,4 +1,17 @@
 frappe.ui.form.on('Account', {
+	refresh(frm){
+		frm.add_custom_button(
+			__("Account Statment Summary"),
+			function () {
+				frappe.route_options = {
+					account: frm.doc.name,
+					from_date: frappe.datetime.year_start(frappe.datetime.nowdate()),
+					to_date: frappe.datetime.nowdate()
+				};
+				frappe.set_route("query-report", "Account Statement Summary");
+			},
+			__("View"));
+	},
 	account_name(frm) {
 		if (frm.doc.__islocal) {
 			frappe.call({
