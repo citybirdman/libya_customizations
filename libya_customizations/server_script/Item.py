@@ -8,7 +8,7 @@ def after_insert_item(doc, method):
             item_price_doc = frappe.get_doc({
                 "doctype": "Item Price",
                 "item_code": doc.item_code,
-                "price_list": selling_price_list,
+                "price_list": selling_price_list.name,
                 "price_list_rate": 0,
                 "selling": 1,
                 "item_name": doc.item_name,
