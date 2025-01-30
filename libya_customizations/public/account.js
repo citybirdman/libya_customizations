@@ -10,7 +10,7 @@ frappe.ui.form.on('Account', {
 				};
 				frappe.set_route("query-report", "Account Statement Summary");
 			},
-			__("View"));
+		).removeClass("btn-default").addClass("btn-primary");
 	},
 	account_name(frm) {
 		if (frm.doc.__islocal) {
