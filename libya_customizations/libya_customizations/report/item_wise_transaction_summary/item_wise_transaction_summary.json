@@ -1,0 +1,114 @@
+{
+ "add_total_row": 1,
+ "columns": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item Code",
+   "width": 0
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "width": 0
+  },
+  {
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "label": "Item Group",
+   "options": "Item Group",
+   "width": 0
+  },
+  {
+   "fieldname": "brand",
+   "fieldtype": "Link",
+   "label": "Brand",
+   "options": "Brand",
+   "width": 0
+  },
+  {
+   "fieldname": "country_of_origin",
+   "fieldtype": "Link",
+   "label": "Origin",
+   "options": "Country",
+   "width": 0
+  },
+  {
+   "fieldname": "opening_stock",
+   "fieldtype": "Int",
+   "label": "Opening Stock",
+   "width": 0
+  },
+  {
+   "fieldname": "purchases",
+   "fieldtype": "Int",
+   "label": "Purchases",
+   "width": 0
+  },
+  {
+   "fieldname": "sales",
+   "fieldtype": "Int",
+   "label": "Sales",
+   "width": 0
+  },
+  {
+   "fieldname": "ending_stock",
+   "fieldtype": "Int",
+   "label": "Ending Stock",
+   "width": 0
+  }
+ ],
+ "creation": "2025-02-09 22:53:08.913141",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date",
+   "mandatory": 1,
+   "wildcard_filter": 0
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "mandatory": 1,
+   "wildcard_filter": 0
+  }
+ ],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "itar",
+ "letterhead": null,
+ "modified": "2025-02-09 23:06:44.374092",
+ "modified_by": "Administrator",
+ "module": "Libya Customizations",
+ "name": "Item-wise Transaction Summary",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "WITH\nopening_entry AS (\n    SELECT\n        name AS stock_reconciliation,\n        DATE_SUB(DATE(posting_date), INTERVAL 1 DAY) AS posting_date\n    FROM\n        `tabStock Reconciliation`\n    WHERE\n        docstatus = 1\n        AND purpose = 'Opening Stock'\n),\nopening_stock AS (\n    SELECT\n        sle.item_code,\n        SUM(sle.actual_qty) AS actual_qty\n    FROM\n        `tabStock Ledger Entry` sle\n    LEFT JOIN\n        opening_entry oe\n    ON\n        sle.voucher_no = oe.stock_reconciliation\n    WHERE\n        sle.is_cancelled = 0\n        AND IF(oe.posting_date IS NOT NULL, oe.posting_date, sle.posting_date) < %(from_date)s\n    GROUP BY\n        sle.item_code\n),\npurchases AS (\n    SELECT\n        item_code,\n        SUM(actual_qty) AS actual_qty\n    FROM\n        `tabStock Ledger Entry`\n    WHERE\n        is_cancelled = 0\n        AND posting_date BETWEEN %(from_date)s AND %(to_date)s\n        AND voucher_type IN ('Purchase Invoice', 'Purchase Receipt')\n    GROUP BY\n        item_code\n),\nsales AS (\n    SELECT\n        item_code,\n        SUM(actual_qty)*-1 AS actual_qty\n    FROM\n        `tabStock Ledger Entry`\n    WHERE\n        is_cancelled = 0\n        AND posting_date BETWEEN %(from_date)s AND %(to_date)s\n        AND voucher_type IN ('Sales Invoice', 'Delivery Note')\n    GROUP BY\n        item_code\n),\nending_stock AS (\n    SELECT\n        item_code,\n        SUM(actual_qty) AS actual_qty\n    FROM\n        `tabStock Ledger Entry`\n    WHERE\n        is_cancelled = 0\n        AND posting_date <= %(to_date)s\n    GROUP BY\n        item_code\n)\nSELECT\n    i.name AS item_code,\n    i.item_name,\n    i.item_group,\n    i.brand,\n    i.country_of_origin,\n    IFNULL(opening_stock.actual_qty, 0) AS opening_stock,\n    IFNULL(purchases.actual_qty, 0) AS purchases,\n    IFNULL(sales.actual_qty, 0) AS sales,\n    IFNULL(ending_stock.actual_qty, 0) AS ending_stock\nFROM\n    `tabItem` i\nLEFT JOIN\n    opening_stock\nON\n    i.name = opening_stock.item_code\nLEFT JOIN\n    purchases\nON\n    i.name = purchases.item_code\nLEFT JOIN\n    sales\nON\n    i.name = sales.item_code\nLEFT JOIN\n    ending_stock\nON\n    i.name = ending_stock.item_code\nWHERE\n    IFNULL(opening_stock.actual_qty, 0) + ABS(IFNULL(purchases.actual_qty, 0)) + ABS(IFNULL(sales.actual_qty, 0)) + IFNULL(ending_stock.actual_qty, 0) > 0\nORDER BY\n    brand,\n    ending_stock DESC",
+ "ref_doctype": "Stock Ledger Entry",
+ "report_name": "Item-wise Transaction Summary",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Accounts Manager"
+  },
+  {
+   "role": "Stock User"
+  },
+  {
+   "role": "Chief Sales Officer"
+  },
+  {
+   "role": "Sales Supervisor"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "timeout": 0
+}

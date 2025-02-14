@@ -57536,5 +57536,18 @@
   "name": "mr8qu07e4h",
   "source_text": "Miscellaneous",
   "translated_text": "متنوع"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-02-14 08:30:48.903632",
+  "name": "ep9vn7mi97",
+  "source_text": "Item-wise Transaction Summary",
+  "translated_text": "بيان بالمعاملات حسب الصنف"
  }
 ]
