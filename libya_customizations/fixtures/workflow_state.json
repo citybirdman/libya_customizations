@@ -84,19 +84,19 @@
   "docstatus": 0,
   "doctype": "Workflow State",
   "icon": "",
-  "modified": "2024-11-24 10:48:42.575206",
-  "name": "Posted",
+  "modified": "2024-11-24 10:49:12.933258",
+  "name": "Returned",
   "style": "",
-  "workflow_state_name": "Posted"
+  "workflow_state_name": "Returned"
  },
  {
   "docstatus": 0,
   "doctype": "Workflow State",
   "icon": "",
-  "modified": "2024-11-24 10:49:12.933258",
-  "name": "Returned",
+  "modified": "2024-11-24 10:48:42.575206",
+  "name": "Posted",
   "style": "",
-  "workflow_state_name": "Returned"
+  "workflow_state_name": "Posted"
  },
  {
   "docstatus": 0,
