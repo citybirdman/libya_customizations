@@ -140,3 +140,27 @@ frappe.listview_settings['Item Price'] = {
         }
     }
 };
+
+function upload_and_import(file) {
+    var formData = new FormData(); // Create FormData object
+    formData.append('file', file);  // Append the file to FormData
+    // Perform the AJAX call
+    frappe.call({
+        method: 'libya_customizations.server_script.item_price.import_item_price_data',
+        args: {
+            file_url: file
+        },
+        freeze: true,
+        freeze_message: __('Uploading and Importing Data...'),
+        callback: function(response) {
+            if (response.message) {
+                frappe.msgprint(__('File uploaded and Item Prices imported successfully.'));
+                // Refresh the list view to reflect the changes
+                console.log(response.message)
+                frappe.views.ListView.refresh();
+            } else {
+                frappe.msgprint(__('Error occurred while importing the data.'));
+            }
+        }
+    });
+}
