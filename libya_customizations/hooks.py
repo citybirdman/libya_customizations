@@ -47,7 +47,8 @@ doctype_js = {
 	"Sales Invoice" : "public/sales_invoice.js",
 	"Delivery Note" : "public/delivery_note.js",
 	"Stock Entry" : "public/stock_entry.js",
-	"Account" : "public/account.js"
+	"Account" : "public/account.js",
+	"Purchase Invoice": "public/purchase_invoice.js"
 }
 
 doctype_list_js = {
@@ -195,7 +196,8 @@ doc_events = {
         "on_update": "libya_customizations.server_script.Item.after_update_item"
     },
     "Purchase Invoice":{
-        "before_update_after_submit": "libya_customizations.server_script.purchase_invoice.before_update_after_submit" 
+        "before_update_after_submit": "libya_customizations.server_script.purchase_invoice.before_update_after_submit",
+        "before_submit": "libya_customizations.server_script.purchase_invoice.validate_post_carriage_costs" 
     },
     "Sales Invoice":{
         "on_submit":[
