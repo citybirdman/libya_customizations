@@ -56,9 +56,9 @@ def on_submit(doc, method):
         })
              
     landed_costs.append({
-		"expense_account":doc.clearence_account,
-		"description": "Clearence",
-		"amount": doc.clearence_amount
+		"expense_account":doc.clearance_account,
+		"description": "Clearance",
+		"amount": doc.clearance_amount
         })
     
     landed_costs.append({
@@ -124,9 +124,9 @@ def on_update_after_submit(doc, method):
         })
             
     landed_costs.append({
-        "expense_account":doc.clearence_account,
-        "description": "Clearence",
-        "amount": doc.clearence_amount
+        "expense_account":doc.clearance_account,
+        "description": "Clearance",
+        "amount": doc.clearance_amount
         })
     
     landed_costs.append({
