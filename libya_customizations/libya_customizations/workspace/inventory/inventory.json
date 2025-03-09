@@ -1,0 +1,185 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"69sLiiYi8R\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/sales-order/\\\"><b>Sales Orders</b></a></span>\",\"col\":12}},{\"id\":\"6h79EUkwv3\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Order No - Partly Delivered\",\"col\":4}},{\"id\":\"wNDv8xR9i1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Order No - Not Delivered\",\"col\":4}},{\"id\":\"h70UDJyxWX\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/delivery-note/\\\"><b>Delivery Notes</b></a></span>\",\"col\":12}},{\"id\":\"8iSr-uH2kF\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Delivery Note No - Submitted\",\"col\":4}},{\"id\":\"gOuyGi9ZIe\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Delivery Note No - Draft\",\"col\":4}},{\"id\":\"rZYH7imAHq\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Delivery Note No - Cancelled\",\"col\":4}},{\"id\":\"PAt77aNBTM\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Delivery Note No - Unbilled\",\"col\":4}},{\"id\":\"mcxlzbETwx\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/sales-invoice?is_return=1\\\"><b>Returns</b></a></span>\",\"col\":12}},{\"id\":\"L-nuqqB1XA\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Return No - Submitted\",\"col\":4}},{\"id\":\"_B-PTYcgNP\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Return No - Draft\",\"col\":4}},{\"id\":\"aAm_VL8384\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Return No - Cancelled\",\"col\":4}},{\"id\":\"4DNsxAuq4K\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Return No - Pending Submission\",\"col\":4}},{\"id\":\"3qEL1pEk_D\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Return No - Pending Cancellation\",\"col\":4}},{\"id\":\"_a6Qk45YOD\",\"type\":\"spacer\",\"data\":{\"col\":4}},{\"id\":\"R6xEv7h4eh\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Return No - Rejected Submission\",\"col\":4}},{\"id\":\"q3UevnWV4N\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Return No - Rejected Cancellation\",\"col\":4}},{\"id\":\"1Nm3RyETV9\",\"type\":\"spacer\",\"data\":{\"col\":4}},{\"id\":\"DuSWVl9PsI\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/stock-entry?stock_entry_type=Material+Issue\\\"><b>Material Issue</b></a></span>\",\"col\":8}},{\"id\":\"gP_Ddd37vI\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"New Material Issue\",\"col\":4}},{\"id\":\"9vbqdnhwzV\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Submitted\",\"col\":4}},{\"id\":\"16USEaDzPN\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Draft\",\"col\":4}},{\"id\":\"HVI_6o3ITK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Cancelled\",\"col\":4}},{\"id\":\"elvx38AuBZ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Pending Submission\",\"col\":3}},{\"id\":\"8-dNaISOmf\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Pending Cancellation\",\"col\":3}},{\"id\":\"FTZQiM1cL7\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Rejected Submission\",\"col\":3}},{\"id\":\"hfvJVp1L99\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Rejected Cancellation\",\"col\":3}},{\"id\":\"5I3mcpdR1O\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/stock-entry?stock_entry_type=Material+Receipt\\\"><b>Material Receipt</b></a></span>\",\"col\":8}},{\"id\":\"UkvVVmjiYh\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"New Material Receipt\",\"col\":4}},{\"id\":\"1w8TCBjs7U\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Submitted\",\"col\":4}},{\"id\":\"1F-LrF029P\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Draft\",\"col\":4}},{\"id\":\"P1CQ0S7NKd\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Cancelled\",\"col\":4}},{\"id\":\"xK53g8XlmA\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Pending Submission\",\"col\":3}},{\"id\":\"D74_p3NQNW\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Pending Cancellation\",\"col\":3}},{\"id\":\"sbzEth2xDc\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Rejected Submission\",\"col\":3}},{\"id\":\"ICwwXu0wPG\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Rejected Cancellation\",\"col\":3}},{\"id\":\"rdOadM7TXf\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"http://app/sales-adjustment-request/\\\"><b>Sales Adjustment Requests</b></a></span>\",\"col\":12}},{\"id\":\"TSPDfBkhxE\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Adjustment Request No - Submitted\",\"col\":4}},{\"id\":\"l_9IwWSsNv\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Adjustment Request No - Draft\",\"col\":4}},{\"id\":\"BB9Uivc5Lx\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Adjustment Request No - Cancelled\",\"col\":4}},{\"id\":\"7KSjyO3UUW\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Adjustment Request No - Pending Submission\",\"col\":3}},{\"id\":\"W_2fyZsnjK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Adjustment Request No - Pending Cancellation\",\"col\":3}},{\"id\":\"icbaEIUw5u\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Adjustment Request No - Rejected Submission\",\"col\":3}},{\"id\":\"BmhaU0qWQv\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Sales Adjustment Request No - Rejected Cancellation\",\"col\":3}}]",
+ "creation": "2024-12-07 08:46:56.462737",
+ "custom_blocks": [
+  {
+   "custom_block_name": "New Material Issue",
+   "label": "New Material Issue"
+  },
+  {
+   "custom_block_name": "New Material Receipt",
+   "label": "New Material Receipt"
+  }
+ ],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "stock",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Inventory",
+ "links": [],
+ "modified": "2024-12-18 10:52:14.279640",
+ "modified_by": "Administrator",
+ "module": "Libya Customizations",
+ "name": "Inventory",
+ "number_cards": [
+  {
+   "label": "Sales Order No - Not Delivered",
+   "number_card_name": "Sales Order No - Not Delivered - Reserve with Delivery"
+  },
+  {
+   "label": "Sales Adjustment Request No - Submitted",
+   "number_card_name": "Sales Adjustment Request No - Submitted"
+  },
+  {
+   "label": "Sales Adjustment Request No - Pending Submission",
+   "number_card_name": "Sales Adjustment Request No - Pending Submission"
+  },
+  {
+   "label": "Material Issue No - Pending Submission",
+   "number_card_name": "Material Issue No - Pending Submission"
+  },
+  {
+   "label": "Sales Return No - Pending Submission",
+   "number_card_name": "Sales Return No - Pending Submission"
+  },
+  {
+   "label": "Sales Return No - Submitted",
+   "number_card_name": "Sales Return No - Submitted"
+  },
+  {
+   "label": "Material Issue No - Submitted",
+   "number_card_name": "Material Issue No - Submitted"
+  },
+  {
+   "label": "Material Receipt No - Pending Submission",
+   "number_card_name": "Material Receipt No - Pending Submission"
+  },
+  {
+   "label": "Material Issue No - Pending Cancellation",
+   "number_card_name": "Material Issue No - Pending Cancellation"
+  },
+  {
+   "label": "Material Issue No - Draft",
+   "number_card_name": "Material Issue No - Draft"
+  },
+  {
+   "label": "Material Receipt No - Pending Cancellation",
+   "number_card_name": "Material Receipt No - Pending Cancellation"
+  },
+  {
+   "label": "Sales Adjustment Request No - Draft",
+   "number_card_name": "Sales Adjustment Request No - Draft"
+  },
+  {
+   "label": "Sales Order No - Partly Delivered",
+   "number_card_name": "Sales Order No - Partly Delivered - Reserve with Delivery"
+  },
+  {
+   "label": "Sales Return No - Draft",
+   "number_card_name": "Sales Return No - Draft"
+  },
+  {
+   "label": "Sales Return No - Pending Cancellation",
+   "number_card_name": "Sales Return No - Pending Cancellation"
+  },
+  {
+   "label": "Sales Adjustment Request No - Pending Cancellation",
+   "number_card_name": "Sales Adjustment Request No - Pending Cancellation"
+  },
+  {
+   "label": "Sales Return No - Cancelled",
+   "number_card_name": "Sales Return No - Cancelled"
+  },
+  {
+   "label": "Sales Adjustment Request No - Rejected Submission",
+   "number_card_name": "Sales Adjustment Request No - Rejected Submission"
+  },
+  {
+   "label": "Material Issue No - Cancelled",
+   "number_card_name": "Material Issue No - Cancelled"
+  },
+  {
+   "label": "Sales Adjustment Request No - Cancelled",
+   "number_card_name": "Sales Adjustment Request No - Cancelled"
+  },
+  {
+   "label": "Delivery Note No - Submitted",
+   "number_card_name": "Delivery Note No - Submitted"
+  },
+  {
+   "label": "Sales Return No - Rejected Submission",
+   "number_card_name": "Sales Return No - Rejected Submission"
+  },
+  {
+   "label": "Material Issue No - Rejected Submission",
+   "number_card_name": "Material Issue No - Rejected Submission"
+  },
+  {
+   "label": "Material Receipt No - Rejected Submission",
+   "number_card_name": "Material Receipt No - Rejected Submission"
+  },
+  {
+   "label": "Material Receipt No - Rejected Cancellation",
+   "number_card_name": "Material Receipt No - Rejected Cancellation"
+  },
+  {
+   "label": "Material Issue No - Rejected Cancellation",
+   "number_card_name": "Material Issue No - Rejected Cancellation"
+  },
+  {
+   "label": "Sales Return No - Rejected Cancellation",
+   "number_card_name": "Sales Return No - Rejected Cancellation"
+  },
+  {
+   "label": "Material Receipt No - Submitted",
+   "number_card_name": "Material Receipt No - Submitted"
+  },
+  {
+   "label": "Delivery Note No - Draft",
+   "number_card_name": "Delivery Note No - Draft"
+  },
+  {
+   "label": "Sales Adjustment Request No - Rejected Cancellation",
+   "number_card_name": "Sales Adjustment Request No - Rejected Cancellation"
+  },
+  {
+   "label": "Delivery Note No - Cancelled",
+   "number_card_name": "Delivery Note No - Cancelled"
+  },
+  {
+   "label": "Material Receipt No - Draft",
+   "number_card_name": "Material Receipt No - Draft"
+  },
+  {
+   "label": "Material Receipt No - Cancelled",
+   "number_card_name": "Material Receipt No - Cancelled"
+  },
+  {
+   "label": "Delivery Note No - Unbilled",
+   "number_card_name": "Delivery Note No - Unbilled"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Warehouse User"
+  },
+  {
+   "role": "Chief Sales Officer"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "sequence_id": 30.0,
+ "shortcuts": [],
+ "title": "Inventory"
+}
