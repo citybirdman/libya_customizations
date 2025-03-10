@@ -128,7 +128,7 @@ class SalesAdjustmentRequest(Document):
 			set_posting_time=1,
 			update_stock=1,
 			is_return=1,  # Mark as a return
-			against_sales_invoice=self.sales_invoice,
+			return_against=self.sales_invoice,
 			set_warehouse=si.set_warehouse,
 			sales_adjustment_request=self.name,
 			selling_price_list=si.selling_price_list,

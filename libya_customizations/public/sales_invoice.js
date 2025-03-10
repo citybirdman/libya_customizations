@@ -1,6 +1,6 @@
 frappe.ui.form.on("Sales Invoice", {
 	onload_post_render(frm){
-		const buttonsToRemove = [
+        const buttonsToRemove = [
 			["Payment", "Create"],
 			["Return / Credit Note", "Create"],
 			["Payment Request", "Create"],
@@ -45,6 +45,15 @@ frappe.ui.form.on("Sales Invoice", {
                 frm.fields_dict['items'].grid.wrapper.find('.grid-delete-row').hide();
                 frm.fields_dict.items.wrapper.querySelector(".grid-upload").style.display = "none";
                 frm.fields_dict.items.wrapper.querySelector(".grid-download").style.display = "none";
+            }
+        }else{
+            frm.fields_dict.items.wrapper.onchange = function(){
+                frm.fields_dict.items.grid.reset_grid()
+                frm.fields_dict.items.grid.grid_buttons[0].children[1].style.display = "display-block";
+                frm.fields_dict.items.grid.grid_buttons[0].children[2].style.display = "display-block";
+                frm.fields_dict.items.grid.grid_buttons[0].children[3].style.display = "display-block";
+				frm.fields_dict.items.grid.grid_buttons[0].children[0].style.display = "display-block";
+                frm.fields_dict['items'].grid.wrapper.find('.grid-delete-row').show();
             }
         }
     },
