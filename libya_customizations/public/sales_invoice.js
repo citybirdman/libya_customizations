@@ -48,7 +48,7 @@ frappe.ui.form.on("Sales Invoice", {
             }
         }else{
             frm.fields_dict.items.wrapper.onchange = function(){
-                frm.fields_dict.items.grid.reset_grid()
+                // frm.fields_dict.items.grid.reset_grid()
                 frm.fields_dict.items.grid.grid_buttons[0].children[1].style.display = "display-block";
                 frm.fields_dict.items.grid.grid_buttons[0].children[2].style.display = "display-block";
                 frm.fields_dict.items.grid.grid_buttons[0].children[3].style.display = "display-block";
