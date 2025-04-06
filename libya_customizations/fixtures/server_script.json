@@ -218,7 +218,7 @@
   "doctype_event": "After Submit",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2025-02-03 03:16:12.281524",
+  "modified": "2025-02-22 10:13:54.625764",
   "module": "Libya Customizations",
   "name": "Auto-Creation of Purchase Receipt Upon Submitting Purchase Invoice",
   "rate_limit_count": 5,
