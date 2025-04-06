@@ -81,7 +81,8 @@ function get_list(frm, filters= {docstatus: ["!=",2]}, fields= ["name", "title",
         args: {
             doctype: 'Purchase Receipt',
             filters, fields,
-            order_by: "docstatus ASC"
+            order_by: "docstatus ASC",
+            limit_page_length: 0
         },
         callback: function(response) {
             if (response.message) {
