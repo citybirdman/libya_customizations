@@ -1,6 +1,17 @@
 import frappe
 from frappe import _
 
+def get_default_company():
+    default_company = frappe.db.get_single_value("Global Defaults", "default_company")
+    
+    if default_company:
+        return default_company
+    else:
+        # Fallback: get the first company in the list
+        company = frappe.get_all("Company", fields=["name"], limit=1)
+        return company[0].name if company else None
+
+
 def after_submit_sales_order(doc, method):
     flag = False
     for row in doc.items:
@@ -149,7 +160,10 @@ def after_submit_sales_order(doc, method):
     
 def before_save_sales_order(doc, method):
     doc = frappe.get_doc(doc)
-    if doc.reservation_status == "Reserve against Future Receipts" and not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]]):
+    if  (
+		    doc.reservation_status == "Reserve against Future Receipts"
+		    and not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
+		):
         frappe.msgprint(_("You do not have the authority to choose <b>Reserve against Future Receipts</b>"), title=_('Error'), indicator='red')
         raise frappe.ValidationError
 
@@ -355,9 +369,11 @@ def create_dn_from_so(doc):
 
 def before_submit_sales_order(doc, method):
 	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
-	if not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]]):
+	if  (
+		    not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
+		):
 		for row in rows:
-			if row['rate'] < row['valuation_rate']:
+			if row['rate'] < row['valuation_rate'] and frappe.db.get_value("Company", get_default_company(), "validate_selling_price_so"):
 				frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Valuation Rate</b>").format('{:0.2f}'.format(row['rate']), row['item_name']))
 			elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
 				for row in rows:
@@ -367,13 +383,14 @@ def before_submit_sales_order(doc, method):
 
 def validate_item_prices_after_submit(doc, method):
 	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
-	if not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]]):
+	if (
+		    not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
+		):
 		for row in rows:
-			if row['rate'] < row['valuation_rate']:
+			if row['rate'] < row['valuation_rate'] and frappe.db.get_value("Company", get_default_company(), "validate_selling_price_so"):
 				frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Valuation Rate</b>").format('{:0.2f}'.format(row['rate']), row['item_name']))
 			elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
 				for row in rows:
 					price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
 					if row['rate'] < price_list_rate:
 						frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
-                    
