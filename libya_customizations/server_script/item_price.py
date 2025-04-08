@@ -99,34 +99,24 @@ def import_item_price_data(file_url):
 @frappe.whitelist()
 def update_stock_valuation_rate():
     sql = """
-        UPDATE
-            `tabItem Price` ip
+        UPDATE `tabItem Price` ip
+        JOIN (
+            SELECT
+                b.item_code,
+                IFNULL(SUM(IFNULL(b.actual_qty, 0)), 0) AS total_qty,
+                IFNULL(
+                    CASE
+                        WHEN SUM(IFNULL(b.actual_qty, 0)) = 0 THEN 0
+                        ELSE SUM(IFNULL(b.stock_value, 0)) / SUM(IFNULL(b.actual_qty, 0))
+                    END,
+                0) AS avg_rate
+            FROM
+                `tabBin` b
+            GROUP BY
+                b.item_code
+        ) AS bin_data ON TRIM(bin_data.item_code) = TRIM(ip.item_code)
         SET
-            ip.stock_valuation_rate = (
-                SELECT
-                    SUM(b.stock_value) / SUM(b.actual_qty) AS avg_rate
-                FROM
-                    `tabBin` b
-                WHERE
-                    b.actual_qty > 0 AND b.item_code = ip.item_code
-                GROUP BY
-                    b.item_code
-            ),
-            ip.stock_qty = (
-                SELECT
-                    SUM(b.actual_qty)
-                FROM
-                    `tabBin` b
-                WHERE
-                    b.actual_qty > 0 AND b.item_code = ip.item_code
-                GROUP BY
-                    b.item_code
-            )
-        WHERE
-            EXISTS (
-                SELECT 1
-                FROM `tabBin` b
-                WHERE b.actual_qty > 0 AND b.item_code = ip.item_code
-            )
+            ip.stock_qty = IFNULL(bin_data.total_qty, 0),
+            ip.stock_valuation_rate = bin_data.avg_rate;
     """
     frappe.db.sql(sql)
