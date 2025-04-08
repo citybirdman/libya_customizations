@@ -1,5 +1,36 @@
 frappe.listview_settings['Item Price'] = {
     onload: function (listview) {
+        setTimeout(() => {
+            // This hides "Export"
+            document.querySelectorAll('.dropdown-menu li a').forEach((el) => {
+                if (el.innerText.trim() === 'Export') {
+                    el.parentElement.remove();
+                }
+                if (el.innerText.trim() === 'تصدير') {
+                    el.parentElement.remove();
+                }
+                if (el.innerText.includes('Import')) {
+                    el.parentElement.style.display = 'none';
+                }
+                if (el.innerText.includes('استيراد')) {
+                    el.parentElement.style.display = 'none';
+                }
+            });
+            document.querySelectorAll('.actions-btn-group .dropdown-menu li a').forEach(el => {
+                if (el.innerText.trim() === 'Export') {
+                    el.parentElement.remove();
+                }
+                if (el.innerText.trim() === 'تصدير') {
+                    el.parentElement.remove();
+                }
+                if (el.innerText.includes('Import')) {
+                    el.parentElement.style.display = 'none';
+                }
+                if (el.innerText.includes('استيراد')) {
+                    el.parentElement.style.display = 'none';
+                }
+            });
+        }, 500);
         // Call the backend method to update stock valuation rate
         frappe.call({
             method: "libya_customizations.server_script.item_price.update_stock_valuation_rate",
