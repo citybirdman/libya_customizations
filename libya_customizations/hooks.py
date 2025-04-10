@@ -98,7 +98,7 @@ jinja = {
 
 # before_install = "libya_customizations.install.before_install"
 after_install = "libya_customizations.install.after_install"
-
+before_migrate = "libya_customizations.install.after_install"
 # Uninstallation
 # ------------
 
@@ -309,4 +309,4 @@ doc_events = {
 # }
 
 
-website_route_rules = [{'from_route': '/libya/<path:app_path>', 'to_route': 'libya'},]
+# website_route_rules = [{'from_route': '/libya/<path:app_path>', 'to_route': 'libya'},]
