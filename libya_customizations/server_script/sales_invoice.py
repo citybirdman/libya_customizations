@@ -97,7 +97,9 @@ def before_cancel_sales_invoice_dn(doc, method):
 
             
 
-# def before_submit_sales_invoice(doc, method):
+def before_submit_sales_invoice(doc, method):
+    pass
+
 #     rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.incoming_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
 
     
