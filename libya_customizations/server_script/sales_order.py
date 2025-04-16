@@ -343,8 +343,14 @@ def create_dn_from_so(doc):
                     'so_detail':item['name'],
                     'warehouse': doc['set_warehouse'],
                     'rate': rate,
-                    'price_list_rate': item['price_list_rate']
+                    'price_list_rate': item['price_list_rate'],
+                    'brand': item['brand']
                 })
+            for item in items_to_load:
+                if not item["brand"]:
+                    brand = frappe.db.get_value("Item", item.item_code, "brand")
+                    item["brand"] = brand or ""
+            items_to_load.sort(key=lambda x: x["brand"] or "")
         delivery_note = frappe.get_doc(dict(
             doctype = 'Delivery Note',
             customer = doc['customer'],
