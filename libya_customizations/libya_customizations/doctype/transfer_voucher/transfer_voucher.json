@@ -224,6 +224,7 @@
    "read_only": 1
   },
   {
+   "depends_on": "!frappe.user_roles.includes(\"Libya Team\")",
    "fieldname": "connections_tab",
    "fieldtype": "Tab Break",
    "label": "Connections",
@@ -264,7 +265,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-12-16 16:31:43.383568",
+ "modified": "2025-04-19 12:36:52.240242",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Transfer Voucher",

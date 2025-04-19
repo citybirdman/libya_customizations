@@ -180,6 +180,7 @@
    "label": "Remark"
   },
   {
+   "depends_on": "!frappe.user_roles.includes(\"Libya Team\")",
    "fieldname": "connections_tab",
    "fieldtype": "Tab Break",
    "label": "Connections",
@@ -215,7 +216,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-12-16 11:54:17.196731",
+ "modified": "2025-04-19 12:37:41.772009",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Debt Voucher",

@@ -258,6 +258,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "!frappe.user_roles.includes(\"Libya Team\")",
    "fieldname": "connections_tab",
    "fieldtype": "Tab Break",
    "label": "Connections",
@@ -345,7 +346,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-01-05 13:19:27.483622",
+ "modified": "2025-04-19 12:33:44.432297",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Receipt Voucher",

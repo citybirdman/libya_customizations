@@ -283,6 +283,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "!frappe.user_roles.includes(\"Libya Team\")",
    "fieldname": "connections_tab",
    "fieldtype": "Tab Break",
    "label": "Connections",
@@ -318,7 +319,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2024-12-16 11:57:58.800051",
+ "modified": "2025-04-19 12:38:51.998589",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Clearing Voucher",
