@@ -40,6 +40,7 @@ def create_si_from_dn(doc):
             additional_discount_percentage = doc['additional_discount_percentage'],
             taxes = doc['taxes'],
             sales_team = doc['sales_team'],
+            workflow_state = 'Posted',
             items = items_to_load
         )).insert(ignore_permissions=True)
         si_name = sales_invoice.name
