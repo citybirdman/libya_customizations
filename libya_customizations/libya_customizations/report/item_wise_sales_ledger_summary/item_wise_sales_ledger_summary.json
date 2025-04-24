@@ -1,0 +1,124 @@
+{
+ "add_total_row": 1,
+ "columns": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item",
+   "width": 80
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "width": 300
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Sales Invoice",
+   "options": "Sales Invoice",
+   "width": 230
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "width": 120
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer",
+   "width": 90
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "Customer Name",
+   "width": 150
+  },
+  {
+   "fieldname": "in_qty",
+   "fieldtype": "Int",
+   "label": "In-Qty",
+   "width": 80
+  },
+  {
+   "fieldname": "out_qty",
+   "fieldtype": "Int",
+   "label": "Out-Qty",
+   "width": 80
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Price",
+   "width": 80
+  }
+ ],
+ "creation": "2025-04-25 00:11:57.038587",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item",
+   "mandatory": 1,
+   "options": "Item",
+   "wildcard_filter": 0
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From",
+   "mandatory": 1,
+   "wildcard_filter": 0
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "mandatory": 1,
+   "wildcard_filter": 0
+  }
+ ],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "itar",
+ "letterhead": null,
+ "modified": "2025-04-25 00:23:52.558084",
+ "modified_by": "Administrator",
+ "module": "Libya Customizations",
+ "name": "Item-wise Sales Ledger Summary",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "SELECT\r\n    sii.item_code,\r\n    i.item_name,\r\n    sii.parent AS sales_invoice,\r\n    si.posting_date,\r\n    si.customer,\r\n    c.customer_name,\r\n    IF(sii.qty < 0, sii.qty, 0) * -1 AS in_qty,\r\n    IF(sii.qty > 0, sii.qty, 0) AS out_qty,\r\n    sii.rate\r\nFROM\r\n    `tabSales Invoice Item` sii\r\nINNER JOIN\r\n    `tabSales Invoice` si\r\nON\r\n    sii.parent = si.name\r\nINNER JOIN\r\n    `tabItem` i\r\nON\r\n    sii.item_code = i.name\r\nINNER JOIN\r\n    `tabCustomer` c\r\nON\r\n    si.customer = c.name\r\nWHERE\r\n    sii.docstatus = 1\r\n    AND si.docstatus = 1\r\n    AND si.is_opening = 'No'\r\n    AND si.posting_date BETWEEN %(from_date)s AND %(to_date)s\r\n    AND i.item_code = %(item_code)s\r\nORDER BY\r\n    si.posting_date DESC,\r\n    sii.parent DESC",
+ "ref_doctype": "Sales Invoice",
+ "report_name": "Item-wise Sales Ledger Summary",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Accounts Manager"
+  },
+  {
+   "role": "Accounts User"
+  },
+  {
+   "role": "Accountant"
+  },
+  {
+   "role": "Chief Sales Officer"
+  },
+  {
+   "role": "Sales Supervisor"
+  },
+  {
+   "role": "Sales Coordinator"
+  }
+ ],
+ "timeout": 0
+}

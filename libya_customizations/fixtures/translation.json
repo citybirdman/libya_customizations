@@ -57588,5 +57588,18 @@
   "name": "1ab2fl0gc0",
   "source_text": "Minmum Balance",
   "translated_text": "أقل رصيد"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-04-25 00:28:44.005089",
+  "name": "s6kvopcm0s",
+  "source_text": "Item-wise Sales Ledger Summary",
+  "translated_text": "بيان حركة بيع حسب الصنف"
  }
 ]
