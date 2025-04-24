@@ -92,7 +92,7 @@ jinja = {
 		]
 # 	"filters": "libya_customizations.utils.jinja_filters"
 }
-# fixtures = [
+fixtures = [
 #     {
 #         "doctype": "Server Script",
 #         "filters": [["module" , "in" , ("Libya Customizations" )]]
@@ -106,8 +106,8 @@ jinja = {
 #     {
 #         "doctype": "Restrict Account View"
 #     },
-#     {
-#         "doctype": "Translation"
+    {
+        "doctype": "Translation"
 #     },
 #     {
 #         "doctype": "Workflow Action Master"
@@ -120,8 +120,8 @@ jinja = {
 #     },
 #     {
 #         "doctype": "Workflow State"
-#     }
-# ]
+    }
+]
 # Installation
 # ------------
 
