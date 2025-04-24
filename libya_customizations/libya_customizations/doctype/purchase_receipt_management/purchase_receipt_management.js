@@ -197,7 +197,7 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
                 fieldname: "prof",
                 onchange: ()=>{
                     const prof = cur_dialog.get_value("prof");
-                    cur_dialog.fields_dict.purchase_receipt_table.grid.data.map(function(row){row.p_price = Math.ceil(row.stock_valuation_rate * (prof+100)/100)});
+                    cur_dialog.fields_dict.purchase_receipt_table.grid.data.map(function(row){row.p_price = Math.ceil(row.receipt_valuation_rate * (prof+100)/100)});
                     cur_dialog.fields_dict.purchase_receipt_table.grid.refresh()
                 }
             },
