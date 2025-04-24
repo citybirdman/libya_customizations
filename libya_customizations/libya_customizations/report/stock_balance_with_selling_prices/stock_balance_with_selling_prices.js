@@ -22,7 +22,7 @@ frappe.query_reports["Stock Balance with Selling Prices"] = {
             label: "Minimum Balance",
             fieldname: "minimum_qty",
             fieldtype: "Int",
-            default: 0
+            default: 1
         },
         {
             label: "Brand",

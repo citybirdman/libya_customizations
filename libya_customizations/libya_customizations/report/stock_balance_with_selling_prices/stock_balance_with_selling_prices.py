@@ -12,7 +12,7 @@ def execute(filters=None):
     filters.setdefault("to_date", frappe.utils.today())
     filters.setdefault("filter_based_on", "Actual Balances")
     filters.setdefault("brand", [])
-    filters.setdefault("minimum_qty", 0)
+    filters.setdefault("minimum_qty", 1)
 
     # --- Parameters for query ---
     conditions = []

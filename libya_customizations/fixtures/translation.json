@@ -57575,5 +57575,18 @@
   "name": "ormlrhk69p",
   "source_text": "Qty To Deliver",
   "translated_text": "الكمية قيد التسليم"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-04-24 13:54:57.094345",
+  "name": "1ab2fl0gc0",
+  "source_text": "Minmum Balance",
+  "translated_text": "أقل رصيد"
  }
 ]
