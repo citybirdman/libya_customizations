@@ -76,7 +76,7 @@ def execute(filters=None):
         ip.price_list_rate
     FROM stock_ledger_entry sle
     INNER JOIN `tabItem` i ON sle.item_code = i.name
-    LEFT JOIN `tabTireSize` ts ON i.tire_size = ts.name
+    LEFT JOIN `tabTire Size` ts ON i.tire_size = ts.name
     LEFT JOIN item_price ip ON sle.item_code = ip.item_code
     LEFT JOIN sales_order_item soi ON sle.item_code = soi.item_code
     WHERE
