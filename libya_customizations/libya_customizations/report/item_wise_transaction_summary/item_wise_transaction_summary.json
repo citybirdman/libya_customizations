@@ -5,58 +5,58 @@
    "fieldname": "item_code",
    "fieldtype": "Data",
    "label": "Item Code",
-   "width": 0
+   "width": 100
   },
   {
    "fieldname": "item_name",
    "fieldtype": "Data",
    "label": "Item Name",
-   "width": 0
+   "width": 270
   },
   {
    "fieldname": "item_group",
    "fieldtype": "Link",
    "label": "Item Group",
    "options": "Item Group",
-   "width": 0
+   "width": 90
   },
   {
    "fieldname": "brand",
    "fieldtype": "Link",
    "label": "Brand",
    "options": "Brand",
-   "width": 0
+   "width": 120
   },
   {
    "fieldname": "country_of_origin",
    "fieldtype": "Link",
    "label": "Origin",
    "options": "Country",
-   "width": 0
+   "width": 80
   },
   {
    "fieldname": "opening_stock",
    "fieldtype": "Int",
    "label": "Opening Stock",
-   "width": 0
+   "width": 130
   },
   {
    "fieldname": "purchases",
    "fieldtype": "Int",
    "label": "Purchases",
-   "width": 0
+   "width": 130
   },
   {
    "fieldname": "sales",
    "fieldtype": "Int",
    "label": "Sales",
-   "width": 0
+   "width": 130
   },
   {
    "fieldname": "ending_stock",
    "fieldtype": "Int",
    "label": "Ending Stock",
-   "width": 0
+   "width": 130
   }
  ],
  "creation": "2025-02-09 22:53:08.913141",
@@ -79,11 +79,11 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 0,
+ "idx": 3,
  "is_standard": "Yes",
  "letter_head": "itar",
  "letterhead": null,
- "modified": "2025-02-09 23:06:44.374092",
+ "modified": "2025-04-25 09:15:36.903867",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Item-wise Transaction Summary",
