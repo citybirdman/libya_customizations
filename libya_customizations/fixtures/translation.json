@@ -57692,5 +57692,18 @@
   "name": "mvadum5cjh",
   "source_text": "Sales Cost",
   "translated_text": "تكلفة المبيعات"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-04-25 21:26:34.271983",
+  "name": "avoj6g9svb",
+  "source_text": "Purchase Receipt Details",
+  "translated_text": "بيان مشتريات"
  }
 ]
