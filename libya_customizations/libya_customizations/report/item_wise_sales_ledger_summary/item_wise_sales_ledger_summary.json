@@ -42,13 +42,13 @@
   {
    "fieldname": "in_qty",
    "fieldtype": "Int",
-   "label": "In-Qty",
+   "label": "In Qty",
    "width": 80
   },
   {
    "fieldname": "out_qty",
    "fieldtype": "Int",
-   "label": "Out-Qty",
+   "label": "Out Qty",
    "width": 80
   },
   {
@@ -90,7 +90,7 @@
  "is_standard": "Yes",
  "letter_head": "itar",
  "letterhead": null,
- "modified": "2025-04-25 00:23:52.558084",
+ "modified": "2025-04-25 08:32:05.930997",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Item-wise Sales Ledger Summary",
