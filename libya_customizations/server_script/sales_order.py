@@ -359,7 +359,9 @@ def create_dn_from_so(doc):
             taxes = doc['taxes'],
             sales_team = doc['sales_team'],
             items = items_to_load
-        )).insert(ignore_permissions=False)
+        ))
+        if(doc['custom_remarks']):
+            delivery_note.custom_remarks = doc['custom_remarks']
         dn_name = delivery_note.name
         so_name = doc['name']
         # frappe.msgprint(_(f"Delivery Note <b>{dn_name}</b> has been created against Sales Order <b>{so_name}</b>"), title=_('Error'), indicator='red')
