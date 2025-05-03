@@ -57705,5 +57705,18 @@
   "name": "avoj6g9svb",
   "source_text": "Purchase Receipt Details",
   "translated_text": "بيان مشتريات"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-05-03 21:16:09.418131",
+  "name": "brh3hh2scn",
+  "source_text": "Qty To Receive",
+  "translated_text": "الكمية قيد الإستلام"
  }
 ]
