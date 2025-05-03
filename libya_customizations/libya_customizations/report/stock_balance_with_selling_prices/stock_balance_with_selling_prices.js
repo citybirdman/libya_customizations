@@ -14,7 +14,7 @@ frappe.query_reports["Stock Balance with Selling Prices"] = {
             label: "Filter Based On",
             fieldname: "filter_based_on",
             fieldtype: "Select",
-            options: ["Actual Balances", "Available Balances"],
+            options: ["Actual Balances", "Available Balances", "Available and Future Balances"],
             default: "Actual Balances",
             reqd: 1
         },

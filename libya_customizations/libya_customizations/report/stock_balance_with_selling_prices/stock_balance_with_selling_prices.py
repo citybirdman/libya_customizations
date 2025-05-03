@@ -65,26 +65,41 @@ def execute(filters=None):
             SELECT value FROM `tabSingles`
             WHERE doctype = 'Selling Settings' AND field = 'selling_price_list'
         )
-    )
+    ),
+	purchase_receipt_item_virtual AS (
+		SELECT pri.item_code, SUM(pri.qty) AS qty
+		FROM `tabPurchase Receipt Item` pri
+		INNER JOIN `tabPurchase Receipt` pr ON pri.parent = pr.name
+		WHERE pri.docstatus = 0
+		AND pri.qty > 0
+		AND pr.is_return = 0
+		AND pr.docstatus = 0
+		AND pr.virtual_receipt = 1
+		GROUP BY pri.item_code
+	)
     SELECT
         sle.item_code,
         i.item_name,
         i.brand,
-        sle.actual_qty,
+        IFNULL(sle.actual_qty, 0) AS actual_qty,
         IFNULL(soi.qty_to_deliver, 0) AS qty_to_deliver,
-        sle.actual_qty - IFNULL(soi.qty_to_deliver, 0) AS available_qty,
+        IFNULL(sle.actual_qty, 0) - IFNULL(soi.qty_to_deliver, 0) AS available_qty,
+        IFNULL(priv.qty, 0) AS qty_to_receive,
         ip.price_list_rate
-    FROM stock_ledger_entry sle
-    INNER JOIN `tabItem` i ON sle.item_code = i.name
+    FROM `tabItem` i
+    LEFT JOIN stock_ledger_entry sle ON i.name = sle.item_code
     LEFT JOIN `tabTire Size` ts ON i.tire_size = ts.name
-    LEFT JOIN item_price ip ON sle.item_code = ip.item_code
-    LEFT JOIN sales_order_item soi ON sle.item_code = soi.item_code
+    LEFT JOIN item_price ip ON i.name = ip.item_code
+    LEFT JOIN sales_order_item soi ON i.name = soi.item_code
+    LEFT JOIN purchase_receipt_item_virtual priv ON i.name = priv.item_code
     WHERE
         i.is_stock_item = 1
         AND (
-            (%(filter_based_on)s = 'Actual Balances' AND sle.actual_qty >= %(minimum_qty)s)
+            (%(filter_based_on)s = 'Actual Balances' AND IFNULL(sle.actual_qty, 0) >= %(minimum_qty)s)
             OR
-            (%(filter_based_on)s = 'Available Balances' AND (sle.actual_qty - IFNULL(soi.qty_to_deliver, 0)) >= %(minimum_qty)s)
+            (%(filter_based_on)s = 'Available Balances' AND (IFNULL(sle.actual_qty, 0) - IFNULL(soi.qty_to_deliver, 0)) >= %(minimum_qty)s)
+            OR
+            (%(filter_based_on)s = 'Available and Future Balances' AND (IFNULL(sle.actual_qty, 0) - IFNULL(soi.qty_to_deliver, 0) + IFNULL(priv.qty, 0)) >= %(minimum_qty)s)
         )
         {brand_condition}
     ORDER BY i.brand, ts.sorting_code
@@ -99,6 +114,7 @@ def execute(filters=None):
         {"label": _("Actual Balance"), "fieldname": "actual_qty", "fieldtype": "Int", "width": 140},
         {"label": _("Qty To Deliver"), "fieldname": "qty_to_deliver", "fieldtype": "Int", "width": 140},
         {"label": _("Available Balance"), "fieldname": "available_qty", "fieldtype": "Int", "width": 140},
+		{"label": _("Qty To Receive"), "fieldname": "qty_to_receive", "fieldtype": "Int", "width": 140},
         {"label": _("Selling Price"), "fieldname": "price_list_rate", "fieldtype": "Currency", "width": 140},
     ]
 
