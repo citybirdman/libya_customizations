@@ -78,7 +78,7 @@ def execute(filters=None):
 		GROUP BY pri.item_code
 	)
     SELECT
-        sle.item_code,
+        i.name AS item_code,
         i.item_name,
         i.brand,
         IFNULL(sle.actual_qty, 0) AS actual_qty,
