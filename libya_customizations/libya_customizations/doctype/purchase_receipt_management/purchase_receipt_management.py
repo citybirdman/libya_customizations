@@ -229,96 +229,102 @@ def get_values_for_validation(purchase_receipt):
 @frappe.whitelist()
 def get_purchase_receipt_data(purchase_receipt):
 	sql = f"""
-			WITH purchase_receipt AS (
-				SELECT
-					name,
-					posting_date,
-					(freight_amount * freight_exchange_rate + inspection_amount * inspection_exchange_rate + clearance_amount + transport_amount + foreign_bank_charges_amount * foreign_bank_charges_exchange_rate + local_bank_charges_amount) / base_grand_total AS landed_cost_prorata       
-				FROM
-					`tabPurchase Receipt`
-				WHERE
-					docstatus != 2
-			),
-			purchase_receipt_item AS (
-				SELECT
-					purchase_receipt_item.item_code,
-					item.item_name,
-					item.brand,
-					purchase_receipt_item.docstatus,
-					SUM(purchase_receipt_item.qty) AS qty,
-					SUM(purchase_receipt_item.base_net_amount + purchase_receipt_item.item_tax_amount + (purchase_receipt_item.base_net_amount + purchase_receipt_item.item_tax_amount) * purchase_receipt.landed_cost_prorata) AS total_cost_amount
-				FROM
-					`tabPurchase Receipt Item` purchase_receipt_item
-				INNER JOIN
-					purchase_receipt
-				ON
-					purchase_receipt_item.parent = purchase_receipt.name
-				INNER JOIN
-					`tabItem` item
-				ON
-					purchase_receipt_item.item_code = item.name
-				WHERE
-					purchase_receipt_item.docstatus != 2
-				AND
-					purchase_receipt_item.parent = '{purchase_receipt}'
-				GROUP BY
-					purchase_receipt_item.item_code,
-					item.item_name,
-					item.brand        
-			),
-			stock_ledger_entry AS (
-				SELECT
-					item_code,
-					SUM(actual_qty) AS actual_qty,
-					SUM(stock_value_difference) AS stock_value
-				FROM
-					`tabStock Ledger Entry`
-				WHERE
-					is_cancelled = 0
-				GROUP BY
-					item_code
-			),
-			item_price AS (
-				SELECT
-					name,
-					item_code,
-					price_list_rate
-				FROM
-					`tabItem Price`
-				WHERE
-					selling = 1
-				AND
-					price_list IN (
-						SELECT
-							value
-						FROM
-							`tabSingles`
-						WHERE
-							doctype = 'Selling Settings'
-						AND
-							field = 'selling_price_list'
-					)
-			)
-			SELECT
-				purchase_receipt_item.item_code,
-				purchase_receipt_item.item_name,
-				purchase_receipt_item.brand,
-				purchase_receipt_item.qty AS receipt_qty,
-				purchase_receipt_item.total_cost_amount / purchase_receipt_item.qty AS receipt_valuation_rate,
-				IF(purchase_receipt_item.docstatus = 1, stock_ledger_entry.actual_qty, IFNULL(stock_ledger_entry.actual_qty, 0) + purchase_receipt_item.qty) AS stock_qty,
+			
+WITH purchase_receipt AS (
+                SELECT
+                    name,
+                    posting_date,
+                    (freight_amount * freight_exchange_rate + inspection_amount * inspection_exchange_rate + clearance_amount + transport_amount + foreign_bank_charges_amount * foreign_bank_charges_exchange_rate + local_bank_charges_amount) / base_grand_total AS landed_cost_prorata      
+                FROM
+                    `tabPurchase Receipt`
+                WHERE
+                    docstatus != 2
+            ),
+            purchase_receipt_item AS (
+                SELECT
+                    purchase_receipt_item.item_code,
+                    item.item_name,
+                    item.brand,
+                    purchase_receipt_item.docstatus,
+                    SUM(purchase_receipt_item.qty) AS qty,
+                    SUM(purchase_receipt_item.base_net_amount + purchase_receipt_item.item_tax_amount + (purchase_receipt_item.base_net_amount + purchase_receipt_item.item_tax_amount) * purchase_receipt.landed_cost_prorata) AS total_cost_amount
+                FROM
+                    `tabPurchase Receipt Item` purchase_receipt_item
+                INNER JOIN
+                    purchase_receipt
+                ON
+                    purchase_receipt_item.parent = purchase_receipt.name
+                INNER JOIN
+                    `tabItem` item
+                ON
+                    purchase_receipt_item.item_code = item.name
+                WHERE
+                    purchase_receipt_item.docstatus != 2
+                AND
+                    purchase_receipt_item.parent = '{purchase_receipt}'
+                GROUP BY
+                    purchase_receipt_item.item_code,
+                    item.item_name,
+                    item.brand        
+            ),
+            stock_ledger_entry AS (
+                SELECT
+                    item_code,
+                    SUM(actual_qty) AS actual_qty,
+                    SUM(stock_value_difference) AS stock_value
+                FROM
+                    `tabStock Ledger Entry`
+                WHERE
+                    is_cancelled = 0
+                GROUP BY
+                    item_code
+            ),
+            item_price AS (
+                SELECT
+                    name,
+                    item_code,
+                    price_list_rate
+                FROM
+                    `tabItem Price`
+                WHERE
+                    selling = 1
+                AND
+                    price_list IN (
+                        SELECT
+                            value
+                        FROM
+                            `tabSingles`
+                        WHERE
+                            doctype = 'Selling Settings'
+                        AND
+                            field = 'selling_price_list'
+                    )
+            )
+            SELECT
+                purchase_receipt_item.item_code,
+                purchase_receipt_item.item_name,
+                purchase_receipt_item.brand,
+                purchase_receipt_item.qty AS receipt_qty,
+                purchase_receipt_item.total_cost_amount / purchase_receipt_item.qty AS receipt_valuation_rate,
+                IF(purchase_receipt_item.docstatus = 1, stock_ledger_entry.actual_qty, IFNULL(stock_ledger_entry.actual_qty, 0) + purchase_receipt_item.qty) AS stock_qty,
     IF(purchase_receipt_item.docstatus = 1, stock_ledger_entry.stock_value, IFNULL(stock_ledger_entry.stock_value, 0) + purchase_receipt_item.total_cost_amount) / IF(purchase_receipt_item.docstatus = 1, stock_ledger_entry.actual_qty, IFNULL(stock_ledger_entry.actual_qty, 0) + purchase_receipt_item.qty) AS stock_valuation_rate,
-				item_price.price_list_rate AS selling_price,
+                item_price.price_list_rate AS selling_price,
                 item_price.name As price_name
-			FROM
-				purchase_receipt_item
-			LEFT JOIN
-				stock_ledger_entry
-			ON
-				purchase_receipt_item.item_code = stock_ledger_entry.item_code
-			LEFT JOIN
-				item_price
-			ON
-				purchase_receipt_item.item_code = item_price.item_code
+            FROM
+                purchase_receipt_item
+            LEFT JOIN
+                stock_ledger_entry
+            ON
+                purchase_receipt_item.item_code = stock_ledger_entry.item_code
+            LEFT JOIN
+                item_price
+            ON
+                purchase_receipt_item.item_code = item_price.item_code
+            join `tabItem` item on item.name = purchase_receipt_item.item_code
+            left join `tabTire Size`ts on item.tire_size = ts.name
+            ORDER BY ts.sorting_code
+ 
+ 
 		"""
     
 	result = frappe.db.sql(sql, as_dict=1)
