@@ -323,8 +323,6 @@ WITH purchase_receipt AS (
             join `tabItem` item on item.name = purchase_receipt_item.item_code
             left join `tabTire Size`ts on item.tire_size = ts.name
             ORDER BY ts.sorting_code
- 
- 
 		"""
     
 	result = frappe.db.sql(sql, as_dict=1)
