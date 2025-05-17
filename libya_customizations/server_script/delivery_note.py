@@ -41,7 +41,7 @@ def create_si_from_dn(doc):
             taxes = doc['taxes'],
             sales_team = doc['sales_team'],
             items = items_to_load
-        ))
+        )).insert(ignore_permissions=True)
         # if(doc['custom_remarks']):
         #     sales_invoice.custom_remarks = doc['custom_remarks']
         si_name = sales_invoice.name
