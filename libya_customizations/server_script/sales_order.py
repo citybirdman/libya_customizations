@@ -359,7 +359,7 @@ def create_dn_from_so(doc):
             taxes = doc['taxes'],
             sales_team = doc['sales_team'],
             items = items_to_load
-        ))
+        )).insert(ignore_permissions=True)
         # if(doc['custom_remarks']):
         #     delivery_note.custom_remarks = doc['custom_remarks']
         dn_name = delivery_note.name
