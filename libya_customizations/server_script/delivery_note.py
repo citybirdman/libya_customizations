@@ -42,8 +42,8 @@ def create_si_from_dn(doc):
             sales_team = doc['sales_team'],
             items = items_to_load
         ))
-        if(doc['custom_remarks']):
-            sales_invoice.custom_remarks = doc['custom_remarks']
+        # if(doc['custom_remarks']):
+        #     sales_invoice.custom_remarks = doc['custom_remarks']
         si_name = sales_invoice.name
         dn_name = doc['name']
         # frappe.msgprint(_(f"Sales Invoice <b>{si_name}</b> has been created against Delivery Note <b>{dn_name}</b>"))
