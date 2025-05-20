@@ -261,7 +261,7 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
             dialog.hide();
         }
     });
-    dialog.$wrapper.find('.modal-dialog').removeClass("modal-lg").addClass("modal-xl");
+    dialog.$wrapper.find('.modal-dialog').removeClass("modal-lg").css("max-width", "100%");
     Array.from(dialog.fields_dict.purchase_receipt_table.grid.grid_buttons[0].children).map(function(child, i){
             if( child.classList.contains("grid-add-row")){
                     dialog.fields_dict.purchase_receipt_table.grid.grid_buttons[0].children[i].style.display = "none";
