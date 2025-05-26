@@ -25,7 +25,8 @@ def create_si_from_dn(doc):
                     'sales_order': item['against_sales_order'],
                     'warehouse': doc['set_warehouse'],
                     'rate': rate,
-                    'price_list_rate': item['price_list_rate']
+                    'price_list_rate': item['price_list_rate'],
+                    'custom_is_old': item['custom_is_old']
                 })
         sales_invoice = frappe.get_doc(dict(
             doctype = 'Sales Invoice',

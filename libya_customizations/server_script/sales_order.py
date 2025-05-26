@@ -344,7 +344,8 @@ def create_dn_from_so(doc):
                     'warehouse': doc['set_warehouse'],
                     'rate': rate,
                     'price_list_rate': item['price_list_rate'],
-                    'brand': item['brand']
+                    'brand': item['brand'],
+                    'custom_is_old': item['custom_is_old']
                 })
             for item in items_to_load:
                 if not item["brand"]:
