@@ -22,7 +22,7 @@ def create_si_from_dn(doc):
                     'delivery_note': doc['name'],
                     'dn_detail':item['name'],
                     'so_detail': item['so_detail'],
-                    'sales_order': item['against_sales_order'],
+                    'sales_order': item['against_sales_order'], 
                     'warehouse': doc['set_warehouse'],
                     'rate': rate,
                     'price_list_rate': item['price_list_rate'],
