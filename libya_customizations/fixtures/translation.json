@@ -57718,5 +57718,31 @@
   "name": "brh3hh2scn",
   "source_text": "Qty To Receive",
   "translated_text": "الكمية قيد الإستلام"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-05-26 21:12:34.560184",
+  "name": "ohqlomkfop",
+  "source_text": "Is Old",
+  "translated_text": "قديم"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-05-26 21:12:58.882779",
+  "name": "kreuu6akq6",
+  "source_text": "Old Rate",
+  "translated_text": "سعر مخزون قديم"
  }
 ]
