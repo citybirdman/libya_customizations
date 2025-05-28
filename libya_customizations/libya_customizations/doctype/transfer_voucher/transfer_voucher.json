@@ -29,6 +29,7 @@
   "base_received_amount",
   "section_break_btyf",
   "charge_account",
+  "sender",
   "column_break_vtin",
   "banking_charges",
   "section_break_26",
@@ -254,6 +255,12 @@
   {
    "fieldname": "column_break_vtin",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "sender",
+   "fieldtype": "Check",
+   "label": "\u200bCharges to be borne by Sender"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -265,7 +272,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-04-19 12:36:52.240242",
+ "modified": "2025-05-28 12:59:28.963147",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Transfer Voucher",
