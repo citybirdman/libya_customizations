@@ -2,6 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
+from frappe import _
 import frappe.query_builder
 import frappe.query_builder.functions
 from frappe.utils import nowdate, nowtime
@@ -9,6 +10,9 @@ from frappe.model.document import Document
 
 
 class SalesAdjustmentRequest(Document):
+	def validate(self):
+		if not self.increased_items and not self.decreased_items:
+			frappe.throw(_("Please add at least one item to increase or decrease."))
 	def on_submit(self):
 		if(len(self.increased_items)):
 			sales_order = self.create_sales_order(self.increased_items)
@@ -128,7 +132,6 @@ class SalesAdjustmentRequest(Document):
 			set_posting_time=1,
 			update_stock=1,
 			is_return=1,  # Mark as a return
-			return_against=self.sales_invoice,
 			set_warehouse=si.set_warehouse,
 			sales_adjustment_request=self.name,
 			selling_price_list=si.selling_price_list,
