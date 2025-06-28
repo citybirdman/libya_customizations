@@ -511,5 +511,43 @@
   "reference_doctype": null,
   "script": "for invoice in frappe.db.get_list(\"Sales Invoice\", [[\"is_return\", \"=\", 0],[\"docstatus\", \"=\", 1],[\"outstanding_amount\", \"<\", 0]], ['name', 'company']):\n    linked_docs = frappe.call(\"erpnext.accounts.doctype.unreconcile_payment.unreconcile_payment.get_linked_payments_for_doc\", company = invoice.company, doctype= \"Sales Invoice\", docname=invoice.name)\n    selection_map = []\n    for elem in linked_docs:\n        if(elem.voucher_type == \"Payment Entry\"):\n            selection_map = [{\n    \t\t\t\"company\": elem.company,\n    \t\t\t\"voucher_type\": elem.voucher_type,\n    \t\t\t\"voucher_no\": elem.voucher_no,\n    \t\t\t\"against_voucher_type\": \"Sales Invoice\",\n    \t\t\t\"against_voucher_no\": invoice.name,\n    \t\t}]\n            try:\n                frappe.call(\"erpnext.accounts.doctype.unreconcile_payment.unreconcile_payment.create_unreconcile_doc_for_selection\", selections=json.dumps(selection_map));\n            except:\n                continue\nfor company in frappe.get_all(\"Company\"):\n    company = company.name\n    account = frappe.db.get_value(\"Company\", company, \"default_receivable_account\")\n    for customer in frappe.get_all(\"Customer\", {\"disabled\": 0}):\n        outstanding_documents = frappe.call('erpnext.accounts.doctype.payment_entry.payment_entry.get_outstanding_reference_documents', args = {'party_type':'Customer', 'party':customer.name, 'party_account':account}) or 0\n        flag = False\n        if outstanding_documents:\n            total = 0\n            for i in outstanding_documents:\n                if i.outstanding_amount > 0:\n                    flag = True\n                    break\n        if flag:\n            unallocated_amount = frappe.db.get_value(\"Payment Entry\", [[\"party\", \"=\", customer.name], [\"unallocated_amount\", \">\", 0], [\"docstatus\", \"=\", 1]], \"sum(unallocated_amount)\") or 0\n            credit_amount = frappe.db.get_value(\"Journal Entry Account\", [[\"party\", \"=\", customer.name], [\"credit\", \">\", 0], [\"reference_name\", \"=\", None], [\"docstatus\", \"=\", 1]], \"sum(credit)\") or 0\n            cn_amount = frappe.db.get_value(\"Sales Invoice\", [[\"customer\", \"=\", customer.name], [\"outstanding_amount\", \"<\", 0], [\"is_return\", \"=\", 1], [\"docstatus\", \"=\", 1]], \"sum(outstanding_amount)\") or 0\n            if unallocated_amount or credit_amount or cn_amount:\n                reconciliation = frappe.get_doc({\n                    \"doctype\": \"Process Payment Reconciliation\",\n                    \"party_type\": \"Customer\",\n                    \"party\" : customer.name,\n                    \"company\": company,\n                    \"receivable_payable_account\": account,\n                    \"default_advance_account\": account\n                }).insert()\n                reconciliation.save()\n                reconciliation.submit()\n",
   "script_type": "Scheduler Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Submit",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2025-06-28 20:51:12.948420",
+  "module": "Libya Customizations",
+  "name": "Validating ZERO Rate in Sales Order",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Sales Order",
+  "script": "for item in doc.items:\n    if item.rate == 0:\n        frappe.throw(_(f\"Selling Rate of Item ({item.item_code}) cannot be ZERO\"), title=_('Error'), indicator='red')",
+  "script_type": "DocType Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Submit",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2025-06-28 20:51:20.855503",
+  "module": "Libya Customizations",
+  "name": "Validating ZERO Rate in Sales Invoice",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Sales Order",
+  "script": "for item in doc.items:\n    if item.rate == 0:\n        frappe.throw(_(f\"Selling Rate of Item ({item.item_code}) cannot be ZERO\"), title=_('Error'), indicator='red')",
+  "script_type": "DocType Event"
  }
 ]

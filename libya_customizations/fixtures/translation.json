@@ -57757,5 +57757,18 @@
   "name": "mqe5i8gidr",
   "source_text": "Charges to be borne by Sender",
   "translated_text": "المصاريف يتحملها الراسل"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-06-28 20:50:56.604744",
+  "name": "l6531sfrc2",
+  "source_text": "Selling Rate of Item ({0}) cannot be ZERO",
+  "translated_text": "سعر البيع للصنف ({0}) لا يمكن أن يكون صفرا"
  }
 ]
