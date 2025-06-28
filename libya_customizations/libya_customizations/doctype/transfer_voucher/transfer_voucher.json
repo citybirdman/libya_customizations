@@ -260,7 +260,7 @@
    "default": "0",
    "fieldname": "sender",
    "fieldtype": "Check",
-   "label": "\u200bCharges to be borne by Sender"
+   "label": "Charges to be borne by Sender"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -272,7 +272,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-05-28 12:59:28.963147",
+ "modified": "2025-06-28 20:12:14.763411",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Transfer Voucher",
