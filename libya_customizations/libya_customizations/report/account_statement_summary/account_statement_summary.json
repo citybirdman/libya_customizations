@@ -86,11 +86,11 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 28,
+ "idx": 34,
  "is_standard": "Yes",
  "letter_head": "itar",
  "letterhead": null,
- "modified": "2025-03-08 08:58:30.056491",
+ "modified": "2025-06-28 19:59:54.205565",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Account Statement Summary",
@@ -116,6 +116,9 @@
   },
   {
    "role": "System Manager"
+  },
+  {
+   "role": "Cash Accountant"
   }
  ],
  "timeout": 0

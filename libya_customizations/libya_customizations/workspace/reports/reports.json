@@ -13,7 +13,7 @@
  "is_hidden": 0,
  "label": "Reports",
  "links": [],
- "modified": "2025-04-25 21:25:41.213140",
+ "modified": "2025-06-28 19:58:36.469905",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Reports",
@@ -40,6 +40,9 @@
   },
   {
    "role": "System Manager"
+  },
+  {
+   "role": "Cash Accountant"
   }
  ],
  "sequence_id": 32.0,

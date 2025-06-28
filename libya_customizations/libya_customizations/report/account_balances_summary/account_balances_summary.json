@@ -46,11 +46,11 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 12,
+ "idx": 31,
  "is_standard": "Yes",
  "letter_head": "itar",
  "letterhead": null,
- "modified": "2025-01-01 00:35:30.689824",
+ "modified": "2025-06-28 20:01:02.438519",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Account Balances Summary",
@@ -75,6 +75,9 @@
   },
   {
    "role": "System Manager"
+  },
+  {
+   "role": "Cash Accountant"
   }
  ],
  "timeout": 0
