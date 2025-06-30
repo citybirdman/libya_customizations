@@ -20,6 +20,13 @@
    "width": 300
   },
   {
+   "fieldname": "production_year",
+   "fieldtype": "Link",
+   "label": "Production",
+   "options": "Production Year",
+   "width": 100
+  },
+  {
    "fieldname": "brand",
    "fieldtype": "Link",
    "label": "Brand",
@@ -47,17 +54,17 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 0,
+ "idx": 2,
  "is_standard": "Yes",
  "letter_head": "itar",
  "letterhead": null,
- "modified": "2025-04-25 21:23:42.234044",
+ "modified": "2025-06-30 12:34:00.621579",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Purchase Receipt Details",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "SELECT\r\n    pr.title AS shipment_name,\r\n    pri.item_code,\r\n    pri.item_name,\r\n    pri.brand,\r\n    SUM(pri.qty) AS qty\r\nFROM\r\n    `tabPurchase Receipt Item` pri\r\nINNER JOIN\r\n    `tabPurchase Receipt` pr\r\nON\r\n    pri.parent = pr.name\r\nINNER JOIN\r\n    `tabItem` i\r\nON\r\n    pri.item_code = i.name\r\nLEFT JOIN\r\n    `tabTire Size` ts\r\nON\r\n    i.tire_size = ts.name\r\nWHERE\r\n    pri.docstatus != 2\r\n    AND pr.docstatus != 2\r\n    AND pri.qty > 0\r\n    AND is_return = 0\r\n    AND pri.parent = %(purchase_receipt)s\r\n    AND pr.name = %(purchase_receipt)s\r\nGROUP BY\r\n    pr.title,\r\n    pri.item_code,\r\n    pri.item_name,\r\n    pri.brand\r\nORDER BY\r\n    pri.brand,\r\n    ts.sorting_code,\r\n    pri.item_code",
+ "query": "SELECT\r\n    pr.title AS shipment_name,\r\n    pri.item_code,\r\n    pri.item_name,\r\n    pri.production_year,\r\n    pri.brand,\r\n    SUM(pri.qty) AS qty\r\nFROM\r\n    `tabPurchase Receipt Item` pri\r\nINNER JOIN\r\n    `tabPurchase Receipt` pr\r\nON\r\n    pri.parent = pr.name\r\nINNER JOIN\r\n    `tabItem` i\r\nON\r\n    pri.item_code = i.name\r\nLEFT JOIN\r\n    `tabTire Size` ts\r\nON\r\n    i.tire_size = ts.name\r\nWHERE\r\n    pri.docstatus != 2\r\n    AND pr.docstatus != 2\r\n    AND pri.qty > 0\r\n    AND is_return = 0\r\n    AND pri.parent = %(purchase_receipt)s\r\n    AND pr.name = %(purchase_receipt)s\r\nGROUP BY\r\n    pr.title,\r\n    pri.item_code,\r\n    pri.item_name,\r\n    pri.production_year,\r\n    pri.brand\r\nORDER BY\r\n    pri.brand,\r\n    ts.sorting_code,\r\n    pri.item_code",
  "ref_doctype": "Purchase Receipt",
  "report_name": "Purchase Receipt Details",
  "report_type": "Query Report",
