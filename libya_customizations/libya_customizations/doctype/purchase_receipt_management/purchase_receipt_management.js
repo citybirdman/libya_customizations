@@ -1,6 +1,6 @@
 // Copyright (c) 2024, Ahmed Zaytoon and contributors
 // For license information, please see license.txt
-
+frappe.require('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
 frappe.ui.form.on('Purchase Receipt Management', {
     onload: function(frm) {
         frm.fields_dict['purchase_receipts'].grid.get_field('virtual_receipt').get_query = function(doc, cdt, cdn) {
@@ -236,8 +236,9 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
                 fieldname: 'purchase_receipt_table',
                 fields: [
                     { label: __('Item Code'), fieldtype: 'Link', options:"Item",fieldname: 'item_code', read_only:1},
-                    { label: __('Item Name'), fieldtype: 'Data', fieldname: 'item_name', read_only:1 , in_list_view:1, colsize: 3, columns: 3 },
+                    { label: __('Item Name'), fieldtype: 'Data', fieldname: 'item_name', read_only:1 , in_list_view:1, colsize: 3, columns: 2 },
                     { label: __('Brand'), fieldtype: 'Data', fieldname: 'brand', read_only:1 },
+                    { label: __('Production Year'), fieldtype: 'Link', options:"Production Year",fieldname: 'production_year', columns: 1, colsize: 1, read_only:1, in_list_view:1},
                     { label: __('Receipt Qty'), fieldtype: 'Int', fieldname: 'receipt_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1 },
                     { label: __('Receipt Valuation Rate'), fieldtype: 'Float', fieldname: 'receipt_valuation_rate', in_list_view:1, precision: 2, read_only:1, colsize: 1, columns: 1},
                     { label: __('Stock Qty'), fieldtype: 'Int', fieldname: 'stock_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1},
@@ -248,11 +249,22 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
                 ],
                 data: data,
                 get_data: ()=>{return data}
+            },
+            {
+                label: __('Download Excel'),
+                fieldtype: 'Button',
+                fieldname: 'download_excel'
+            },
+            {
+                label: __('Upload Excel'),
+                fieldtype: 'Button',
+                fieldname: 'upload_excel'
             }
+
         ],
         primary_action_label: __('Edit Prices'),
         primary_action: function(values) {
-            prices = values.purchase_receipt_table.map(row => ({name:row.price_name, price: row.selling_price, item_code: row.item_code, item_name:row.item_name}))
+            prices = values.purchase_receipt_table.map(row => ({name:row.price_name, price: row.selling_price, item_code: row.item_code, production_year: row.production_year, item_name:row.item_name}))
             prices = prices.filter(row=>row.name)
             let args = {values:prices}
             if(values.price_list)
@@ -260,11 +272,52 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
             frm.call({method:"edit_item_price", args})
             dialog.hide();
         }
+    }); 
+
+
+    dialog.fields_dict.download_excel.$wrapper.find('button').click(() => {
+        const grid = dialog.fields_dict.purchase_receipt_table.grid;
+        const table_data = grid.get_data();
+        const fields = grid.df.fields;
+
+        if (!table_data || table_data.length === 0) {
+            frappe.msgprint(__('No data to download'));
+            return;
+        }
+
+        const headers = fields.map(col => col.label);
+        const keys = fields.map(col => col.fieldname);
+
+        const sheet_data = [
+            headers,
+            ...table_data.map(row => keys.map(k => row[k] || ""))
+        ];
+
+        const worksheet = XLSX.utils.aoa_to_sheet(sheet_data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Receipt Data');
+
+        const excelFile = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelFile], { type: 'application/octet-stream' });
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'purchase_receipt_data.xlsx';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     });
+
+    dialog.fields_dict.upload_excel.$wrapper.find('button').click(() => {
+        fileInput.click();
+    });
+    
+    
+    
     dialog.$wrapper.find('.modal-dialog').removeClass("modal-lg").css("max-width", "100%");
     Array.from(dialog.fields_dict.purchase_receipt_table.grid.grid_buttons[0].children).map(function(child, i){
-            if( child.classList.contains("grid-add-row")){
-                    dialog.fields_dict.purchase_receipt_table.grid.grid_buttons[0].children[i].style.display = "none";
+        if( child.classList.contains("grid-add-row")){
+            dialog.fields_dict.purchase_receipt_table.grid.grid_buttons[0].children[i].style.display = "none";
         }
     })
     dialog.fields_dict.purchase_receipt_table.wrapper.onchange = function(){
@@ -277,6 +330,44 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
     // Show the dialog
     frm.fields_dict.purchase_receipts.grid.wrapper[0].querySelector(".grid-collapse-row").click();
     dialog.show();
+    const fileInput = $('<input type="file" accept=".xlsx" style="display:none;">');
+    $('body').append(fileInput);
+    
+    fileInput.on('change', function () {
+        const file = this.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const arrayBuffer = e.target.result;
+            const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const data = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+
+            // map label → fieldname
+            const grid = dialog.fields_dict.purchase_receipt_table.grid;
+            const field_map = {};
+            grid.df.fields.forEach(col => field_map[col.label] = col.fieldname);
+
+            const mapped_rows = data.map(row => {
+                let r = {};
+                for (const label in row) {
+                    if (field_map[label]) {
+                        r[field_map[label]] = row[label];
+                    }
+                }
+                return r;
+            });
+
+            // update table data
+            grid.df.data = mapped_rows;
+            grid.refresh();
+        };
+
+        reader.readAsArrayBuffer(file);
+    });
+
     dialog.$wrapper.on("keydown", function(e){
         if (e.key === 'Enter') {
            e.preventDefault();

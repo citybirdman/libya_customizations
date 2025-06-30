@@ -29,7 +29,7 @@ def export_selected_data(names):
     parent_doctype = "Purchase Receipt"
     child_doctype = "Purchase Receipt Item"
     parent_fields = ["name","title"]  # Example fields for the parent
-    child_fields = [ "brand", "item_code", "item_name", "qty", "rate", "amount"]  # Example fields for the child table
+    child_fields = [ "brand", "item_code", "item_name", "production_year", "qty", "rate", "amount"]  # Example fields for the child table
     
     # Create a new Excel workbook
     workbook = Workbook()
@@ -105,6 +105,8 @@ def get_values_for_validation(purchase_receipt):
 				AND
 					item_code = "{row.item_code}"
 				AND
+					production_year = "{row.production_year}"
+				AND
 					warehouse="{doc.set_warehouse}"
 				) stock_actual
 			LEFT JOIN
@@ -126,6 +128,8 @@ def get_values_for_validation(purchase_receipt):
 				AND
 					purchase_receipt_item.item_code = "{row.item_code}"
 				AND
+					purchase_receipt_item.production_year = "{row.production_year}"
+				AND
 					purchase_receipt_item.warehouse = "{doc.set_warehouse}"
 				) purchase_future
 			ON
@@ -140,6 +144,7 @@ def get_values_for_validation(purchase_receipt):
 						sales_order.name AS sales_order,
 						sales_order.set_warehouse,
 						sales_order_item.item_code,
+						sales_order_item.production_year,
 						IF(COALESCE(SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0) > 0, COALESCE(SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0), 0) AS qty_to_deliver
 					FROM
 						`tabSales Order Item` sales_order_item
@@ -166,10 +171,13 @@ def get_values_for_validation(purchase_receipt):
 					GROUP BY
 						sales_order.name,
 						sales_order.set_warehouse,
-						sales_order_item.item_code
+						sales_order_item.item_code,
+						sales_order_item.production_year
 					) sales_order_item
 				WHERE
 					item_code = "{row.item_code}"
+				AND
+					production_year = "{row.production_year}"
 				AND
 					set_warehouse = "{doc.set_warehouse}"
 				) sales_actual
@@ -216,6 +224,8 @@ def get_values_for_validation(purchase_receipt):
 				WHERE
 					item_code = "{row.item_code}"
 				AND
+					production_year = "{row.production_year}"
+				AND
 					set_warehouse = "{doc.set_warehouse}"
 				) sales_future
 			ON
@@ -243,6 +253,7 @@ WITH purchase_receipt AS (
             purchase_receipt_item AS (
                 SELECT
                     purchase_receipt_item.item_code,
+                    purchase_receipt_item.production_year,
                     item.item_name,
                     item.brand,
                     purchase_receipt_item.docstatus,
@@ -264,10 +275,24 @@ WITH purchase_receipt AS (
                     purchase_receipt_item.parent = '{purchase_receipt}'
                 GROUP BY
                     purchase_receipt_item.item_code,
+                    purchase_receipt_item.production_year,
                     item.item_name,
                     item.brand        
             ),
-            stock_ledger_entry AS (
+            stock_ledger_entry_qty AS (
+                SELECT
+                    item_code,
+                    production_year,
+                    SUM(actual_qty) AS actual_qty
+                FROM
+                    `tabStock Ledger Entry`
+                WHERE
+                    is_cancelled = 0
+                GROUP BY
+                    item_code,
+                    production_year
+            ),
+            stock_ledger_entry_value AS (
                 SELECT
                     item_code,
                     SUM(actual_qty) AS actual_qty,
@@ -283,6 +308,7 @@ WITH purchase_receipt AS (
                 SELECT
                     name,
                     item_code,
+                    production_year,
                     price_list_rate
                 FROM
                     `tabItem Price`
@@ -304,25 +330,39 @@ WITH purchase_receipt AS (
                 purchase_receipt_item.item_code,
                 purchase_receipt_item.item_name,
                 purchase_receipt_item.brand,
+                purchase_receipt_item.production_year,
                 purchase_receipt_item.qty AS receipt_qty,
                 purchase_receipt_item.total_cost_amount / purchase_receipt_item.qty AS receipt_valuation_rate,
-                IF(purchase_receipt_item.docstatus = 1, stock_ledger_entry.actual_qty, IFNULL(stock_ledger_entry.actual_qty, 0) + purchase_receipt_item.qty) AS stock_qty,
-    IF(purchase_receipt_item.docstatus = 1, stock_ledger_entry.stock_value, IFNULL(stock_ledger_entry.stock_value, 0) + purchase_receipt_item.total_cost_amount) / IF(purchase_receipt_item.docstatus = 1, stock_ledger_entry.actual_qty, IFNULL(stock_ledger_entry.actual_qty, 0) + purchase_receipt_item.qty) AS stock_valuation_rate,
+                IF(purchase_receipt_item.docstatus = 1, stock_ledger_entry_qty.actual_qty, IFNULL(stock_ledger_entry_qty.actual_qty, 0) + purchase_receipt_item.qty) AS stock_qty,
+    			IF(purchase_receipt_item.docstatus = 1, stock_ledger_entry_value.stock_value, IFNULL(stock_ledger_entry_value.stock_value, 0) + purchase_receipt_item.total_cost_amount) / IF(purchase_receipt_item.docstatus = 1, stock_ledger_entry_value.actual_qty, IFNULL(stock_ledger_entry_value.actual_qty, 0) + purchase_receipt_item.qty) AS stock_valuation_rate,
                 item_price.price_list_rate AS selling_price,
                 item_price.name As price_name
             FROM
                 purchase_receipt_item
             LEFT JOIN
-                stock_ledger_entry
+                stock_ledger_entry_qty
             ON
-                purchase_receipt_item.item_code = stock_ledger_entry.item_code
+                purchase_receipt_item.item_code = stock_ledger_entry_qty.item_code
+                AND purchase_receipt_item.production_year = stock_ledger_entry_qty.production_year
+            LEFT JOIN
+                stock_ledger_entry_value
+            ON
+                purchase_receipt_item.item_code = stock_ledger_entry_value.item_code
             LEFT JOIN
                 item_price
             ON
                 purchase_receipt_item.item_code = item_price.item_code
-            join `tabItem` item on item.name = purchase_receipt_item.item_code
-            left join `tabTire Size`ts on item.tire_size = ts.name
-            ORDER BY ts.sorting_code
+                AND purchase_receipt_item.production_year = item_price.production_year
+            INNER JOIN
+                `tabItem` item
+            ON
+                purchase_receipt_item.item_code = item.name 
+            LEFT JOIN
+                `tabTire Size` ts
+            ON
+                item.tire_size = ts.name
+            ORDER BY
+                ts.sorting_code
 		"""
     
 	result = frappe.db.sql(sql, as_dict=1)
@@ -352,6 +392,7 @@ def edit_item_price(values, selling_price_list = None):
 				"doctype": "Item Price",
 				"item_code": row['item_code'],
 				"item_name": row['item_name'],
+				"production_year": row['production_year'],
 				"price_list": selling_price_list,
 				"price_list_rate": row['price']
 			})
