@@ -18,6 +18,7 @@ def create_si_from_dn(doc):
                 rate = frappe.db.get_value("Delivery Note Item", item['name'], 'rate')
                 items_to_load.append({
                     'item_code': item['item_code'],
+                    'production_year': item['production_year'],
                     'qty': item['qty'] - item['billed_qty'],
                     'delivery_note': doc['name'],
                     'dn_detail':item['name'],

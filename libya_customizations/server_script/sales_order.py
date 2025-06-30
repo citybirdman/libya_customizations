@@ -30,6 +30,8 @@ def after_submit_sales_order(doc, method):
                 AND
                     item_code = "{row.item_code}"
                 AND
+                    production_year = "{row.production_year}"
+                AND
                     warehouse="{doc.set_warehouse}"
                 ) stock_actual
             LEFT JOIN
@@ -51,6 +53,8 @@ def after_submit_sales_order(doc, method):
                 AND
                     purchase_receipt_item.item_code = "{row.item_code}"
                 AND
+                    purchase_receipt_item.production_year = "{row.production_year}"
+                AND
                     purchase_receipt_item.warehouse = "{doc.set_warehouse}"
                 ) purchase_future
             ON
@@ -65,6 +69,7 @@ def after_submit_sales_order(doc, method):
                         sales_order.name AS sales_order,
                         sales_order.set_warehouse,
                         sales_order_item.item_code,
+                        sales_order_item.production_year,
                         IF(COALESCE(SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0) > 0, COALESCE(SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0), 0) AS qty_to_deliver
                     FROM
                         `tabSales Order Item` sales_order_item
@@ -91,10 +96,13 @@ def after_submit_sales_order(doc, method):
                     GROUP BY
                         sales_order.name,
                         sales_order.set_warehouse,
-                        sales_order_item.item_code
+                        sales_order_item.item_code,
+                        sales_order_item.production_year
                     ) sales_order_item
                 WHERE
                     item_code = "{row.item_code}"
+                AND
+                    production_year = "{row.production_year}"
                 AND
                     set_warehouse = "{doc.set_warehouse}"
                 ) sales_actual
@@ -110,6 +118,7 @@ def after_submit_sales_order(doc, method):
                         sales_order.name AS sales_order,
                         sales_order.set_warehouse,
                         sales_order_item.item_code,
+                        sales_order_item.production_year,
                         IF(COALESCE(SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0) > 0, COALESCE(SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0), 0) AS qty_to_deliver
                     FROM
                         `tabSales Order Item` sales_order_item
@@ -136,10 +145,13 @@ def after_submit_sales_order(doc, method):
                     GROUP BY
                         sales_order.name,
                         sales_order.set_warehouse,
-                        sales_order_item.item_code
+                        sales_order_item.item_code,
+                        sales_order_item.production_year
                     ) sales_order_item
                 WHERE
                     item_code = "{row.item_code}"
+                AND
+                    production_year = "{row.production_year}"
                 AND
                     set_warehouse = "{doc.set_warehouse}"
                 ) sales_future
@@ -338,6 +350,7 @@ def create_dn_from_so(doc):
                 rate = frappe.db.get_value("Sales Order Item", item['name'], 'rate')
                 items_to_load.append({
                     'item_code': item['item_code'],
+                    'production_year': item['production_year'],
                     'qty': item['qty'] - item['delivered_qty'],
                     'against_sales_order': doc['name'],
                     'so_detail':item['name'],
@@ -375,7 +388,7 @@ def create_dn_from_so(doc):
 
 
 def before_submit_sales_order(doc, method):
-	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
+	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "production_year": row.production_year, "item_name": row.item_name} for row in doc.items]
 	if  (
 		    not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
 		):
@@ -384,12 +397,12 @@ def before_submit_sales_order(doc, method):
 				frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Valuation Rate</b>").format('{:0.2f}'.format(row['rate']), row['item_name']))
 			elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
 				for row in rows:
-					price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
+					price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["production_year", "=", row['production_year']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
 					if row['rate'] < price_list_rate:
 						frappe.throw(msg=_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
 
 def validate_item_prices_after_submit(doc, method):
-	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
+	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "production_year": row.production_year, "item_name": row.item_name} for row in doc.items]
 	if (
 		    not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
 		):
@@ -398,7 +411,7 @@ def validate_item_prices_after_submit(doc, method):
 				frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Valuation Rate</b>").format('{:0.2f}'.format(row['rate']), row['item_name']))
 			elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
 				for row in rows:
-					price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
+					price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["production_year", "=", row['production_year']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
 					if row['rate'] < price_list_rate:
 						frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
                     
