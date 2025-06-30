@@ -38,6 +38,7 @@ class SalesAdjustmentRequest(Document):
 		for item in items:
 			sales_order.append("items", {
 				"item_code": item.item_code,
+				"production_year": item.production_year,
 				"qty": item.qty,
 				"rate": item.rate,
 				"warehouse": sales_invoice.set_warehouse,
@@ -52,6 +53,7 @@ class SalesAdjustmentRequest(Document):
 		for item in so.items:
 			items_to_load.append({
 				'item_code': item.item_code,
+				'production_year': item.production_year,
 				'qty': item.qty,
 				'against_sales_order': so.name,
 				'so_detail':item.name,
@@ -82,6 +84,7 @@ class SalesAdjustmentRequest(Document):
 		for item in dn.items:
 			items_to_load.append({
 				'item_code': item.item_code,
+				"production_year": item.production_year,
 				'qty': item.qty,
 				'delivery_note': dn.name,
 				'dn_detail':item.name,
@@ -117,6 +120,7 @@ class SalesAdjustmentRequest(Document):
 		for item in self.decreased_items:
 			items_to_load.append({
 				'item_code': item.item_code,
+				'production_year': item.production_year,
 				'qty': item.qty * -1,
 				'warehouse': si.set_warehouse,
 				'rate': item.rate,
