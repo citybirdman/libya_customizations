@@ -26,5 +26,26 @@ function get_item_price(frm, cdn, cdt, table){
         }
     })
 }
+
+function production_year(frm, cdt, cdn) {
+    let row = locals[cdt][cdn];
+
+    if (row.item_code && row.production_year) {
+        frappe.db.get_value('Item Price', {
+            item_code: row.item_code,
+            production_year: row.production_year,
+            selling: 1
+        }, 'price_list_rate').then(r => {
+            if (r && r.message && r.message.price_list_rate) {
+                frappe.model.set_value(cdt, cdn, 'rate', r.message.price_list_rate);
+            } else {
+                frappe.msgprint(__('No selling price found for this item and production year.'));
+            }
+        });
+    }
+}
+
 frappe.ui.form.on("Sales Adjustment Request Increase Detail", "item_code", (frm, cdt, cdn) => get_item_price(frm, cdn, cdt, "increased_items"));
 frappe.ui.form.on("Sales Adjustment Request Decrease Detail", "item_code", (frm, cdt, cdn) => get_item_price(frm, cdn, cdt, "decreased_items"));
+frappe.ui.form.on("Sales Adjustment Request Increase Detail", "production_year", (frm, cdt, cdn) => production_year(frm, cdt, cdn));
+frappe.ui.form.on("Sales Adjustment Request Decrease Detail", "production_year", (frm, cdt, cdn) => production_year(frm, cdt, cdn));
