@@ -93,10 +93,10 @@ jinja = {
 # 	"filters": "libya_customizations.utils.jinja_filters"
 }
 fixtures = [
-    # {
-    #     "doctype": "Server Script",
-    #     "filters": [["module" , "in" , ("Libya Customizations" )]]
-    # },
+    {
+        "doctype": "Server Script",
+        "filters": [["module" , "in" , ("Libya Customizations" )]]
+    },
     # {
     #     "doctype": "Custom HTML Block"
     # },
