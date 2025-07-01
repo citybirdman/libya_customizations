@@ -97,29 +97,29 @@ fixtures = [
         "doctype": "Server Script",
         "filters": [["module" , "in" , ("Libya Customizations" )]]
     },
-    {
-        "doctype": "Custom HTML Block"
-    },
-    {
-        "doctype": "Workflow"
-    },
-    {
-        "doctype": "Restrict Account View"
-    },
+    # {
+    #     "doctype": "Custom HTML Block"
+    # },
+    # {
+    #     "doctype": "Workflow"
+    # },
+    # {
+    #     "doctype": "Restrict Account View"
+    # },
     {
         "doctype": "Translation"
-    },
-    {
-        "doctype": "Workflow Action Master"
-    },
-    {
-        "doctype": "Document Naming Rule"
-    },
-    {
-        "doctype": "Number Card"
-    },
-    {
-        "doctype": "Workflow State"
+    # },
+    # {
+    #     "doctype": "Workflow Action Master"
+    # },
+    # {
+    #     "doctype": "Document Naming Rule"
+    # },
+    # {
+    #     "doctype": "Number Card"
+    # },
+    # {
+    #     "doctype": "Workflow State"
     }
 ]
 # Installation
