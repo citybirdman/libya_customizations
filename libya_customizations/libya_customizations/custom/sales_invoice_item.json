@@ -29,7 +29,7 @@
    "ignore_user_permissions": 0,
    "ignore_xss_filter": 0,
    "in_global_search": 0,
-   "in_list_view": 1,
+   "in_list_view": 0,
    "in_preview": 0,
    "in_standard_filter": 0,
    "insert_after": "base_price_list_rate",
@@ -389,7 +389,7 @@
    "property": "columns",
    "property_type": "Int",
    "row_name": null,
-   "value": "5"
+   "value": "4"
   },
   {
    "_assign": null,
