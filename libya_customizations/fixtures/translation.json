@@ -57783,5 +57783,18 @@
   "name": "vqhe4pt5mq",
   "source_text": "Cash and Bank Statement Summary",
   "translated_text": "كشف حساب خزائن وبنوك"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-07-02 06:24:16.862945",
+  "name": "moubnfqcgg",
+  "source_text": "Production Year",
+  "translated_text": "سنة الإنتاج"
  }
 ]
