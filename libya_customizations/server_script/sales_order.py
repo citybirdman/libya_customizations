@@ -353,7 +353,7 @@ def create_dn_from_so(doc):
                 rate = frappe.db.get_value("Sales Order Item", item['name'], 'rate')
                 items_to_load.append({
                     'item_code': item['item_code'],
-                    'production_year': item['production_year'],
+                    'production_year': item['production_year'] or None,
                     'qty': item['qty'] - item['delivered_qty'],
                     'against_sales_order': doc['name'],
                     'so_detail':item['name'],
