@@ -1,0 +1,101 @@
+{
+ "add_total_row": 1,
+ "columns": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item",
+   "width": 80
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "width": 300
+  },
+  {
+   "fieldname": "brand",
+   "fieldtype": "Link",
+   "label": "Brand",
+   "options": "Brand",
+   "width": 100
+  },
+  {
+   "fieldname": "sales_orde",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order",
+   "width": 230
+  },
+  {
+   "fieldname": "transaction_date",
+   "fieldtype": "Date",
+   "label": "Order Date",
+   "width": 120
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "Customer Name",
+   "width": 150
+  },
+  {
+   "fieldname": "qty_to_deliver",
+   "fieldtype": "Int",
+   "label": "Qty To Deliver",
+   "width": 120
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Price",
+   "width": 100
+  }
+ ],
+ "creation": "2025-07-07 06:56:45.652593",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item",
+   "mandatory": 1,
+   "options": "Item",
+   "wildcard_filter": 0
+  }
+ ],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "itar",
+ "letterhead": null,
+ "modified": "2025-07-07 07:00:16.337995",
+ "modified_by": "Administrator",
+ "module": "Libya Customizations",
+ "name": "Item-wise Reservation Summary",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "SELECT\r\n\tsales_order_item.item_code,\r\n\titem.item_name,\r\n\titem.brand,\r\n\tsales_order.name AS sales_order,\r\n\tsales_order.transaction_date,\r\n\tcustomer.customer_name,\r\n\tIF(SUM(sales_order_item.qty - sales_order_item.delivered_qty) > 0, SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0) AS qty_to_deliver,\r\n\tsales_order_item.rate\r\nFROM\r\n\t`tabSales Order Item` sales_order_item\r\nINNER JOIN\r\n\t`tabSales Order` sales_order\r\nON\r\n\tsales_order_item.parent = sales_order.name\r\nINNER JOIN\r\n\t`tabItem` item\r\nON\r\n\tsales_order_item.item_code = item.name\r\nINNER JOIN\r\n\t`tabCustomer` customer\r\nON\r\n\tsales_order.customer = customer.name\r\nWHERE\r\n\tsales_order.docstatus = 1\r\nAND\r\n\tsales_order_item.docstatus = 1\r\nAND\r\n\tsales_order.status NOT IN ('Completed', 'Closed')\r\nAND\r\n\tsales_order_item.qty - sales_order_item.delivered_qty > 0\r\nAND\r\n    sales_order_item.item_code = %(item_code)s\r\nGROUP BY\r\n\tsales_order_item.item_code,\r\n\tsales_order.name\r\n",
+ "ref_doctype": "Sales Order",
+ "report_name": "Item-wise Reservation Summary",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Accounts Manager"
+  },
+  {
+   "role": "Accounts User"
+  },
+  {
+   "role": "Chief Sales Officer"
+  },
+  {
+   "role": "Sales Supervisor"
+  },
+  {
+   "role": "Sales Coordinator"
+  }
+ ],
+ "timeout": 0
+}

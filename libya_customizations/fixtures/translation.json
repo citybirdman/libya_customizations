@@ -57796,5 +57796,18 @@
   "name": "moubnfqcgg",
   "source_text": "Production Year",
   "translated_text": "سنة الإنتاج"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-07-07 06:59:48.914426",
+  "name": "fiargurgn0",
+  "source_text": "Order Date",
+  "translated_text": "تاريخ الأمر"
  }
 ]
