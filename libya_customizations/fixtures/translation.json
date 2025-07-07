@@ -57809,5 +57809,18 @@
   "name": "fiargurgn0",
   "source_text": "Order Date",
   "translated_text": "تاريخ الأمر"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-07-07 07:02:36.522964",
+  "name": "pop4ngvohg",
+  "source_text": "Item-wise Reservation Summary",
+  "translated_text": "بيان حجز حسب الصنف"
  }
 ]
