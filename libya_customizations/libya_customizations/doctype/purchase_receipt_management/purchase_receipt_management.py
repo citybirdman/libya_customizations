@@ -227,7 +227,9 @@ def get_purchase_receipt_data(purchase_receipt):
 	LEFT JOIN stock_ledger_entry_qty sle_qty ON pri.item_code = sle_qty.item_code AND pri.production_year <=> sle_qty.production_year
 	LEFT JOIN stock_ledger_entry_value sle_value ON pri.item_code = sle_value.item_code
 	LEFT JOIN item_price ip ON pri.item_code = ip.item_code AND pri.production_year <=> ip.production_year
-	ORDER BY pri.item_code
+	INNER JOIN `tabItem` i ON pri.item_code = i.name
+	LEFT JOIN `tabTire Size` ts ON i.tire_size = ts.name
+	ORDER BY i.brand, ts.sorting_code, i.ply_rating, pri.production_year
 	"""
 
 	return frappe.db.sql(sql, values=[purchase_receipt], as_dict=1)
