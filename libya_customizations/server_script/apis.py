@@ -13,7 +13,7 @@ def get_customer_credit_balance(customer, company):
     credit_balance = get_customer_outstanding(
         customer=customer,
         company=company,
-        ignore_outstanding_sales_order=False,
+        ignore_outstanding_sales_order=True,
         cost_center=None
     )
     return credit_balance
