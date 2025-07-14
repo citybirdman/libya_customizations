@@ -403,7 +403,7 @@ def before_submit_sales_order(doc, method):
                     if not row.production_year:
                         price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
                     else:
-                         price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["production_year","=", row['production_year']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
+                         price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["production_year","=", row.get(['production_year'], None)], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
                     if row['rate'] < price_list_rate:
                             frappe.throw(msg=_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
 
