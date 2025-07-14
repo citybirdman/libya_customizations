@@ -391,7 +391,7 @@ def create_dn_from_so(doc):
 
 
 def before_submit_sales_order(doc, method):
-    rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
+    rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name, "production_year":row.get('production_year', None)} for row in doc.items]
     if  (
         not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
         ):
