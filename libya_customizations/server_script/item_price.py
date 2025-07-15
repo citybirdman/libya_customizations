@@ -114,7 +114,7 @@ def update_stock_valuation_rate():
             ),
             ip.stock_qty = (
                 SELECT
-                    SUM(sle.actual_qty)
+                    IFNULL(SUM(sle.actual_qty), 0)
                 FROM
                     `tabStock Ledger Entry` sle
                 WHERE
