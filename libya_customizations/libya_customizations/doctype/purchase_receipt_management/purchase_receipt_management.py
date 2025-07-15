@@ -172,7 +172,7 @@ def get_purchase_receipt_data(purchase_receipt):
 	purchase_receipt_item AS (
 		SELECT
 			purchase_receipt_item.item_code,
-			purchase_receipt_item.production_year,
+			IFNULL(purchase_receipt_item.production_year, "") AS production_year,
 			item.item_name,
 			item.brand,
 			purchase_receipt_item.docstatus,
@@ -184,13 +184,13 @@ def get_purchase_receipt_data(purchase_receipt):
 		INNER JOIN `tabItem` item ON purchase_receipt_item.item_code = item.name
 		WHERE purchase_receipt_item.docstatus != 2
 			AND purchase_receipt_item.parent = %s
-		GROUP BY purchase_receipt_item.item_code, purchase_receipt_item.production_year, item.item_name, item.brand
+		GROUP BY purchase_receipt_item.item_code, IFNULL(purchase_receipt_item.production_year, ""), item.item_name, item.brand
 	),
 	stock_ledger_entry_qty AS (
-		SELECT item_code, production_year, SUM(actual_qty) AS actual_qty
+		SELECT item_code, IFNULL(production_year, "") AS production_year, SUM(actual_qty) AS actual_qty
 		FROM `tabStock Ledger Entry`
 		WHERE is_cancelled = 0
-		GROUP BY item_code, production_year
+		GROUP BY item_code, IFNULL(production_year, "")
 	),
 	stock_ledger_entry_value AS (
 		SELECT item_code, SUM(actual_qty) AS actual_qty, SUM(stock_value_difference) AS stock_value
@@ -199,7 +199,7 @@ def get_purchase_receipt_data(purchase_receipt):
 		GROUP BY item_code
 	),
 	item_price AS (
-		SELECT name, item_code, production_year, price_list_rate
+		SELECT name, item_code, IFNULL(production_year, "") AS production_year, price_list_rate
 		FROM `tabItem Price`
 		WHERE selling = 1
 			AND price_list IN (
@@ -248,7 +248,7 @@ def edit_item_price(values, selling_price_list=None):
 				"doctype": "Item Price",
 				"item_code": row['item_code'],
 				"item_name": row['item_name'],
-				"production_year": row['production_year'],
+				"production_year": row.get('production_year', None),
 				"price_list": selling_price_list,
 				"price_list_rate": row['price']
 			})
