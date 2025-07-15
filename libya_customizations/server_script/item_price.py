@@ -118,10 +118,8 @@ def update_stock_valuation_rate():
                 FROM
                     `tabStock Ledger Entry` sle
                 WHERE
-                    sle.item_code = ip.item_code AND IFNULL(sle.production_year, '') = IFNULL(ip.production_year, '')
-                GROUP BY
-                    sle.item_code,
-                    IFNULL(sle.production_year, '')
+                    sle.item_code = ip.item_code
+                    AND IFNULL(sle.production_year, '') = IFNULL(ip.production_year, '')
             )
         WHERE
             EXISTS (
