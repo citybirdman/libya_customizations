@@ -114,13 +114,14 @@ def update_stock_valuation_rate():
             ),
             ip.stock_qty = (
                 SELECT
-                    SUM(b.actual_qty)
+                    SUM(sle.actual_qty)
                 FROM
-                    `tabBin` b
+                    `tabStock Ledger Entry` sle
                 WHERE
-                    b.actual_qty > 0 AND b.item_code = ip.item_code
+                    sle.item_code = ip.item_code AND IFNULL(sle.production_year, '') = IFNULL(ip.production_year, '')
                 GROUP BY
-                    b.item_code
+                    sle.item_code,
+                    IFNULL(sle.production_year, '')
             )
         WHERE
             EXISTS (
