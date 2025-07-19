@@ -9,11 +9,21 @@ def check_user_role(user, role):
     return False
 
 @frappe.whitelist()
-def get_customer_credit_balance(customer, company):
+def get_customer_credit_balance_wo_so(customer, company):
     credit_balance = get_customer_outstanding(
         customer=customer,
         company=company,
         ignore_outstanding_sales_order=True,
+        cost_center=None
+    )
+    return credit_balance
+
+@frappe.whitelist()
+def get_customer_credit_balance_w_so(customer, company):
+    credit_balance = get_customer_outstanding(
+        customer=customer,
+        company=company,
+        ignore_outstanding_sales_order=False,
         cost_center=None
     )
     return credit_balance

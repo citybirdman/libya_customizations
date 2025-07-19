@@ -88,7 +88,8 @@ doctype_list_js = {
 # add methods and filters to jinja environment
 jinja = {
 	"methods": [
-		"libya_customizations.server_script.apis.get_customer_credit_balance"
+		"libya_customizations.server_script.apis.get_customer_credit_balance_w_so",
+        "libya_customizations.server_script.apis.get_customer_credit_balance_wo_so",
 		]
 # 	"filters": "libya_customizations.utils.jinja_filters"
 }
