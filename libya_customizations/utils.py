@@ -251,6 +251,8 @@ def update_child_qty_rate(parent_doctype, trans_items, parent_doctype_name, chil
 				child_item.rate_with_margin = 0
 		if d.get("brand"):
 			child_item.brand = d.get("brand")
+		if d.get("production_year"):
+			child_item.production_year = d.get("production_year")
 		child_item.flags.ignore_validate_update_after_submit = True
 		if new_child_flag:
 			parent.load_from_db()

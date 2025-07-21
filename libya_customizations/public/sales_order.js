@@ -128,6 +128,7 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 			delivery_date: d.delivery_date,
 			schedule_date: d.schedule_date,
 			conversion_factor: d.conversion_factor,
+			production_year: d.production_year,
 			qty: d.qty,
 			brand: d.brand,
 			rate: d.rate,
@@ -150,12 +151,14 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 			options: "Brand",
 			read_only: 1,
 			label: __("Brand"),
+			in_list_view: 1,
+			columns: 2,
 		},
 		{
 			fieldtype: "Link",
 			fieldname: "item_code",
 			options: "Item",
-			in_list_view: 1,
+			in_list_view: 0,
 			read_only: 0,
 			disabled: 0,
 			label: __("Item Code"),
@@ -187,7 +190,8 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 			read_only: 0,
 			in_list_view: 1,
 			fetch_from: "item_code.item_name",
-			label: __("Item Name")
+			label: __("Item Name"),
+			columns: 5,
 		},
 		{
 			fieldtype: "Link",
@@ -218,6 +222,16 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 			},
 		},
 		{
+			fieldtype: "Link",
+			options: "Production Year",
+			fieldname: "production_year",
+			default: 0,
+			read_only: 0,
+			in_list_view: 1,
+			label: __("Production"),
+			columns: 1,
+		},
+		{
 			fieldtype: "Float",
 			fieldname: "qty",
 			default: 0,
@@ -225,6 +239,7 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 			in_list_view: 1,
 			label: __("Qty"),
 			precision: get_precision("qty"),
+			columns: 1,
 		},
 		{
 			fieldtype: "Currency",
@@ -235,6 +250,7 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 			in_list_view: 1,
 			label: __("Rate"),
 			precision: get_precision("rate"),
+			columns: 1,
 		},
 	];
 
