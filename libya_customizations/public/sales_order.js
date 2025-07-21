@@ -396,6 +396,7 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 			"Item Code":'',
 			"Brand":'',
 			"Item Name":'',
+			"Production Year":"",
 			"Actual Stock":"",
 			"Available Stock": "",
 			"Selling Price":'',
