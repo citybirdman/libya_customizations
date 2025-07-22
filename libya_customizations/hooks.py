@@ -174,7 +174,8 @@ after_install = "libya_customizations.install.after_install"
 # Override standard doctype classes
 
 override_doctype_class = {
-	"Sales Order": "libya_customizations.overrides.sales_order.CustomSalesOrder"
+	"Sales Order": "libya_customizations.overrides.sales_order.CustomSalesOrder",
+    "Item Price": "libya_customizations.overrides.item_price.CustomItemPrice"
 }
 
 # Document Events
