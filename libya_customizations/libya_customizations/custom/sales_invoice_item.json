@@ -274,7 +274,7 @@
    "property": "mandatory_depends_on",
    "property_type": "Code",
    "row_name": null,
-   "value": "eval: doc.discount_amount"
+   "value": null
   },
   {
    "_assign": null,
