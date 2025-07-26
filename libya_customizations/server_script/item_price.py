@@ -98,34 +98,26 @@ def import_item_price_data(file_url):
 
 @frappe.whitelist()
 def update_stock_valuation_rate():
-    sql = """
-        UPDATE
-            `tabItem Price` ip
-        SET
-            ip.stock_valuation_rate = (
-                SELECT
-                    SUM(b.stock_value) / SUM(b.actual_qty) AS avg_rate
-                FROM
-                    `tabBin` b
-                WHERE
-                    b.actual_qty > 0 AND b.item_code = ip.item_code
-                GROUP BY
-                    b.item_code
-            ),
-            ip.stock_qty = (
-                SELECT
-                    IFNULL(SUM(sle.actual_qty), 0)
-                FROM
-                    `tabStock Ledger Entry` sle
-                WHERE
-                    sle.item_code = ip.item_code
-                    AND IFNULL(sle.production_year, '') = IFNULL(ip.production_year, '')
-            )
-        WHERE
-            EXISTS (
-                SELECT 1
-                FROM `tabBin` b
-                WHERE b.actual_qty > 0 AND b.item_code = ip.item_code
-            )
-    """
-    frappe.db.sql(sql)
+    item_prices = frappe.get_all("Item Price", fields=["name", "item_code", "production_year"])
+    
+    for ip in item_prices:
+        # Get Stock Valuation Rate (based on item_code)
+        avg_rate = frappe.db.sql("""
+            SELECT SUM(stock_value) / SUM(actual_qty)
+            FROM `tabBin`
+            WHERE item_code = %s AND actual_qty > 0
+        """, (ip.item_code,))[0][0]
+
+        # Get Stock Qty (based on item_code + production_year)
+        stock_qty = frappe.db.sql("""
+            SELECT IFNULL(SUM(actual_qty), 0)
+            FROM `tabStock Ledger Entry`
+            WHERE item_code = %s AND IFNULL(production_year, '') = IFNULL(%s, '')
+        """, (ip.item_code, ip.production_year))[0][0]
+
+        frappe.db.set_value("Item Price", ip.name, {
+            "stock_valuation_rate": avg_rate or 0,
+            "stock_qty": stock_qty or 0
+        })
+
+    frappe.db.commit()
