@@ -128,7 +128,7 @@ erpnext.utils.advanced_update_child_items = function (opts) {
 			delivery_date: d.delivery_date,
 			schedule_date: d.schedule_date,
 			conversion_factor: d.conversion_factor,
-			production_year: d.production_year,
+			production_year: d.production_year != null ? d.production_year : '',
 			qty: d.qty,
 			brand: d.brand,
 			rate: d.rate,
