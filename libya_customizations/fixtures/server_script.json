@@ -788,13 +788,13 @@
   "doctype_event": "Before Save (Submitted Document)",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2025-07-03 07:41:03.495894",
+  "modified": "2025-07-26 15:45:23.668097",
   "module": "Libya Customizations",
   "name": "Update Brand in SO (After Submit)",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Sales Order",
-  "script": "for item in doc.items:\n    if not item.brand:\n        item.brand = frappe.db.get_value(\"Item\", item.item_code, \"brand\")\n        ",
+  "script": "for item in doc.items:\n    if not item.brand:\n        item.brand = frappe.db.get_value(\"Item\", item.item_code, \"brand\")\n    if not item.production_year:\n        item.production_year = ''\n               ",
   "script_type": "DocType Event"
  },
  {
