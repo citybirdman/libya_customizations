@@ -1059,7 +1059,7 @@
    "insert_after": "supplier_terms_tab",
    "is_system_generated": 0,
    "is_virtual": 0,
-   "label": "Incoterm",
+   "label": "Custom Incoterm",
    "length": 0,
    "link_filters": null,
    "mandatory_depends_on": null,
