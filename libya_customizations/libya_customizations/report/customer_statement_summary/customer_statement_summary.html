@@ -59,13 +59,14 @@
             line-height: 1.5; /* Prevent text overlap */
         }
 
-        .table th:nth-child(1) { width: 10%; }
-        .table th:nth-child(2) { width: 11%; }
-        .table th:nth-child(3) { width: 17%; }
-        .table th:nth-child(4) { width: 9%; }
-        .table th:nth-child(5) { width: 9%; }
-        .table th:nth-child(6) { width: 9%; }
-        .table th:nth-child(7) { width: 35%; }
+        .table th:nth-child(1) { width: 9%; }
+        .table th:nth-child(2) { width: 9%; }
+        .table th:nth-child(3) { width: 14%; }
+        .table th:nth-child(4) { width: 14%; }
+        .table th:nth-child(5) { width: 8%; }
+        .table th:nth-child(6) { width: 8%; }
+        .table th:nth-child(7) { width: 8%; }
+        .table th:nth-child(8) { width: 30%; }
 
         .balance-cell {
             font-weight: bold;
@@ -103,6 +104,7 @@
                 <th>التاريخ</th>
                 <th>نوع المستند</th>
                 <th>رقم المستند</th>
+                <th>أمر البيع</th>
                 <th>المدين</th>
                 <th>الدائن</th>
                 <th>الرصيد</th>
@@ -115,6 +117,7 @@
                     <td>{{ row.posting_date }}</td>
                     <td>{{ row.translated_voucher_type }}</td>
                     <td>{{ row.voucher_no }}</td>
+                    <td>{{ row.sales_order }}</td>
                     <td>{{ format_currency(row.debit) }}</td>
                     <td>{{ format_currency(row.credit) }}</td>
                     <td class="balance-cell">{{ format_currency(row.balance) }}</td>
