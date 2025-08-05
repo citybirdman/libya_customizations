@@ -360,8 +360,8 @@ def create_dn_from_so(doc):
             sales_team = doc['sales_team'],
             items = items_to_load
         ))
-        if(doc['custom_remarks']):
-            delivery_note.custom_remarks = doc['custom_remarks']
+        if(doc.get('custom_remarks')):
+            delivery_note.custom_remarks = doc.get('custom_remarks')
         delivery_note.insert(ignore_permissions=False)
         dn_name = delivery_note.name
         so_name = doc['name']
