@@ -359,9 +359,10 @@ def create_dn_from_so(doc):
             taxes = doc['taxes'],
             sales_team = doc['sales_team'],
             items = items_to_load
-        )).insert(ignore_permissions=True)
-        # if(doc['custom_remarks']):
-        #     delivery_note.custom_remarks = doc['custom_remarks']
+        ))
+        if(doc['custom_remarks']):
+            delivery_note.custom_remarks = doc['custom_remarks']
+        delivery_note.insert(ignore_permissions=False)
         dn_name = delivery_note.name
         so_name = doc['name']
         # frappe.msgprint(_(f"Delivery Note <b>{dn_name}</b> has been created against Sales Order <b>{so_name}</b>"), title=_('Error'), indicator='red')
@@ -384,16 +385,17 @@ def before_submit_sales_order(doc, method):
 						frappe.throw(msg=_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
 
 def validate_item_prices_after_submit(doc, method):
-	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
-	if (
-		    not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Chief Sales Officer", "Price Exception"]]])
-		):
-		for row in rows:
-			if row['rate'] < row['valuation_rate'] and frappe.db.get_value("Company", get_default_company(), "validate_selling_price_so"):
-				frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Valuation Rate</b>").format('{:0.2f}'.format(row['rate']), row['item_name']))
-			elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
-				for row in rows:
-					price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
-					if row['rate'] < price_list_rate:
-						frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
+    rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
+    bypass_role = frappe.db.get_value("Company", get_default_company(), "role_bypass_price_list_validation")
+    if (
+            not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Chief Sales Officer", "Price Exception", bypass_role]]])
+        ):
+        for row in rows:
+            if row['rate'] < row['valuation_rate'] and frappe.db.get_value("Company", get_default_company(), "validate_selling_price_so"):
+                frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Valuation Rate</b>").format('{:0.2f}'.format(row['rate']), row['item_name']))
+            elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
+                for row in rows:
+                    price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
+                    if row['rate'] < price_list_rate:
+                        frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
                     
