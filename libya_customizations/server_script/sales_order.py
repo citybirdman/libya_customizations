@@ -409,8 +409,9 @@ def before_submit_sales_order(doc, method):
 
 def validate_item_prices_after_submit(doc, method):
 	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
+	bypass_role = frappe.db.get_value("Company", get_default_company(), "role_bypass_price_list_validation")
 	if (
-		    not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
+		    not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer", bypass_role]])
 		):
 		for row in rows:
 			if row['rate'] < row['valuation_rate'] and frappe.db.get_value("Company", get_default_company(), "validate_selling_price_so"):
