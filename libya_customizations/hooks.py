@@ -198,6 +198,7 @@ doc_events = {
         "on_submit":[
             "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_so",
             "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_dn",
+            "libya_customizations.server_script.sales_invoice.after_submit_amended_sales_invoice",
 			"libya_customizations.server_script.sales_invoice.reconcile_payments",
 			"libya_customizations.server_script.sales_invoice.reconcile_everything"
         ],

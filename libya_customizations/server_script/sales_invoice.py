@@ -205,7 +205,9 @@ def create_payment(doc, method):
 		doc.custom_is_payment_value_checked =1
 		frappe.db.set_value(doc.doctype, doc.name, "custom_is_payment_value_checked", 1)
 		create_write_off(doc, method)
-
+def after_submit_amended_sales_invoice(doc, method):
+	if doc.amended_from and doc.is_paid:
+	    create_payment(doc, method)
 def create_write_off(doc, method):
 	if doc.custom_payment_value_is_different and doc.custom_payment_value:
 		if abs(doc.grand_total) - doc.custom_payment_value <= 0:
