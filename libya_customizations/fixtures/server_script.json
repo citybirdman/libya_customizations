@@ -66,13 +66,13 @@
   "doctype_event": "Before Insert",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2024-12-31 01:08:42.741257",
+  "modified": "2025-08-07 12:33:58.275787",
   "module": "Libya Customizations",
   "name": "Account - Permission Query",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Account",
-  "script": "if frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"Libya Team\"]]):\n    conditions = \"restrict_account_view='No'\"",
+  "script": "role1 = frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"Libya Team\"]])\nrole2 = frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"Chief Executive Officer\"]])\nif role1 and not role2:\n    conditions = \"restrict_account_view='No'\"",
   "script_type": "Permission Query"
  },
  {
