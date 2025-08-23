@@ -17,7 +17,7 @@ class SalesAdjustmentRequest(Document):
 		if(len(self.increased_items)):
 			sales_order = self.create_sales_order(self.increased_items)
 			delivery_note = self.create_delivery_note(sales_order)
-			self.create_sales_invoice(delivery_note)
+			# self.create_sales_invoice(delivery_note)
 
 		if(len(self.decreased_items)):
 			self.create_return_sales_invoice()
