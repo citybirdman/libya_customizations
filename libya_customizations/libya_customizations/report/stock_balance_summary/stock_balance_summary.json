@@ -24,7 +24,7 @@
   {
    "fieldname": "brand",
    "fieldtype": "Link",
-   "label": "brand",
+   "label": "Brand",
    "options": "Brand",
    "width": 150
   },
@@ -74,7 +74,7 @@
  "is_standard": "Yes",
  "letter_head": "itar",
  "letterhead": null,
- "modified": "2025-08-23 14:20:22.939797",
+ "modified": "2025-08-23 14:55:22.537221",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Stock Balance Summary",
