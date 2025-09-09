@@ -16,7 +16,7 @@ def after_submit_sales_order(doc, method):
     flag = False
     for row in doc.items:
         balances = frappe.db.sql(f"""
-			SELECT
+            SELECT
                 IF(sales_future.future_qty_to_deliver > purchase_future.future_balance, stock_actual.actual_balance - (sales_actual.actual_qty_to_deliver + (sales_future.future_qty_to_deliver - purchase_future.future_balance)), stock_actual.actual_balance-sales_actual.actual_qty_to_deliver) AS actual_available_qty,
                 (stock_actual.actual_balance + purchase_future.future_balance) - (sales_actual.actual_qty_to_deliver + sales_future.future_qty_to_deliver) AS future_available_qty
             FROM
@@ -161,164 +161,164 @@ def after_submit_sales_order(doc, method):
 def before_save_sales_order(doc, method):
     doc = frappe.get_doc(doc)
     if  (
-		    doc.reservation_status == "Reserve against Future Receipts"
-		    and not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
-		):
+            doc.reservation_status == "Reserve against Future Receipts"
+            and not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
+        ):
         frappe.msgprint(_("You do not have the authority to choose <b>Reserve against Future Receipts</b>"), title=_('Error'), indicator='red')
         raise frappe.ValidationError
 
 def after_update_after_submit_sales_order(doc, method):
-	doc = frappe.get_doc(doc)
-	after_submit_sales_order(doc, method)
-	before_save_sales_order(doc, method)
+    doc = frappe.get_doc(doc)
+    after_submit_sales_order(doc, method)
+    before_save_sales_order(doc, method)
 
 def validate_before_submit_sales_order(doc, method):
     
-	payment_terms_template = frappe.db.get_value('Customer', doc.customer, 'payment_terms')
-	if payment_terms_template:
-		bypass_overdue_check = frappe.db.get_value('Customer', doc.customer, 'bypass_overdue_check')
-		user_has_cso = frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
-		credit_days = frappe.db.get_value('Payment Terms Template Detail', {'parent': payment_terms_template}, 'credit_days')
-		outstanding = frappe.db.get_value('Sales Invoice', {'docstatus': 1, 'customer': doc.customer, 'posting_date': ['<', frappe.utils.add_days(frappe.utils.nowdate(), - credit_days)]}, 'sum(outstanding_amount)')
-		outstanding = outstanding if outstanding else 0
+    payment_terms_template = frappe.db.get_value('Customer', doc.customer, 'payment_terms')
+    if payment_terms_template:
+        bypass_overdue_check = frappe.db.get_value('Customer', doc.customer, 'bypass_overdue_check')
+        user_has_cso = frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
+        credit_days = frappe.db.get_value('Payment Terms Template Detail', {'parent': payment_terms_template}, 'credit_days')
+        outstanding = frappe.db.get_value('Sales Invoice', {'docstatus': 1, 'customer': doc.customer, 'posting_date': ['<', frappe.utils.add_days(frappe.utils.nowdate(), - credit_days)]}, 'sum(outstanding_amount)')
+        outstanding = outstanding if outstanding else 0
 
-		if outstanding > 0 and not (bypass_overdue_check or user_has_cso):
-			frappe.msgprint(msg=_("There are overdue outstandings valued at {0} against the Customer").format('{:0,.2f}'.format(outstanding)), title=_('Error'), indicator='red')
-			raise frappe.ValidationError
-		# elif outstanding > 0 and (bypass_overdue_check or user_has_cso):
-		# 	frappe.msgprint(msg=_("There are overdue outstandings valued at {0} against the Customer").format('{:0,.2f}'.format(outstanding)), title=_('Warning'), indicator='orange')
-	else:
-		frappe.msgprint(msg=_(f"There is no payment terms assigned to Customer in Customer Master"), title=_('Error'), indicator='red')
-		raise frappe.ValidationError
+        if outstanding > 0 and not (bypass_overdue_check or user_has_cso):
+            frappe.msgprint(msg=_("There are overdue outstandings valued at {0} against the Customer").format('{:0,.2f}'.format(outstanding)), title=_('Error'), indicator='red')
+            raise frappe.ValidationError
+        # elif outstanding > 0 and (bypass_overdue_check or user_has_cso):
+        # 	frappe.msgprint(msg=_("There are overdue outstandings valued at {0} against the Customer").format('{:0,.2f}'.format(outstanding)), title=_('Warning'), indicator='orange')
+    else:
+        frappe.msgprint(msg=_(f"There is no payment terms assigned to Customer in Customer Master"), title=_('Error'), indicator='red')
+        raise frappe.ValidationError
 
 
 @frappe.whitelist()
 def get_customer_info(customer):
     sql = frappe.db.sql(f"""SELECT
-	gl_entry.customer_balance,
-	sales_invoice_actual.customer_actual_overdues,
-	sales_invoice_potential.customer_potential_overdues,
-	customer_credit_limit.customer_credit_limit,
-	sales_order_item.unbilled_sales_orders,
-	IF((gl_entry.customer_balance + sales_order_item.unbilled_sales_orders > customer_credit_limit.customer_credit_limit AND customer_credit_limit.customer_credit_limit > 0) OR sales_invoice_actual.customer_actual_overdues > 0, '#FF0000', IF((gl_entry.customer_balance + sales_order_item.unbilled_sales_orders > customer_credit_limit.customer_credit_limit * 0.85 AND customer_credit_limit.customer_credit_limit > 0) OR sales_invoice_potential.customer_potential_overdues > 0, '#FFA500', '#008000')) AS customer_index
+    gl_entry.customer_balance,
+    sales_invoice_actual.customer_actual_overdues,
+    sales_invoice_potential.customer_potential_overdues,
+    customer_credit_limit.customer_credit_limit,
+    sales_order_item.unbilled_sales_orders,
+    IF((gl_entry.customer_balance + sales_order_item.unbilled_sales_orders > customer_credit_limit.customer_credit_limit AND customer_credit_limit.customer_credit_limit > 0) OR sales_invoice_actual.customer_actual_overdues > 0, '#FF0000', IF((gl_entry.customer_balance + sales_order_item.unbilled_sales_orders > customer_credit_limit.customer_credit_limit * 0.85 AND customer_credit_limit.customer_credit_limit > 0) OR sales_invoice_potential.customer_potential_overdues > 0, '#FFA500', '#008000')) AS customer_index
 FROM
-	(
-	SELECT
-		COALESCE(SUM(debit - credit), 0) AS customer_balance
-	FROM
-		`tabGL Entry`
-	WHERE
-		is_cancelled = 0
-	AND
-		party_type = 'Customer'
-	AND
-		party = "{customer}"
-	) gl_entry
+    (
+    SELECT
+        COALESCE(SUM(debit - credit), 0) AS customer_balance
+    FROM
+        `tabGL Entry`
+    WHERE
+        is_cancelled = 0
+    AND
+        party_type = 'Customer'
+    AND
+        party = "{customer}"
+    ) gl_entry
 LEFT JOIN
-	(
-	SELECT
-		COALESCE(SUM(sales_invoice.outstanding_amount), 0) AS customer_actual_overdues
-	FROM
-		`tabSales Invoice` sales_invoice
-	LEFT JOIN
-		(
-		SELECT
-			customer.name,
-			COALESCE(payment_terms_template_detail.credit_days, 0) AS credit_days
-		FROM
-			`tabCustomer` customer
-		LEFT JOIN
-			`tabPayment Terms Template Detail` payment_terms_template_detail
-		ON
-			customer.payment_terms = payment_terms_template_detail.parent
-		) customer
-	ON
-		sales_invoice.customer = customer.name
-	WHERE
-		sales_invoice.docstatus = 1
-	AND
-		sales_invoice.is_return = 0
-	AND
-		sales_invoice.outstanding_amount > 0
-	AND
-		DATE(DATE_ADD(NOW(), INTERVAL 2 HOUR)) >= DATE_ADD(sales_invoice.posting_date, INTERVAL customer.credit_days DAY)
-	AND
-		sales_invoice.customer = "{customer}"
-	) sales_invoice_actual
+    (
+    SELECT
+        COALESCE(SUM(sales_invoice.outstanding_amount), 0) AS customer_actual_overdues
+    FROM
+        `tabSales Invoice` sales_invoice
+    LEFT JOIN
+        (
+        SELECT
+            customer.name,
+            COALESCE(payment_terms_template_detail.credit_days, 0) AS credit_days
+        FROM
+            `tabCustomer` customer
+        LEFT JOIN
+            `tabPayment Terms Template Detail` payment_terms_template_detail
+        ON
+            customer.payment_terms = payment_terms_template_detail.parent
+        ) customer
+    ON
+        sales_invoice.customer = customer.name
+    WHERE
+        sales_invoice.docstatus = 1
+    AND
+        sales_invoice.is_return = 0
+    AND
+        sales_invoice.outstanding_amount > 0
+    AND
+        DATE(DATE_ADD(NOW(), INTERVAL 2 HOUR)) >= DATE_ADD(sales_invoice.posting_date, INTERVAL customer.credit_days DAY)
+    AND
+        sales_invoice.customer = "{customer}"
+    ) sales_invoice_actual
 ON
-	TRUE
+    TRUE
 LEFT JOIN
-	(
-	SELECT
-		COALESCE(SUM(sales_invoice.outstanding_amount), 0) AS customer_potential_overdues
-	FROM
-		`tabSales Invoice` sales_invoice
-	LEFT JOIN
-		(
-		SELECT
-			customer.name,
-			COALESCE(payment_terms_template_detail.credit_days, 0) AS credit_days
-		FROM
-			`tabCustomer` customer
-		LEFT JOIN
-			`tabPayment Terms Template Detail` payment_terms_template_detail
-		ON
-			customer.payment_terms = payment_terms_template_detail.parent
-		) customer
-	ON
-		sales_invoice.customer = customer.name
-	WHERE
-		sales_invoice.docstatus = 1
-	AND
-		sales_invoice.is_return = 0
-	AND
-		sales_invoice.outstanding_amount > 0
-	AND
-		DATE(DATE_ADD(NOW(), INTERVAL 2 HOUR)) < DATE_ADD(sales_invoice.posting_date, INTERVAL customer.credit_days DAY)
-	AND
-		DATE(DATE_ADD(NOW(), INTERVAL 2 HOUR)) >= DATE_ADD(sales_invoice.posting_date, INTERVAL FLOOR(customer.credit_days * 0.85) DAY)
-	AND
-		sales_invoice.customer = "{customer}"
-	) sales_invoice_potential
+    (
+    SELECT
+        COALESCE(SUM(sales_invoice.outstanding_amount), 0) AS customer_potential_overdues
+    FROM
+        `tabSales Invoice` sales_invoice
+    LEFT JOIN
+        (
+        SELECT
+            customer.name,
+            COALESCE(payment_terms_template_detail.credit_days, 0) AS credit_days
+        FROM
+            `tabCustomer` customer
+        LEFT JOIN
+            `tabPayment Terms Template Detail` payment_terms_template_detail
+        ON
+            customer.payment_terms = payment_terms_template_detail.parent
+        ) customer
+    ON
+        sales_invoice.customer = customer.name
+    WHERE
+        sales_invoice.docstatus = 1
+    AND
+        sales_invoice.is_return = 0
+    AND
+        sales_invoice.outstanding_amount > 0
+    AND
+        DATE(DATE_ADD(NOW(), INTERVAL 2 HOUR)) < DATE_ADD(sales_invoice.posting_date, INTERVAL customer.credit_days DAY)
+    AND
+        DATE(DATE_ADD(NOW(), INTERVAL 2 HOUR)) >= DATE_ADD(sales_invoice.posting_date, INTERVAL FLOOR(customer.credit_days * 0.85) DAY)
+    AND
+        sales_invoice.customer = "{customer}"
+    ) sales_invoice_potential
 ON
-	TRUE
+    TRUE
 LEFT JOIN
-	(
-	SELECT
-		COALESCE(SUM(credit_limit), 0) AS customer_credit_limit
-	FROM
-		`tabCustomer Credit Limit`
-	WHERE
-		parenttype = 'Customer'
-	AND
-		parent = "{customer}"
-	
-	) customer_credit_limit
+    (
+    SELECT
+        COALESCE(SUM(credit_limit), 0) AS customer_credit_limit
+    FROM
+        `tabCustomer Credit Limit`
+    WHERE
+        parenttype = 'Customer'
+    AND
+        parent = "{customer}"
+    
+    ) customer_credit_limit
 ON
-	TRUE
+    TRUE
 LEFT JOIN
-	(
-	SELECT
-		COALESCE(SUM((sales_order_item.amount - sales_order_item.billed_amt) * sales_order.grand_total / sales_order.total), 0) AS unbilled_sales_orders
-	FROM
-		`tabSales Order Item` sales_order_item
-	INNER JOIN
-		`tabSales Order` sales_order
-	ON
-		sales_order_item.parent = sales_order.name
-	WHERE
-		sales_order_item.docstatus = 1
-	AND
-		sales_order.docstatus = 1
-	AND
-		sales_order.status NOT IN ('Closed', 'Completed')
-	AND
-		sales_order_item.amount - sales_order_item.billed_amt > 0
-	AND
-		sales_order.customer = "{customer}"
-	) sales_order_item
+    (
+    SELECT
+        COALESCE(SUM((sales_order_item.amount - sales_order_item.billed_amt) * sales_order.grand_total / sales_order.total), 0) AS unbilled_sales_orders
+    FROM
+        `tabSales Order Item` sales_order_item
+    INNER JOIN
+        `tabSales Order` sales_order
+    ON
+        sales_order_item.parent = sales_order.name
+    WHERE
+        sales_order_item.docstatus = 1
+    AND
+        sales_order.docstatus = 1
+    AND
+        sales_order.status NOT IN ('Closed', 'Completed')
+    AND
+        sales_order_item.amount - sales_order_item.billed_amt > 0
+    AND
+        sales_order.customer = "{customer}"
+    ) sales_order_item
 ON
-	TRUE""", as_dict=True)
+    TRUE""", as_dict=True)
     return sql
 
 import json
@@ -371,20 +371,22 @@ def create_dn_from_so(doc):
 
 
 def before_submit_sales_order(doc, method):
-	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
-	if  (
-		    not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Chief Sales Officer", "Price Exception"]]])
-		):
-		for row in rows:
-			if row['rate'] < row['valuation_rate'] and frappe.db.get_value("Company", get_default_company(), "validate_selling_price_so"):
-				frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Valuation Rate</b>").format('{:0.2f}'.format(row['rate']), row['item_name']))
-			elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
-				for row in rows:
-					price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
-					if row['rate'] < price_list_rate:
-						frappe.throw(msg=_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
+    return
+    rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
+    if  (
+            not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Chief Sales Officer", "Price Exception"]]])
+        ):
+        for row in rows:
+            if row['rate'] < row['valuation_rate'] and frappe.db.get_value("Company", get_default_company(), "validate_selling_price_so"):
+                frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Valuation Rate</b>").format('{:0.2f}'.format(row['rate']), row['item_name']))
+            elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
+                for row in rows:
+                    price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
+                    if row['rate'] < price_list_rate:
+                        frappe.throw(msg=_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
 
 def validate_item_prices_after_submit(doc, method):
+    return
     rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.valuation_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
     bypass_role = frappe.db.get_value("Company", get_default_company(), "role_bypass_price_list_validation")
     if (
