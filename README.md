@@ -4,4 +4,4 @@ for all customizations for libya
 
 #### License
 
-mit
+MIT
