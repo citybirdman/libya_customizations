@@ -1,6 +1,6 @@
 ## Libya Customizations
 
-For all customizations need for Libya Business under Mobility Group (Under Development)
+For all customizations need for Libya Business under Mobility Group
 
 #### License
 
