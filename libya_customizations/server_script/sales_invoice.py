@@ -3,14 +3,14 @@ from frappe import _
 from frappe import json
 
 def get_default_company():
-    default_company = frappe.db.get_single_value("Global Defaults", "default_company")
-    
-    if default_company:
-        return default_company
-    else:
-        # Fallback: get the first company in the list
-        company = frappe.get_all("Company", fields=["name"], limit=1)
-        return company[0].name if company else None
+	default_company = frappe.db.get_single_value("Global Defaults", "default_company")
+	
+	if default_company:
+		return default_company
+	else:
+		# Fallback: get the first company in the list
+		company = frappe.get_all("Company", fields=["name"], limit=1)
+		return company[0].name if company else None
 
 def unreconcile_linked_payments(doc):
 	linked_docs = frappe.call("erpnext.accounts.doctype.unreconcile_payment.unreconcile_payment.get_linked_payments_for_doc", company = doc.company, doctype= "Sales Invoice", docname=doc.name)
@@ -29,97 +29,103 @@ def unreconcile_linked_payments(doc):
 				continue
 
 def after_submit_sales_invoice_so(doc, method):
-    if not (doc.is_return or doc.update_stock or doc.is_opening == "Yes"):
-        rows = [{"name": row.so_detail, "qty": row.qty} for row in doc.items]
-        for row in rows:
-            qty = frappe.db.get_value("Sales Order Item", row["name"], "billed_qty")
-            qty = qty if qty else 0
-            frappe.db.set_value("Sales Order Item", row["name"], "billed_qty", qty + row["qty"])
-        docname = frappe.db.get_value("Sales Order Item", rows[0]['name'], "parent")
-        doc = frappe.get_doc("Sales Order", docname)
-        flag = True
-        for row in doc.items:
-            if row.qty != row.billed_qty:
-                flag = False
-                break
-        if flag and doc.per_billed < 100:
-            frappe.call("erpnext.selling.doctype.sales_order.sales_order.update_status", status="Closed", name=docname)
+	if not (doc.is_return or doc.update_stock or doc.is_opening == "Yes"):
+		rows = [{"name": row.so_detail, "qty": row.qty} for row in doc.items]
+		for row in rows:
+			qty = frappe.db.get_value("Sales Order Item", row["name"], "billed_qty")
+			qty = qty if qty else 0
+			frappe.db.set_value("Sales Order Item", row["name"], "billed_qty", qty + row["qty"])
+		docname = frappe.db.get_value("Sales Order Item", rows[0]['name'], "parent")
+		doc = frappe.get_doc("Sales Order", docname)
+		flag = True
+		for row in doc.items:
+			if row.qty != row.billed_qty:
+				flag = False
+				break
+		if flag and doc.per_billed < 100:
+			frappe.call("erpnext.selling.doctype.sales_order.sales_order.update_status", status="Closed", name=docname)
 
 def after_submit_sales_invoice_dn(doc, method):
-    if not (doc.is_return or doc.update_stock or doc.is_opening == "Yes"):
-        rows = [{"name": row.dn_detail, "qty": row.qty} for row in doc.items]
+	if not (doc.is_return or doc.update_stock or doc.is_opening == "Yes"):
+		rows = [{"name": row.dn_detail, "qty": row.qty} for row in doc.items]
 
-        for row in rows:
-            qty = frappe.db.get_value("Delivery Note Item", row["name"], "billed_qty")
-            qty = qty if qty else 0
-            frappe.db.set_value("Delivery Note Item", row["name"], "billed_qty", qty + row["qty"])
-        docname = frappe.db.get_value("Delivery Note Item", rows[0]['name'], "parent")
-        total_billed_qty = frappe.db.get_value("Delivery Note Item", {'parent':docname}, 'sum(billed_qty)')
-        total_delivered_qty = frappe.db.get_value("Delivery Note Item", {'parent':docname}, 'sum(qty)')
-        if total_billed_qty == 0:
-            frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', 0)
-            frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Not Billed')
-        elif total_billed_qty > 0 and total_billed_qty < total_delivered_qty:
-            frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', total_billed_qty / total_delivered_qty)
-            frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Partly Billed')
-        else:
-            frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', 100)
-            frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Fully Billed')
-        
+		for row in rows:
+			qty = frappe.db.get_value("Delivery Note Item", row["name"], "billed_qty")
+			qty = qty if qty else 0
+			frappe.db.set_value("Delivery Note Item", row["name"], "billed_qty", qty + row["qty"])
+		docname = frappe.db.get_value("Delivery Note Item", rows[0]['name'], "parent")
+		total_billed_qty = frappe.db.get_value("Delivery Note Item", {'parent':docname}, 'sum(billed_qty)')
+		total_delivered_qty = frappe.db.get_value("Delivery Note Item", {'parent':docname}, 'sum(qty)')
+		if total_billed_qty == 0:
+			frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', 0)
+			frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Not Billed')
+		elif total_billed_qty > 0 and total_billed_qty < total_delivered_qty:
+			frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', total_billed_qty / total_delivered_qty)
+			frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Partly Billed')
+		else:
+			frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', 100)
+			frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Fully Billed')
+	
+		so = doc.items[0].sales_order
+		so_billing_status = frappe.db.get_value('Sales Order', so, 'billing_status')
+		so_delivery_status = frappe.db.get_value('Sales Order', so, 'delivery_status')
+		if so_billing_status == 'Partly Billed' and so_delivery_status == 'Fully Delivered':
+			frappe.db.set_value('Sales Order', so, 'status', 'Closed')
+		
 def before_cancel_sales_invoice_so(doc, method):
-    if not (doc.is_return or doc.update_stock or doc.is_opening == "Yes"):
-        rows = [{"name": row.so_detail, "qty": row.qty} for row in doc.items]
+	if not (doc.is_return or doc.update_stock or doc.is_opening == "Yes"):
+		rows = [{"name": row.so_detail, "qty": row.qty} for row in doc.items]
 
-        for row in rows:
-            qty = frappe.db.get_value("Sales Order Item", row["name"], "billed_qty")
-            qty = qty if qty else 0
-            frappe.db.set_value("Sales Order Item", row["name"], "billed_qty", qty - row["qty"])
-        docname = frappe.db.get_value("Sales Order Item", rows[0]['name'], "parent")
-        doc = frappe.get_doc("Sales Order", docname)
-        flag = False
-        for row in doc.items:
-            if row.qty != row.billed_qty:
-                flag = True
-                break
-        if flag:
-            frappe.call("erpnext.selling.doctype.sales_order.sales_order.update_status", status="Draft", name=docname)
+		for row in rows:
+			qty = frappe.db.get_value("Sales Order Item", row["name"], "billed_qty")
+			qty = qty if qty else 0
+			frappe.db.set_value("Sales Order Item", row["name"], "billed_qty", qty - row["qty"])
+		docname = frappe.db.get_value("Sales Order Item", rows[0]['name'], "parent")
+		doc = frappe.get_doc("Sales Order", docname)
+		flag = False
+		for row in doc.items:
+			if row.qty != row.billed_qty:
+				flag = True
+				break
+		if flag:
+			frappe.call("erpnext.selling.doctype.sales_order.sales_order.update_status", status="Draft", name=docname)
 
 def before_cancel_sales_invoice_dn(doc, method):
-    if not (doc.is_return or doc.update_stock or doc.is_opening == "Yes"):
-        rows = [{"name": row.dn_detail, "qty": row.qty} for row in doc.items]
+	if not (doc.is_return or doc.update_stock or doc.is_opening == "Yes"):
+		rows = [{"name": row.dn_detail, "qty": row.qty} for row in doc.items]
 
-        for row in rows:
-            qty = frappe.db.get_value("Delivery Note Item", row["name"], "billed_qty")
-            qty = qty if qty else 0
-            frappe.db.set_value("Delivery Note Item", row["name"], "billed_qty", qty - row["qty"])
-        docname = frappe.db.get_value("Delivery Note Item", rows[0]['name'], "parent")
-        total_billed_qty = frappe.db.get_value("Delivery Note Item", {'parent':docname}, 'sum(billed_qty)')
-        total_delivered_qty = frappe.db.get_value("Delivery Note Item", {'parent':docname}, 'sum(qty)')
-        if total_billed_qty == 0:
-            frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', 0)
-            frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Not Billed')
-        elif total_billed_qty > 0 and total_billed_qty < total_delivered_qty:
-            frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', total_billed_qty / total_delivered_qty)
-            frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Partly Billed')
-        else:
-            frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', 100)
-            frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Fully Billed')
+		for row in rows:
+			qty = frappe.db.get_value("Delivery Note Item", row["name"], "billed_qty")
+			qty = qty if qty else 0
+			frappe.db.set_value("Delivery Note Item", row["name"], "billed_qty", qty - row["qty"])
+		docname = frappe.db.get_value("Delivery Note Item", rows[0]['name'], "parent")
+		total_billed_qty = frappe.db.get_value("Delivery Note Item", {'parent':docname}, 'sum(billed_qty)')
+		total_delivered_qty = frappe.db.get_value("Delivery Note Item", {'parent':docname}, 'sum(qty)')
+		if total_billed_qty == 0:
+			frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', 0)
+			frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Not Billed')
+		elif total_billed_qty > 0 and total_billed_qty < total_delivered_qty:
+			frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', total_billed_qty / total_delivered_qty)
+			frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Partly Billed')
+		else:
+			frappe.db.set_value('Delivery Note', docname, 'custom_per_billed', 100)
+			frappe.db.set_value('Delivery Note', docname, 'billing_status', 'Fully Billed')
 
-            
+			
 
 def before_submit_sales_invoice(doc, method):
-    rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.incoming_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
-    bypass_role = frappe.db.get_value("Company", get_default_company(), "role_bypass_price_list_validation")
+	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.incoming_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
+	bypass_role = frappe.db.get_value("Company", get_default_company(), "role_bypass_price_list_validation")
 
-    if not (frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", [bypass_role, "Chief Sales Officer"]]]) or doc.is_return):
-        for row in rows:
-            if row['rate'] < row['valuation_rate']:
-                frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Valuation Rate</b>").format('{:0.2f}'.format(row['rate']), row['item_name']))
-            elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
-                for row in rows:
-                    price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
-                    if row['rate'] < price_list_rate:
-                        frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
+	if not (frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", [bypass_role, "Chief Sales Officer"]]]) or doc.is_return):
+		for row in rows:
+			if row['rate'] < row['valuation_rate']:
+				frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Valuation Rate</b>").format('{:0.2f}'.format(row['rate']), row['item_name']))
+			elif not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Sales Supervisor", "Chief Sales Officer"]]]):
+				for row in rows:
+					price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
+					if row['rate'] < price_list_rate:
+						frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
 
 def create_payment(doc, method):
 	doc = frappe.get_doc(doc)
@@ -207,7 +213,7 @@ def create_payment(doc, method):
 		create_write_off(doc, method)
 def after_submit_amended_sales_invoice(doc, method):
 	if doc.amended_from and doc.is_paid:
-	    create_payment(doc, method)
+		create_payment(doc, method)
 def create_write_off(doc, method):
 	if doc.custom_payment_value_is_different and doc.custom_payment_value:
 		if abs(doc.grand_total) - doc.custom_payment_value <= 0:
