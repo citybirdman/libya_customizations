@@ -689,3 +689,20 @@ erpnext.TransactionController.prototype.item_code = function(doc, cdt, cdn){
 	}
 }
 erpnext.TransactionController.prototype.apply_price_list = () => {};
+
+frappe.ui.form.on('Sales Order Item', {
+    item_code: function(frm, cdt, cdn) {
+        let row = locals[cdt][cdn];
+        let duplicate = frm.doc.items.find(
+            d => d.item_code === row.item_code && d.name !== row.name
+        );
+
+        if (duplicate) {
+            frappe.msgprint(__('Item {0} is already added in Row {1}', [row.item_code, duplicate.idx]));
+            
+            // remove the current row
+            frm.get_field("items").grid.grid_rows_by_docname[row.name].remove();
+            frm.refresh_field("items");
+        }
+    }
+});

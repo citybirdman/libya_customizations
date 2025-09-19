@@ -57822,5 +57822,18 @@
   "name": "pop4ngvohg",
   "source_text": "Item-wise Reservation Summary",
   "translated_text": "بيان حجز حسب الصنف"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-09-19 13:40:01.557841",
+  "name": "2lfd68327s",
+  "source_text": "Item {0} is already added in Row {1}",
+  "translated_text": "الصنف {0} بالفعل مضاف في الصف رقم {1}"
  }
 ]
