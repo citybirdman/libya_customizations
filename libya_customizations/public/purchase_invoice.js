@@ -44,3 +44,55 @@ frappe.ui.form.on("Purchase Invoice", {
         }
     },
 });
+
+frappe.ui.form.on("Purchase Invoice", {
+    refresh: function(frm) {
+        // Show button only if doc is submitted and user has Accounts User role
+        if (frm.doc.docstatus === 1 && frappe.user_roles.includes("Accounts User")) {
+            frm.add_custom_button(__("Update Exchange Rate"), function() {
+                show_exchange_rate_dialog(frm);
+            });
+        }
+    }
+});
+
+function show_exchange_rate_dialog(frm) {
+    let d = new frappe.ui.Dialog({
+        title: __("Update Exchange Rate"),
+        fields: [
+            {
+                label: __("New Exchange Rate"),
+                fieldname: "new_rate",
+                fieldtype: "Float",
+                reqd: 1,
+                default: frm.doc.exchange_rate
+            }
+        ],
+        primary_action_label: __("Save"),
+        primary_action(values) {
+            frappe.call({
+                method: "libya_customizations.server_script.purchase_invoice.update_exchange_rate",
+                args: {
+                    invoice_name: frm.doc.name,
+                    new_rate: values.new_rate
+                },
+                callback: function(r) {
+                    if (!r.exc) {
+                        // frappe.msgprint(r.message.msg);
+                        frm.reload_doc();
+                        d.hide();
+                        frappe.call({
+                            method:"frappe.desk.form.save.savedocs",
+                            args:{
+                                doc: frm.doc,
+                                action: "Update"
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+    d.show();
+}
