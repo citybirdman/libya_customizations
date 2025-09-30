@@ -194,31 +194,31 @@ doc_events = {
         "before_update_after_submit": "libya_customizations.server_script.purchase_invoice.before_update_after_submit",
         "before_submit": "libya_customizations.server_script.purchase_invoice.validate_post_carriage_costs" 
     },
-    # "Sales Invoice":{
-    #     "on_submit":[
-    #         "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_so",
-    #         "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_dn",
-    #         "libya_customizations.server_script.sales_invoice.after_submit_amended_sales_invoice",
-	# 		"libya_customizations.server_script.sales_invoice.reconcile_payments",
-	# 		"libya_customizations.server_script.sales_invoice.reconcile_everything"
-    #     ],
-    #     "before_cancel":[
-    #         "libya_customizations.server_script.sales_invoice.before_cancel_sales_invoice_so",
-    #         "libya_customizations.server_script.sales_invoice.before_cancel_sales_invoice_dn",
-	# 		"libya_customizations.server_script.sales_invoice.cancel_linked_payment"
-    #     ],
-    #     "before_submit": "libya_customizations.server_script.sales_invoice.before_submit_sales_invoice",
+    "Sales Invoice":{
+        "on_submit":[
+            "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_so",
+            "libya_customizations.server_script.sales_invoice.after_submit_sales_invoice_dn",
+            "libya_customizations.server_script.sales_invoice.after_submit_amended_sales_invoice",
+			"libya_customizations.server_script.sales_invoice.reconcile_payments",
+			"libya_customizations.server_script.sales_invoice.reconcile_everything"
+        ],
+        "before_cancel":[
+            "libya_customizations.server_script.sales_invoice.before_cancel_sales_invoice_so",
+            "libya_customizations.server_script.sales_invoice.before_cancel_sales_invoice_dn",
+			"libya_customizations.server_script.sales_invoice.cancel_linked_payment"
+        ],
+        "before_submit": "libya_customizations.server_script.sales_invoice.before_submit_sales_invoice",
 
-	# 	"on_trash": [
-	# 		"libya_customizations.server_script.sales_invoice.delete_linked_payment_log",
-	# 		"libya_customizations.server_script.sales_invoice.delete_linked_payment"
-	# 	],
-    #     "on_update_after_submit": [
-	# 		"libya_customizations.server_script.sales_invoice.create_payment",
-	# 		"libya_customizations.server_script.sales_invoice.reconcile_payments",
-	# 		"libya_customizations.server_script.sales_invoice.reconcile_everything"
-	# 	]
-    # },
+		"on_trash": [
+			"libya_customizations.server_script.sales_invoice.delete_linked_payment_log",
+			"libya_customizations.server_script.sales_invoice.delete_linked_payment"
+		],
+        "on_update_after_submit": [
+			"libya_customizations.server_script.sales_invoice.create_payment",
+			"libya_customizations.server_script.sales_invoice.reconcile_payments",
+			"libya_customizations.server_script.sales_invoice.reconcile_everything"
+		]
+    },
     "Sales Order": {
         "on_submit": "libya_customizations.server_script.sales_order.after_submit_sales_order",
         "before_submit": [
