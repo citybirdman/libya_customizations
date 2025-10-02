@@ -107,6 +107,7 @@ class ClearingVoucher(Document):
 			d = frappe.get_doc(doctype, dn.name)
 			if d.docstatus == 1:
 				d.cancel()
+		self.update_status("Cancelled")
 
 	def reconcile_payments(self):
 		if 'Customer' in [self.from_party_type, self.to_party_type]:

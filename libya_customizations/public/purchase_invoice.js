@@ -77,16 +77,18 @@ function show_exchange_rate_dialog(frm) {
                     new_rate: values.new_rate
                 },
                 callback: function(r) {
-                    if (!r.exc) {
+                    if (r.message && r.message.status === "success") {
                         // frappe.msgprint(r.message.msg);
-                        frm.reload_doc();
-                        d.hide();
-                        frappe.call({
-                            method:"frappe.desk.form.save.savedocs",
-                            args:{
-                                doc: frm.doc,
-                                action: "Update"
-                            }
+                        frm.reload_doc().then(() => {
+                            d.hide();
+                            frappe.call({
+                                method:"frappe.desk.form.save.savedocs",
+                                args:{
+                                    doc: frm.doc,
+                                    action: "Update"
+                                }
+                            });
+                            frappe.show_alert({message: __("Exchange rate updated and ledger reposted."), indicator: 'green'});
                         });
                     }
                 }

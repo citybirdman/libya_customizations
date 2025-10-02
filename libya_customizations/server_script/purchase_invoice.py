@@ -83,10 +83,8 @@ def update_exchange_rate(invoice_name, new_rate):
         ]
     })
     ral.insert(ignore_permissions=True)
+    ral.reload()
     ral.submit()
-
-    # --- Step 7: Reload updated document ---
-    doc.reload()
     return {"status": "success", "msg": _("Exchange rate updated and ledger reposted.")}
 
 

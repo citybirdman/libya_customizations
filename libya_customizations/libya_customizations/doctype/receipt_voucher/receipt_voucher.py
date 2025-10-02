@@ -28,6 +28,7 @@ class ReceiptVoucher(Document):
 			d = frappe.get_doc(doctype, dn.name)
 			if d.docstatus == 1:
 				d.cancel()
+		self.update_status("Cancelled")
 
 
 	def on_submit(self):
@@ -172,8 +173,7 @@ class ReceiptVoucher(Document):
 	# def reconcile_everything(self):
 	# 	self.reconcile_payments()
 	# 	frappe.call("erpnext.accounts.doctype.process_payment_reconciliation.process_payment_reconciliation.trigger_reconciliation_for_queued_docs")
-	def on_cancel(self):
-		self.update_status("Cancelled")
+
 
 	def reconcile_payments(self):
 		if self.party_type == 'Customer':

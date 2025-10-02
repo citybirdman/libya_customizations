@@ -81,8 +81,7 @@ class DebtVoucher(Document):
 
 	def update_status(self, status):
 		self.set("status", status)
-	def on_cancel(self):
-		self.update_status("Cancelled")
+
 
 	def on_update_after_submit(self):
 		doctype = 'Journal Entry'
@@ -138,6 +137,7 @@ class DebtVoucher(Document):
 			d = frappe.get_doc(doctype, dn.name)
 			if d.docstatus == 1:
 				d.cancel()
+		self.update_status("Cancelled")
 
 	def reconcile_payments(self):
 		if self.party_type == 'Customer':
