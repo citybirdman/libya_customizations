@@ -62,7 +62,9 @@ def update_exchange_rate(invoice_name, new_rate):
             _("Cannot update exchange rate. Accounts are frozen up to {0}.")
             .format(frozen_upto)
         )
-
+    # ------------------        
+    # edit invoice
+    # -------------------
     # --- Step 3: Cancel invoice (make draft) ---
     _toggle_docstatus(doc, 0)
 
@@ -85,6 +87,22 @@ def update_exchange_rate(invoice_name, new_rate):
     ral.insert(ignore_permissions=True)
     ral.reload()
     ral.submit()
+
+    #------------------------
+    # edit receipt
+    #------------------------
+    if receipt_name := frappe.db.get_value("Purchase Receipt Item", {"purchase_invoice":doc.name}, "parent"):
+        receipt = frappe.get_doc("Purchase Receipt", receipt_name)
+        old_status = receipt.docstatus
+        if old_status == 1:
+            _toggle_docstatus(receipt, 0)
+
+        receipt.reload()
+        receipt.set("conversion_rate", flt(new_rate))
+        receipt.save(ignore_permissions=True)
+
+        if old_status == 1:
+            _toggle_docstatus(receipt, 1)
     return {"status": "success", "msg": _("Exchange rate updated and ledger reposted.")}
 
 
