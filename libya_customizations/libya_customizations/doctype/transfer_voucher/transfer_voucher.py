@@ -44,14 +44,12 @@ class TransferVoucher(Document):
 			accounts.append({
 				'account': paid_account,
 				'exchange_rate': self.source_exchange_rate if self.sender else self.target_exchange_rate,
-				'credit_in_account_currency': abs(self.banking_charges),
-				'branch': 'Main'
+				'credit_in_account_currency': abs(self.banking_charges)
 			})
 			accounts.append({
 				'account': self.charge_account,
 				'exchange_rate': 1,
-				'debit_in_account_currency': abs(self.banking_charges),
-				'branch': 'Main'
+				'debit_in_account_currency': abs(self.banking_charges)
 			})
 			journal_entry = frappe.get_doc({
 				'doctype': 'Journal Entry',

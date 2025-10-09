@@ -66,14 +66,12 @@ class ReceiptVoucher(Document):
 				'party_type': self.party_type,
 				'party': self.party,
 				'exchange_rate': self.source_exchange_rate,
-				'credit_in_account_currency': abs(self.paid_amount),
-				'branch': 'Main'
+				'credit_in_account_currency': abs(self.paid_amount)
 			})
 			accounts.append({
 				'account': self.paid_to,
 				'exchange_rate': self.target_exchange_rate,
-				'debit_in_account_currency': abs(self.received_amount),
-				'branch': 'Main'
+				'debit_in_account_currency': abs(self.received_amount)
 			})
 			journal_entry = frappe.get_doc({
 				'doctype': 'Journal Entry',
@@ -98,16 +96,14 @@ class ReceiptVoucher(Document):
 			accounts.append({
 				'account': self.paid_to,
 				'exchange_rate': self.source_exchange_rate,
-				'credit_in_account_currency': abs(self.banking_charges),
-				'branch': 'Main'
+				'credit_in_account_currency': abs(self.banking_charges)
 			})
 			accounts.append({
 				'account': self.paid_from,
 				'party_type': self.party_type,
 				'party': self.party,
 				'exchange_rate': self.target_exchange_rate,
-				'debit_in_account_currency': abs(self.banking_charges),
-				'branch': 'Main'
+				'debit_in_account_currency': abs(self.banking_charges)
 			})
 			journal_entry = frappe.get_doc({
 				'doctype': 'Journal Entry',
