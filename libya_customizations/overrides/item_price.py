@@ -23,8 +23,7 @@ class CustomItemPrice(ItemPrice):
             "valid_upto",
             "customer",
             "supplier",
-            "batch_no",
-            "production_year"
+            "batch_no"
         )
 
         number_fields = ["packing_unit"]

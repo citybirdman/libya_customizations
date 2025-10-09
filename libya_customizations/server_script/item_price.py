@@ -98,7 +98,7 @@ def import_item_price_data(file_url):
 
 @frappe.whitelist()
 def update_stock_valuation_rate():
-    item_prices = frappe.get_all("Item Price", fields=["name", "item_code", "production_year"])
+    item_prices = frappe.get_all("Item Price", fields=["name", "item_code"])
     
     for ip in item_prices:
         # Get Stock Valuation Rate (based on item_code)
@@ -108,12 +108,12 @@ def update_stock_valuation_rate():
             WHERE item_code = %s AND actual_qty > 0
         """, (ip.item_code,))[0][0]
 
-        # Get Stock Qty (based on item_code + production_year)
+        # Get Stock Qty (based on item_code)
         stock_qty = frappe.db.sql("""
             SELECT IFNULL(SUM(actual_qty), 0)
             FROM `tabStock Ledger Entry`
-            WHERE item_code = %s AND IFNULL(production_year, '') = IFNULL(%s, '')
-        """, (ip.item_code, ip.production_year))[0][0]
+            WHERE item_code = %s
+        """, (ip.item_code))[0][0]
 
         frappe.db.set_value("Item Price", ip.name, {
             "stock_valuation_rate": avg_rate or 0,
