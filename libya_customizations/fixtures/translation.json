@@ -57857,9 +57857,9 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-10-09 12:50:51.984007",
+  "modified": "2025-10-09 13:53:44.994716",
   "name": "grnbkr25c6",
-  "source_text": "ITEMS - ENABLED",
+  "source_text": "Items - Enabled",
   "translated_text": "أصناف - مفعلة"
  },
  {
@@ -57870,9 +57870,9 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-10-09 12:50:52.021116",
+  "modified": "2025-10-09 13:53:44.979242",
   "name": "grosdfvurs",
-  "source_text": "ITEMS - DISABLED",
+  "source_text": "Items - Disabled",
   "translated_text": "أصناف - موقوفة"
  },
  {
@@ -57935,9 +57935,9 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-10-09 12:50:52.083671",
+  "modified": "2025-10-09 13:53:44.964038",
   "name": "groh19c3nd",
-  "source_text": "SUPPLIERS - ENABLED",
+  "source_text": "Suppliers - Enabled",
   "translated_text": "موردين - مفعلين"
  },
  {
@@ -57948,9 +57948,9 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-10-09 12:50:52.095177",
+  "modified": "2025-10-09 13:53:44.948589",
   "name": "gromkffrta",
-  "source_text": "SUPPLIERS - DISABLED",
+  "source_text": "Suppliers - Disabled",
   "translated_text": "موردين - موقوفين"
  },
  {
@@ -57974,9 +57974,9 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-10-09 12:50:52.118372",
+  "modified": "2025-10-09 13:53:44.933177",
   "name": "grpcoj3b8p",
-  "source_text": "PURCHASE INVOICE NO - SUBMITTED",
+  "source_text": "Purchase Invoice No - Submitted",
   "translated_text": "عدد فواتير المشتريات - مسجلة"
  },
  {
@@ -57987,9 +57987,9 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-10-09 12:50:52.130096",
+  "modified": "2025-10-09 13:53:44.917931",
   "name": "grpcob7p6e",
-  "source_text": "PURCHASE INVOICE NO - DRAFT",
+  "source_text": "Purchase Invoice No - Draft",
   "translated_text": "عدد فواتير المشتريات - مسودة"
  },
  {
@@ -58000,9 +58000,9 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-10-09 12:50:52.142674",
+  "modified": "2025-10-09 13:53:44.892673",
   "name": "grp4gssg50",
-  "source_text": "PURCHASE INVOICE NO - CANCELLED",
+  "source_text": "Purchase Invoice No - Cancelled",
   "translated_text": "عدد فواتير المشتريات - ملغاة"
  },
  {
