@@ -173,9 +173,9 @@ override_doctype_class = {
 # Hook on document methods and events
 
 doc_events = {
-    "Journal Entry":{
-        "before_cancel":"libya_customizations.server_script.journal_entry.on_trash"
-    },
+    # "Journal Entry":{
+    #     "before_cancel":"libya_customizations.server_script.journal_entry.on_trash"
+    # },
     "Item": {
         "after_insert": "libya_customizations.server_script.Item.after_insert_item",
         "on_update": "libya_customizations.server_script.Item.after_update_item"
