@@ -80,7 +80,7 @@
    "fieldname": "from",
    "fieldtype": "Autocomplete",
    "label": "From?",
-   "options": "Customer\nAccount"
+   "options": "Customer\nAccount\nSupplier"
   },
   {
    "fieldname": "from_party_type",
@@ -109,7 +109,7 @@
    "fieldname": "to",
    "fieldtype": "Autocomplete",
    "label": "To?",
-   "options": "Customer\nAccount"
+   "options": "Customer\nAccount\nSupplier"
   },
   {
    "fieldname": "to_party_type",
@@ -320,7 +320,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-06-28 20:25:25.269089",
+ "modified": "2025-10-09 12:09:17.805687",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Clearing Voucher",
@@ -345,6 +345,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

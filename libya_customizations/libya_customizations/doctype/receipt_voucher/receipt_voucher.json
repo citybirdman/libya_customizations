@@ -88,7 +88,7 @@
    "fieldname": "receipt_from",
    "fieldtype": "Autocomplete",
    "label": "Receipt From?",
-   "options": "Customer\nAccount",
+   "options": "Customer\nAccount\nSupplier",
    "reqd": 1
   },
   {
@@ -346,7 +346,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-04-19 12:33:44.432297",
+ "modified": "2025-10-09 12:10:01.772998",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Receipt Voucher",
@@ -371,6 +371,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
