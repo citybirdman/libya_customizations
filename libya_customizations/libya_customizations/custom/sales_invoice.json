@@ -2079,7 +2079,7 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
-   "creation": "2024-11-20 11:41:37.502493",
+   "creation": "2025-10-09 22:04:06.126932",
    "default_value": null,
    "doc_type": "Sales Invoice",
    "docstatus": 0,
@@ -2087,7 +2087,7 @@
    "field_name": "posting_date",
    "idx": 0,
    "is_system_generated": 0,
-   "modified": "2025-10-06 16:45:32.445848",
+   "modified": "2025-10-09 22:04:06.126932",
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-posting_date-read_only_depends_on",
@@ -2095,7 +2095,7 @@
    "property": "read_only_depends_on",
    "property_type": "Data",
    "row_name": null,
-   "value": "eval: !doc.is_return"
+   "value": ""
   },
   {
    "_assign": null,
