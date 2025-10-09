@@ -95,6 +95,10 @@ fixtures = [
         "filters": [["module" , "in" , ("Libya Customizations" )]]
     },
     {
+        "doctype": "Client Script",
+        "filters": [["module" , "in" , ("Libya Customizations" )]]
+    },
+    {
         "doctype": "Custom HTML Block"
     },
     {

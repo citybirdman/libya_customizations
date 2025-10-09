@@ -1,0 +1,35 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Item",
+  "enabled": 1,
+  "modified": "2025-10-06 13:55:12.110377",
+  "module": "Libya Customizations",
+  "name": "Item-Form",
+  "script": "frappe.ui.form.on('Item', {\n    item_group: function(frm) {\n        if (frm.doc.item_group === \"Services\") {\n            frm.set_value('is_stock_item', 0);\n            frm.set_value('brand', 'Services');\n        } else {\n            frm.set_value('is_stock_item', 1);\n            frm.set_value('brand', null);\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Supplier",
+  "enabled": 1,
+  "modified": "2025-10-06 16:36:40.416379",
+  "module": "Libya Customizations",
+  "name": "Supplier-Form",
+  "script": "frappe.ui.form.on('Supplier', {\n    setup: function(frm) {\n        frm.set_query('supplier_group', function() {\n            return {\n                filters: {\n                    is_group: 0\n                }\n            };\n        });\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Purchase Invoice",
+  "enabled": 1,
+  "modified": "2025-10-07 08:50:03.371469",
+  "module": "Libya Customizations",
+  "name": "Purchase Invoice-Form",
+  "script": "frappe.ui.form.on('Purchase Invoice', {\n    posting_date: function(frm) {\n        if (frm.doc.posting_date) {\n            frm.set_value('due_date', frm.doc.posting_date);\n        }\n    }\n});\nfrappe.ui.form.on('Purchase Invoice', {\n    validate: function(frm) {\n        if (frm.doc.posting_date) {\n            frm.set_value('due_date', frm.doc.posting_date);\n        }\n    }\n});\n\nfrappe.ui.form.on('Purchase Invoice', {\n    posting_date: function(frm) {\n        if (frm.doc.posting_date && frm.doc.bill_no) {\n            frm.set_value('bill_date', frm.doc.posting_date);\n        }\n    }\n});\nfrappe.ui.form.on('Purchase Invoice', {\n    bill_no: function(frm) {\n        if (frm.doc.posting_date && frm.doc.bill_no) {\n            frm.set_value('bill_date', frm.doc.posting_date);\n        }\n    }\n});",
+  "view": "Form"
+ }
+]
