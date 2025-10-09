@@ -57870,19 +57870,6 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "ar",
-  "modified": "2025-10-09 14:03:10.060327",
-  "name": "grosdfvurs",
-  "source_text": "Items - Disabled",
-  "translated_text": "أصناف - موقوفة"
- },
- {
-  "context": null,
-  "contributed": 0,
-  "contribution_docname": null,
-  "contribution_status": "",
-  "docstatus": 0,
-  "doctype": "Translation",
-  "language": "ar",
   "modified": "2025-10-09 14:01:43.028903",
   "name": "gropcl45aj",
   "source_text": "Brands",
@@ -58030,5 +58017,18 @@
   "name": "3b2k5145kp",
   "source_text": "Supplier Invoice",
   "translated_text": "فاتورة المورد"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-10-09 15:00:33.682118",
+  "name": "srgmp7gs4d",
+  "source_text": "Items - Disabled",
+  "translated_text": "أصناف - موقوفة"
  }
 ]
