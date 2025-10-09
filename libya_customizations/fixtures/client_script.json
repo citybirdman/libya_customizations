@@ -31,5 +31,16 @@
   "name": "Purchase Invoice-Form",
   "script": "frappe.ui.form.on('Purchase Invoice', {\n    posting_date: function(frm) {\n        if (frm.doc.posting_date) {\n            frm.set_value('due_date', frm.doc.posting_date);\n        }\n    }\n});\nfrappe.ui.form.on('Purchase Invoice', {\n    validate: function(frm) {\n        if (frm.doc.posting_date) {\n            frm.set_value('due_date', frm.doc.posting_date);\n        }\n    }\n});\n\nfrappe.ui.form.on('Purchase Invoice', {\n    posting_date: function(frm) {\n        if (frm.doc.posting_date && frm.doc.bill_no) {\n            frm.set_value('bill_date', frm.doc.posting_date);\n        }\n    }\n});\nfrappe.ui.form.on('Purchase Invoice', {\n    bill_no: function(frm) {\n        if (frm.doc.posting_date && frm.doc.bill_no) {\n            frm.set_value('bill_date', frm.doc.posting_date);\n        }\n    }\n});",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Invoice",
+  "enabled": 1,
+  "modified": "2025-10-09 18:05:26.203773",
+  "module": "Libya Customizations",
+  "name": "Sales Invoice-Form",
+  "script": "frappe.ui.form.on(\"Sales Invoice\", {\n    onload: function(frm) {\n        if (frm.is_new()) {\n            frm.set_value('is_paid', 0);\n            frm.set_value('payment_account', null);\n            frm.set_value('custom_payment_value_is_different', 0);\n            frm.set_value('custom_payment_value', 0);\n            frm.set_value('custom_is_payment_value_checked', 0);\n        }\n    }\n});",
+  "view": "Form"
  }
 ]

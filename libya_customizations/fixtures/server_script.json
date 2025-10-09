@@ -28,13 +28,13 @@
   "doctype_event": "Before Insert",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2025-01-04 11:19:59.132553",
+  "modified": "2025-10-09 16:00:39.973720",
   "module": "Libya Customizations",
   "name": "Sales Invoice - Permission Query",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Sales Invoice",
-  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions=\"is_opening='No'\"\n\nif not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabSales Invoice`.name NOT IN (SELECT amended_from FROM `tabSales Invoice` WHERE amended_from IS NOT NULL)\"\n\n# if frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"Warehouse User\"]]):\n#     conditions = \"is_return=1 AND workflow_state IN ('Pending Submission', 'Returned', 'Rejected Submission', 'Pending Cancellation', 'Discarded', 'Rejected Cancellation')\"",
+  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions=\"is_opening='No'\"\n\nif not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabSales Invoice`.name NOT IN (SELECT amended_from FROM `tabSales Invoice` WHERE amended_from IS NOT NULL)\"\n",
   "script_type": "Permission Query"
  },
  {
@@ -435,25 +435,6 @@
   "reference_doctype": "Purchase Invoice",
   "script": "if doc.bill_no:\n    doc.remarks = f'مقابل فاتورة مورد رقم {doc.bill_no} بتاريخ {frappe.utils.formatdate(doc.bill_date)}'",
   "script_type": "DocType Event"
- },
- {
-  "allow_guest": 0,
-  "api_method": null,
-  "cron_format": "*/15 * * * *",
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Server Script",
-  "doctype_event": "Before Insert",
-  "enable_rate_limit": 0,
-  "event_frequency": "Cron",
-  "modified": "2025-06-30 10:10:17.226860",
-  "module": "Libya Customizations",
-  "name": "Correcting Workflow Status in Sales Invoice",
-  "rate_limit_count": 5,
-  "rate_limit_seconds": 86400,
-  "reference_doctype": null,
-  "script": "sis = frappe.db.get_list('Sales Invoice', {'workflow_state':'Returned', 'is_return':0, 'is_opening':'No'})\nfor si in sis:\n    frappe.db.set_value('Sales Invoice', si.name, 'workflow_state', 'Posted')",
-  "script_type": "Scheduler Event"
  },
  {
   "allow_guest": 0,
