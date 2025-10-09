@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"2XP0iAlj1T\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Accounts</span>\",\"col\":12}},{\"id\":\"YzWO8FlJBb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cash and Bank Statement Summary\",\"col\":3}},{\"id\":\"uy707rsyiV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Account Statement Summary\",\"col\":3}},{\"id\":\"iBGT7RKYGi\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Consolidated Statement Summary\",\"col\":3}},{\"id\":\"Iy7sXvjopz\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Account Balances Summary\",\"col\":3}},{\"id\":\"7faXA44QTL\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"LN_90D5p9E\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Sales</b></span>\",\"col\":12}},{\"id\":\"1gfq2ODFbe\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer Statement Summary\",\"col\":3}},{\"id\":\"_MuFq96ET-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer Balances Summary\",\"col\":3}},{\"id\":\"qLtD79v7H3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item-wise Sales Ledger Summary\",\"col\":3}},{\"id\":\"xphB2__6eX\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item-wise Reservation Summary\",\"col\":3}},{\"id\":\"rKfVkb0WNZ\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"jRCCzkufkP\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Inventory</b></span>\",\"col\":12}},{\"id\":\"vwWpq8glUx\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Balance Summary\",\"col\":4}},{\"id\":\"d3bI8JYuHo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Balance with Selling Prices\",\"col\":4}},{\"id\":\"kflkAz8ryY\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Balance with Selling and Cost Prices\",\"col\":4}},{\"id\":\"CvV8pbEfjj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Available Items with Selling Prices\",\"col\":4}},{\"id\":\"5B0yt3yfK0\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Ledger Summary\",\"col\":4}},{\"id\":\"P3kHRZCvhj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"NSMVpvF68Q\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Purchases</b></span>\",\"col\":12}},{\"id\":\"EhSsyiehk6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Purchase Receipt Details\",\"col\":4}},{\"id\":\"hvN6CgL9oL\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"CSYNtALdY4\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Miscellaneous</b></span>\",\"col\":12}},{\"id\":\"JOE9BTfKbl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Performance Report\",\"col\":3}},{\"id\":\"gYA44IJmsI\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item-wise Transaction Summary\",\"col\":3}},{\"id\":\"jR2D0LQC5g\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Brand Performance Report\",\"col\":3}},{\"id\":\"eQhIXP_grF\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Brand-wise Transaction Summary\",\"col\":3}},{\"id\":\"UrZgdijij_\",\"type\":\"spacer\",\"data\":{\"col\":12}}]",
+ "content": "[{\"id\":\"2XP0iAlj1T\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Accounts</span>\",\"col\":12}},{\"id\":\"YzWO8FlJBb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cash and Bank Statement Summary\",\"col\":3}},{\"id\":\"uy707rsyiV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Account Statement Summary\",\"col\":3}},{\"id\":\"iBGT7RKYGi\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Consolidated Statement Summary\",\"col\":3}},{\"id\":\"Iy7sXvjopz\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Account Balances Summary\",\"col\":3}},{\"id\":\"7faXA44QTL\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"LN_90D5p9E\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Sales</b></span>\",\"col\":12}},{\"id\":\"1gfq2ODFbe\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer Statement Summary\",\"col\":3}},{\"id\":\"_MuFq96ET-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer Balances Summary\",\"col\":3}},{\"id\":\"qLtD79v7H3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item-wise Sales Ledger Summary\",\"col\":3}},{\"id\":\"rKfVkb0WNZ\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"jRCCzkufkP\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Inventory</b></span>\",\"col\":12}},{\"id\":\"vwWpq8glUx\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Balance Summary\",\"col\":4}},{\"id\":\"d3bI8JYuHo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Balance with Selling Prices\",\"col\":4}},{\"id\":\"kflkAz8ryY\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Balance with Selling and Cost Prices\",\"col\":4}},{\"id\":\"CvV8pbEfjj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Available Items with Selling Prices\",\"col\":4}},{\"id\":\"5B0yt3yfK0\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Ledger Summary\",\"col\":4}},{\"id\":\"P3kHRZCvhj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"CSYNtALdY4\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Miscellaneous</b></span>\",\"col\":12}},{\"id\":\"JOE9BTfKbl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Performance Report\",\"col\":3}},{\"id\":\"gYA44IJmsI\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item-wise Transaction Summary\",\"col\":3}},{\"id\":\"jR2D0LQC5g\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Brand Performance Report\",\"col\":3}},{\"id\":\"eQhIXP_grF\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Brand-wise Transaction Summary\",\"col\":3}},{\"id\":\"UrZgdijij_\",\"type\":\"spacer\",\"data\":{\"col\":12}}]",
  "creation": "2024-12-14 12:11:46.539797",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,7 +13,7 @@
  "is_hidden": 0,
  "label": "Reports",
  "links": [],
- "modified": "2025-07-07 07:03:40.361280",
+ "modified": "2025-10-09 10:29:49.002652",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Reports",
@@ -53,6 +53,7 @@
    "icon": "dashboard",
    "label": "Customer Statement Summary",
    "link_to": "Customer Statement Summary",
+   "report_ref_doctype": "GL Entry",
    "type": "Report"
   },
   {
@@ -60,6 +61,7 @@
    "doc_view": "List",
    "label": "Brand Performance Report",
    "link_to": "Brand Performance Report",
+   "report_ref_doctype": "Item",
    "type": "Report"
   },
   {
@@ -67,6 +69,7 @@
    "doc_view": "List",
    "label": "Consolidated Statement Summary",
    "link_to": "Consolidated Statement Summary",
+   "report_ref_doctype": "GL Entry",
    "type": "Report"
   },
   {
@@ -74,6 +77,7 @@
    "doc_view": "List",
    "label": "Cash and Bank Statement Summary",
    "link_to": "Cash and Bank Statement Summary",
+   "report_ref_doctype": "GL Entry",
    "type": "Report"
   },
   {
@@ -81,6 +85,7 @@
    "doc_view": "List",
    "label": "Item Performance Report",
    "link_to": "Item Performance Report",
+   "report_ref_doctype": "Item",
    "type": "Report"
   },
   {
@@ -88,6 +93,7 @@
    "doc_view": "List",
    "label": "Customer Balances Summary",
    "link_to": "Customer Balances Summary",
+   "report_ref_doctype": "GL Entry",
    "type": "Report"
   },
   {
@@ -95,6 +101,7 @@
    "doc_view": "List",
    "label": "Stock Balance Summary",
    "link_to": "Stock Balance Summary",
+   "report_ref_doctype": "Stock Ledger Entry",
    "type": "Report"
   },
   {
@@ -102,6 +109,7 @@
    "doc_view": "List",
    "label": "Stock Balance with Selling and Cost Prices",
    "link_to": "Stock Balance with Selling and Cost Prices",
+   "report_ref_doctype": "Stock Ledger Entry",
    "type": "Report"
   },
   {
@@ -109,6 +117,7 @@
    "doc_view": "List",
    "label": "Available Items with Selling Prices",
    "link_to": "Available Items with Selling Prices",
+   "report_ref_doctype": "Stock Ledger Entry",
    "type": "Report"
   },
   {
@@ -116,6 +125,7 @@
    "doc_view": "List",
    "label": "Item Ledger Summary",
    "link_to": "Item Ledger Summary",
+   "report_ref_doctype": "Stock Ledger Entry",
    "type": "Report"
   },
   {
@@ -123,6 +133,7 @@
    "doc_view": "List",
    "label": "Item-wise Sales Ledger Summary",
    "link_to": "Item-wise Sales Ledger Summary",
+   "report_ref_doctype": "Sales Invoice",
    "type": "Report"
   },
   {
@@ -131,6 +142,7 @@
    "icon": "dashboard",
    "label": "Account Statement Summary",
    "link_to": "Account Statement Summary",
+   "report_ref_doctype": "GL Entry",
    "type": "Report"
   },
   {
@@ -138,13 +150,7 @@
    "doc_view": "List",
    "label": "Stock Balance with Selling Prices",
    "link_to": "Stock Balance with Selling Prices",
-   "type": "Report"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "Item-wise Reservation Summary",
-   "link_to": "Item-wise Reservation Summary",
+   "report_ref_doctype": "Stock Ledger Entry",
    "type": "Report"
   },
   {
@@ -152,6 +158,7 @@
    "doc_view": "List",
    "label": "Item-wise Transaction Summary",
    "link_to": "Item-wise Transaction Summary",
+   "report_ref_doctype": "Stock Ledger Entry",
    "type": "Report"
   },
   {
@@ -159,13 +166,7 @@
    "doc_view": "List",
    "label": "Account Balances Summary",
    "link_to": "Account Balances Summary",
-   "type": "Report"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "Purchase Receipt Details",
-   "link_to": "Purchase Receipt Details",
+   "report_ref_doctype": "GL Entry",
    "type": "Report"
   },
   {
@@ -173,6 +174,7 @@
    "doc_view": "List",
    "label": "Brand-wise Transaction Summary",
    "link_to": "Brand-wise Transaction Summary",
+   "report_ref_doctype": "Stock Ledger Entry",
    "type": "Report"
   }
  ],

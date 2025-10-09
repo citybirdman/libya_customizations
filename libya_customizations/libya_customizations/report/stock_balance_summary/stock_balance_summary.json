@@ -1,50 +1,32 @@
 {
  "add_total_row": 1,
+ "add_translate_data": 0,
  "columns": [
   {
    "fieldname": "item_code",
    "fieldtype": "Data",
    "label": "Item Code",
    "options": "",
-   "width": 100
+   "width": 120
   },
   {
    "fieldname": "item_name",
    "fieldtype": "Data",
    "label": "Item Name",
-   "width": 400
-  },
-  {
-   "fieldname": "production_year",
-   "fieldtype": "Link",
-   "label": "Production",
-   "options": "Production Year",
-   "width": 100
+   "width": 500
   },
   {
    "fieldname": "brand",
    "fieldtype": "Link",
    "label": "Brand",
    "options": "Brand",
-   "width": 150
+   "width": 200
   },
   {
    "fieldname": "actual_qty",
    "fieldtype": "Int",
    "label": "Actual Balance",
-   "width": 140
-  },
-  {
-   "fieldname": "qty_to_deliver",
-   "fieldtype": "Int",
-   "label": "Qty To Deliver",
-   "width": 140
-  },
-  {
-   "fieldname": "available_qty",
-   "fieldtype": "Int",
-   "label": "Available Balance",
-   "width": 140
+   "width": 150
   }
  ],
  "creation": "2025-01-01 00:28:51.141991",
@@ -59,28 +41,19 @@
    "label": "To Date",
    "mandatory": 1,
    "wildcard_filter": 0
-  },
-  {
-   "default": "Actual Balances",
-   "fieldname": "filter_based_on",
-   "fieldtype": "Select",
-   "label": "Filter Based On",
-   "mandatory": 1,
-   "options": "Actual Balances\nAvailable Balances",
-   "wildcard_filter": 0
   }
  ],
  "idx": 23,
  "is_standard": "Yes",
- "letter_head": "itar",
+ "letter_head": "",
  "letterhead": null,
- "modified": "2025-08-23 14:55:22.537221",
+ "modified": "2025-10-09 10:04:04.859425",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Stock Balance Summary",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "WITH\nstock_ledger_entry AS (\n\tSELECT\n\t\titem_code,\n\t\tIFNULL(production_year, \"\") AS production_year,\n\t\tSUM(actual_qty) AS actual_qty\n\tFROM\n\t\t`tabStock Ledger Entry`\n\tWHERE\n\t\tis_cancelled = 0\n\tAND\n\t\tposting_date <= %(to_date)s\n\tGROUP BY\n\t\titem_code,\n\t\tIFNULL(production_year, \"\")\n\tHAVING\n\t\tSUM(actual_qty) > 0\n),\nsales_order_item AS (\n\tSELECT\n\t\titem_code,\n\t\tproduction_year,\n\t\tSUM(qty_to_deliver) AS qty_to_deliver\n\tFROM\n\t\t(\n\t\tSELECT\n\t\t\tsales_order.name AS sales_order,\n\t\t\tsales_order_item.item_code,\n\t\t\tIFNULL(sales_order_item.production_year, \"\") AS production_year,\n\t\t\tIF(SUM(sales_order_item.qty - sales_order_item.delivered_qty) > 0, SUM(sales_order_item.qty - sales_order_item.delivered_qty), 0) AS qty_to_deliver\n\t\tFROM\n\t\t\t`tabSales Order Item` sales_order_item\n\t\tINNER JOIN\n\t\t\t`tabSales Order` sales_order\n\t\tON\n\t\t\tsales_order_item.parent = sales_order.name\n\t\tWHERE\n\t\t\tsales_order.docstatus = 1\n\t\tAND\n\t\t\tsales_order_item.docstatus = 1\n\t\tAND\n\t\t\tsales_order.status NOT IN ('Completed', 'Closed')\n\t\tAND\n\t\t\tsales_order_item.qty - sales_order_item.delivered_qty > 0\n\t\tAND\n\t\t\tsales_order.transaction_date <= %(to_date)s\n\t\tGROUP BY\n\t\t\tsales_order.name,\n\t\t\tsales_order_item.item_code,\n\t\t\tIFNULL(sales_order_item.production_year, \"\")\n\t\t) sales_order_item\n\tGROUP BY\n\t\titem_code,\n\t\tproduction_year\n)\nSELECT\n\tstock_ledger_entry.item_code,\n\titem.item_name,\n\tstock_ledger_entry.production_year,\n\titem.brand,\n\tstock_ledger_entry.actual_qty,\n\tIFNULL(sales_order_item.qty_to_deliver, 0) AS qty_to_deliver,\n\tstock_ledger_entry.actual_qty - IFNULL(sales_order_item.qty_to_deliver, 0) AS available_qty\nFROM\n\tstock_ledger_entry\nINNER JOIN\n\t`tabItem` item\nON\n\tstock_ledger_entry.item_code = item.name\nLEFT JOIN\n    `tabTire Size` tire_size\nON\n    item.tire_size = tire_size.name\nLEFT JOIN\n\tsales_order_item\nON\n\tstock_ledger_entry.item_code = sales_order_item.item_code\nAND\n    stock_ledger_entry.production_year = sales_order_item.production_year\nAND\n\titem.is_stock_item = 1\nAND\n\tstock_ledger_entry.actual_qty > 0\nAND\n\t(CASE\n\t\tWHEN %(filter_based_on)s = 'Actual Balances' THEN stock_ledger_entry.actual_qty > 0\n        WHEN %(filter_based_on)s = 'Available Balances' THEN stock_ledger_entry.actual_qty - IFNULL(sales_order_item.qty_to_deliver, 0) > 0\n\tELSE\n\t\tFALSE\n\tEND)\nORDER BY\n    item.brand,\n    tire_size.sorting_code,\n    item.ply_rating",
+ "query": "WITH\nstock_ledger_entry AS (\n\tSELECT\n\t\titem_code,\n\t\tSUM(actual_qty) AS actual_qty\n\tFROM\n\t\t`tabStock Ledger Entry`\n\tWHERE\n\t\tis_cancelled = 0\n\tAND\n\t\tposting_date <= %(to_date)s\n\tGROUP BY\n\t\titem_code\n\tHAVING\n\t\tSUM(actual_qty) > 0\n)\nSELECT\n\tstock_ledger_entry.item_code,\n\titem.item_name,\n\titem.brand,\n\tstock_ledger_entry.actual_qty\nFROM\n\tstock_ledger_entry\nINNER JOIN\n\t`tabItem` item\nON\n\tstock_ledger_entry.item_code = item.name\nWHERE\n\titem.is_stock_item = 1\nAND\n\tstock_ledger_entry.actual_qty > 0\nORDER BY\n    item.brand",
  "ref_doctype": "Stock Ledger Entry",
  "report_name": "Stock Balance Summary",
  "report_type": "Query Report",
