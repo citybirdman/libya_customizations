@@ -180,13 +180,13 @@
   "doctype_event": "After Save (Submitted Document)",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2025-08-02 10:37:55.774932",
+  "modified": "2025-10-11 17:24:43.670136",
   "module": "Libya Customizations",
   "name": "Update Remarks in Sales Invoice (After Submit)",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Sales Invoice",
-  "script": "doc = frappe.get_doc(doc)\nsales_order = doc.sales_order\ndelivery_note = doc.items[0].delivery_note\ntext = \"\"\nif doc.is_return:\n    if doc.is_paid:\n        text = 'فاتورة مردودات مبيعات نقدية'\n    else:\n        text = 'فاتورة مردودات مبيعات آجلة'\nelse:\n    if doc.is_paid:\n        text = f'فاتورة مبيعات نقدية من إذن تسليم رقم {delivery_note} وأمر بيع رقم {sales_order}'\n    else:\n        text = f'فاتورة مبيعات آجلة من إذن تسليم رقم {delivery_note} وأمر بيع رقم {sales_order}'\n        \nfrappe.db.set_value('Sales Invoice', doc.name, 'remarks', text)\nfrappe.db.set_value('GL Entry', {\"voucher_type\":\"Sales Invoice\", \"voucher_no\": doc.name}, 'remarks', text)\n    ",
+  "script": "doc = frappe.get_doc(doc)\ntext = \"\"\nif doc.is_return:\n    if doc.is_paid:\n        text = 'فاتورة مردودات مبيعات نقدية'\n    else:\n        text = 'فاتورة مردودات مبيعات آجلة'\nelse:\n    if doc.is_paid:\n        text = f'فاتورة مبيعات نقدية'\n    else:\n        text = f'فاتورة مبيعات آجلة'\n        \nfrappe.db.set_value('Sales Invoice', doc.name, 'remarks', text)\nfrappe.db.set_value('GL Entry', {\"voucher_type\":\"Sales Invoice\", \"voucher_no\": doc.name}, 'remarks', text)\n    ",
   "script_type": "DocType Event"
  },
  {
@@ -237,13 +237,13 @@
   "doctype_event": "Before Save",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2025-08-02 10:38:05.642262",
+  "modified": "2025-10-11 17:26:42.970165",
   "module": "Libya Customizations",
   "name": "Update Remarks in Sales Invoice",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Sales Invoice",
-  "script": "doc = frappe.get_doc(doc)\nsales_order = doc.items[0].sales_order\ndelivery_note = doc.items[0].delivery_note\nif doc.is_opening == \"Yes\":\n    doc.remarks = \"فاتورة إفتتاحية\"\nelse:\n    if doc.is_return:\n        doc.remarks = \"فاتورة مردودات آجلة مبيعات\"\n    else:\n        doc.remarks = f\"فاتورة مبيعات آجلة من إذن تسليم رقم {delivery_note} وأمر بيع رقم {sales_order}\"",
+  "script": "doc = frappe.get_doc(doc)\nif doc.is_opening == \"Yes\":\n    doc.remarks = \"فاتورة إفتتاحية\"\nelse:\n    if doc.is_return:\n        doc.remarks = \"فاتورة مردودات مبيعات آجلة\"\n    else:\n        doc.remarks = f\"فاتورة مبيعات آجلة\"",
   "script_type": "DocType Event"
  },
  {
