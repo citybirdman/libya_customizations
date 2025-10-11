@@ -1,0 +1,81 @@
+{
+ "add_total_row": 1,
+ "add_translate_data": 0,
+ "columns": [
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier",
+   "width": 80
+  },
+  {
+   "fieldname": "supplier_name",
+   "fieldtype": "Data",
+   "label": "Supplier Name",
+   "width": 230
+  },
+  {
+   "fieldname": "supplier_group",
+   "fieldtype": "Link",
+   "label": "Supplier Group",
+   "options": "Supplier Group",
+   "width": 120
+  },
+  {
+   "fieldname": "balance",
+   "fieldtype": "Currency",
+   "label": "Balance",
+   "width": 140
+  }
+ ],
+ "creation": "2025-10-11 18:07:11.187739",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [
+  {
+   "default": "Today",
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "mandatory": 1,
+   "wildcard_filter": 0
+  },
+  {
+   "default": "All Balances",
+   "fieldname": "show_balances",
+   "fieldtype": "Select",
+   "label": "Show Balances",
+   "mandatory": 1,
+   "options": "All Balances\nDebit Balances\nCredit Balances\nZero Balances",
+   "wildcard_filter": 0
+  }
+ ],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "",
+ "letterhead": null,
+ "modified": "2025-10-11 18:08:24.639482",
+ "modified_by": "Administrator",
+ "module": "Libya Customizations",
+ "name": "Supplier Balances Summary",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "WITH gl_entry AS (\nSELECT\n\tparty AS supplier,\n    SUM(debit) AS debit,\n\tSUM(credit) AS credit,\n\tSUM(debit) - SUM(credit) AS balance\n\t\nFROM\n\t`tabGL Entry`\nWHERE\n\tis_cancelled = 0\nAND\n    party_type = 'Supplier'\nAND\n\tposting_date <= %(to_date)s\nGROUP BY\n\tparty\n)\nSELECT\n\tsupplier.name AS supplier,\n\tsupplier.supplier_name,\n\tsupplier.supplier_group,\n\tIFNULL(gl_entry.balance, 0) AS balance\nFROM\n\t`tabSupplier` supplier\nLEFT JOIN\n\tgl_entry\nON\n\tsupplier.name = gl_entry.supplier\nWHERE\n    (CASE\n        WHEN %(show_balances)s = 'All Balances' THEN TRUE\n        WHEN %(show_balances)s = 'Debit Balances' THEN ROUND(IFNULL(gl_entry.balance, 0), 2) > 0\n        WHEN %(show_balances)s = 'Credit Balances' THEN ROUND(IFNULL(gl_entry.balance, 0), 2) < 0\n        WHEN %(show_balances)s = 'Zero Balances' THEN ROUND(IFNULL(gl_entry.balance, 0), 2) = 0\n        ELSE FALSE\n    END)\nORDER BY\n\tIFNULL(gl_entry.balance, 0),\n\tsupplier.name",
+ "ref_doctype": "GL Entry",
+ "report_name": "Supplier Balances Summary",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Accountant"
+  },
+  {
+   "role": "Chief Sales Officer"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "timeout": 0
+}
