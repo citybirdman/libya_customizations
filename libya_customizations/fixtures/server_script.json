@@ -104,13 +104,13 @@
   "doctype_event": "Before Insert",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2024-12-25 09:27:05.986576",
+  "modified": "2025-10-11 16:59:54.360112",
   "module": "Libya Customizations",
   "name": "Receipt Voucher - Permission Query",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Receipt Voucher",
-  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabReceipt Voucher`.name NOT IN (SELECT amended_from FROM `tabReceipt Voucher` WHERE amended_from IS NOT NULL)\"",
+  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabReceipt Voucher`.name NOT IN (SELECT amended_from FROM `tabReceipt Voucher` WHERE amended_from IS NOT NULL)\"\n\nif not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"in\", [\"Chief Executive Officer\", \"Accounts Manager\"]]]):\n    conditions = \"`tabReceipt Voucher`.paid_from IN (SELECT name FROM `tabAccount` WHERE restrict_account_view = 'No')\"",
   "script_type": "Permission Query"
  },
  {
@@ -123,13 +123,13 @@
   "doctype_event": "Before Insert",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2024-12-25 09:27:05.886717",
+  "modified": "2025-10-11 17:02:21.009346",
   "module": "Libya Customizations",
   "name": "Payment Voucher - Permission Query",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Payment Voucher",
-  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabPayment Voucher`.name NOT IN (SELECT amended_from FROM `tabPayment Voucher` WHERE amended_from IS NOT NULL)\"",
+  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabPayment Voucher`.name NOT IN (SELECT amended_from FROM `tabPayment Voucher` WHERE amended_from IS NOT NULL)\"\nif not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"in\", [\"Chief Executive Officer\", \"Accounts Manager\"]]]):\n    conditions = \"`tabPayment Voucher`.paid_to IN (SELECT name FROM `tabAccount` WHERE restrict_account_view = 'No')\"",
   "script_type": "Permission Query"
  },
  {
@@ -161,13 +161,13 @@
   "doctype_event": "Before Insert",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2024-12-25 09:27:05.701022",
+  "modified": "2025-10-11 17:01:53.685720",
   "module": "Libya Customizations",
   "name": "Debt Voucher - Permission Query",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Debt Voucher",
-  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabDebt Voucher`.name NOT IN (SELECT amended_from FROM `tabDebt Voucher` WHERE amended_from IS NOT NULL)\"",
+  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabDebt Voucher`.name NOT IN (SELECT amended_from FROM `tabDebt Voucher` WHERE amended_from IS NOT NULL)\"\nif not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"in\", [\"Chief Executive Officer\", \"Accounts Manager\"]]]):\n    conditions = \"`tabDebt Voucher`.from_or_to_account IN (SELECT name FROM `tabAccount` WHERE restrict_account_view = 'No')\"",
   "script_type": "Permission Query"
  },
  {
@@ -180,13 +180,13 @@
   "doctype_event": "Before Insert",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2024-12-25 09:27:05.462582",
+  "modified": "2025-10-11 17:04:34.840851",
   "module": "Libya Customizations",
   "name": "Clearing Voucher - Permission Query",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Clearing Voucher",
-  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabClearing Voucher`.name NOT IN (SELECT amended_from FROM `tabClearing Voucher` WHERE amended_from IS NOT NULL)\"",
+  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabClearing Voucher`.name NOT IN (SELECT amended_from FROM `tabClearing Voucher` WHERE amended_from IS NOT NULL)\"\nif not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"in\", [\"Chief Executive Officer\", \"Accounts Manager\"]]]):\n    conditions = \"`tabClearing Voucher`.from_account IN (SELECT name FROM `tabAccount` WHERE restrict_account_view = 'No') AND `tabClearing Voucher`.to_account IN (SELECT name FROM `tabAccount` WHERE restrict_account_view = 'No')\"",
   "script_type": "Permission Query"
  },
  {
