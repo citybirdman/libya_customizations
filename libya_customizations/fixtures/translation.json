@@ -58030,5 +58030,44 @@
   "name": "srgmp7gs4d",
   "source_text": "Items - Disabled",
   "translated_text": "أصناف - موقوفة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-10-11 18:22:14.060549",
+  "name": "agsabkhkgs",
+  "source_text": "Supplier Statement Summary",
+  "translated_text": "كشف حساب مورد"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-10-11 18:23:03.021550",
+  "name": "b064333nhb",
+  "source_text": "Supplier Balances Summary",
+  "translated_text": "كشف أرصدة الموردين"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-10-11 18:25:31.559549",
+  "name": "cejivuqa9p",
+  "source_text": "Item-wise Purchase Ledger Summary",
+  "translated_text": "بيان حركة شراء حسب الصنف"
  }
 ]
