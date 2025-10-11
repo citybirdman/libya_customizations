@@ -104,7 +104,6 @@
                 <th>التاريخ</th>
                 <th>نوع المستند</th>
                 <th>رقم المستند</th>
-                <th>أمر البيع</th>
                 <th>المدين</th>
                 <th>الدائن</th>
                 <th>الرصيد</th>
@@ -117,7 +116,6 @@
                     <td>{{ row.posting_date }}</td>
                     <td>{{ row.translated_voucher_type }}</td>
                     <td>{{ row.voucher_no }}</td>
-                    <td>{{ row.sales_order }}</td>
                     <td>{{ format_currency(row.debit) }}</td>
                     <td>{{ format_currency(row.credit) }}</td>
                     <td class="balance-cell">{{ format_currency(row.balance) }}</td>
