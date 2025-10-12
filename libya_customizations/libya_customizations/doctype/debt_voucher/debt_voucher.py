@@ -7,6 +7,9 @@ from frappe import _
 
 
 class DebtVoucher(Document):
+	def validate(self):
+		self.set_status("Draft")
+
 	def on_submit(self):	
 		if self.type == 'Add':
 			accounts_add = []

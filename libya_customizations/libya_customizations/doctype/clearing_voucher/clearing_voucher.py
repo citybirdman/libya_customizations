@@ -8,6 +8,7 @@ from frappe import _
 
 class ClearingVoucher(Document):
 	def validate(self):
+		self.set_status("Draft")
 		if self.base_deducted_amount != self.base_added_amount:
 			frappe.msgprint(msg=_(f'Deducted Amount in Company Currency not equal to Added Amount in Company Currency'), title=_('Mismatch'), indicator='red')
 			raise frappe.ValidationError
