@@ -9,7 +9,7 @@ from frappe import _
 
 class PaymentVoucher(Document):
 	def validate(self):
-		self.set_status("Draft")
+		self.update_status("Draft")
 
 		if self.base_paid_amount != self.base_received_amount:
 			frappe.msgprint(msg=_(f'Paid Amount in Company Currency not equal to Received Amount in Company Currency'), title=_('Mismatch'), indicator='red')
