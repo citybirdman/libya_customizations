@@ -22,7 +22,7 @@
  "is_hidden": 0,
  "label": "Inventory",
  "links": [],
- "modified": "2024-12-18 10:52:14.279640",
+ "modified": "2025-10-15 15:04:59.025071",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Inventory",
@@ -177,6 +177,9 @@
   },
   {
    "role": "System Manager"
+  },
+  {
+   "role": "Sales Supervisor"
   }
  ],
  "sequence_id": 30.0,

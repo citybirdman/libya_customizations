@@ -19,6 +19,7 @@
     "parent": "Sales Return Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Saved",
     "update_field": null,
     "update_value": null,
@@ -34,6 +35,7 @@
     "parent": "Sales Return Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Pending Submission",
     "update_field": null,
     "update_value": null,
@@ -49,6 +51,7 @@
     "parent": "Sales Return Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Rejected Submission",
     "update_field": null,
     "update_value": null,
@@ -64,6 +67,7 @@
     "parent": "Sales Return Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Returned",
     "update_field": null,
     "update_value": null,
@@ -79,6 +83,7 @@
     "parent": "Sales Return Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Posted",
     "update_field": null,
     "update_value": null,
@@ -94,6 +99,7 @@
     "parent": "Sales Return Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Pending Cancellation (Accounting)",
     "update_field": null,
     "update_value": null,
@@ -109,6 +115,7 @@
     "parent": "Sales Return Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Pending Cancellation (Warehouse)",
     "update_field": null,
     "update_value": null,
@@ -124,6 +131,7 @@
     "parent": "Sales Return Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Rejected Cancellation",
     "update_field": null,
     "update_value": null,
@@ -139,6 +147,7 @@
     "parent": "Sales Return Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Discarded",
     "update_field": null,
     "update_value": null,
@@ -155,6 +164,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Saved",
     "workflow_builder_id": "action-1"
    },
@@ -167,6 +177,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Saved",
     "workflow_builder_id": "action-2"
    },
@@ -179,6 +190,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Saved",
     "workflow_builder_id": "action-3"
    },
@@ -191,6 +203,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Submission",
     "workflow_builder_id": "action-4"
    },
@@ -203,6 +216,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Submission",
     "workflow_builder_id": null
    },
@@ -215,6 +229,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Submission",
     "workflow_builder_id": null
    },
@@ -227,6 +242,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Submission",
     "workflow_builder_id": null
    },
@@ -239,6 +255,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Submission",
     "workflow_builder_id": null
    },
@@ -251,6 +268,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Saved",
     "workflow_builder_id": "action-5"
    },
@@ -263,6 +281,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Returned",
     "workflow_builder_id": null
    },
@@ -275,6 +294,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Cancellation (Accounting)",
     "workflow_builder_id": null
    },
@@ -287,6 +307,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Returned",
     "workflow_builder_id": null
    },
@@ -299,6 +320,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Returned",
     "workflow_builder_id": null
    },
@@ -311,6 +333,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Cancellation (Accounting)",
     "workflow_builder_id": null
    },
@@ -323,6 +346,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Returned",
     "workflow_builder_id": null
    },
@@ -335,6 +359,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Returned",
     "workflow_builder_id": null
    },
@@ -347,6 +372,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Cancellation (Accounting)",
     "workflow_builder_id": null
    },
@@ -359,6 +385,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Returned",
     "workflow_builder_id": null
    },
@@ -371,6 +398,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Cancellation (Warehouse)",
     "workflow_builder_id": null
    },
@@ -383,6 +411,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Cancellation (Warehouse)",
     "workflow_builder_id": null
    },
@@ -395,6 +424,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Cancellation (Accounting)",
     "workflow_builder_id": null
    },
@@ -407,6 +437,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Cancellation",
     "workflow_builder_id": null
    },
@@ -419,6 +450,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Cancellation",
     "workflow_builder_id": null
    },
@@ -431,6 +463,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Cancellation",
     "workflow_builder_id": null
    },
@@ -443,6 +476,7 @@
     "parent": "Sales Return Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Posted",
     "workflow_builder_id": "action-10"
    }
@@ -456,7 +490,7 @@
   "doctype": "Workflow",
   "document_type": "Stock Entry",
   "is_active": 1,
-  "modified": "2024-12-07 15:17:49.633352",
+  "modified": "2025-10-15 15:08:26.921479",
   "name": "Stock Adjustment Process",
   "override_status": 0,
   "send_email_alert": 0,
@@ -471,6 +505,7 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Saved",
     "update_field": null,
     "update_value": null,
@@ -486,6 +521,7 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Pending Submission",
     "update_field": null,
     "update_value": null,
@@ -501,6 +537,7 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Rejected Submission",
     "update_field": null,
     "update_value": null,
@@ -516,6 +553,7 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Posted",
     "update_field": null,
     "update_value": null,
@@ -531,6 +569,7 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Pending Cancellation",
     "update_field": null,
     "update_value": null,
@@ -546,6 +585,7 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Rejected Cancellation",
     "update_field": null,
     "update_value": null,
@@ -561,6 +601,7 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Discarded",
     "update_field": null,
     "update_value": null,
@@ -577,6 +618,7 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Saved",
     "workflow_builder_id": "action-1"
    },
@@ -589,6 +631,20 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
+    "state": "Pending Submission",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Submit",
+    "allow_self_approval": 1,
+    "allowed": "Sales Supervisor",
+    "condition": "",
+    "next_state": "Posted",
+    "parent": "Stock Adjustment Process",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Submission",
     "workflow_builder_id": null
    },
@@ -601,6 +657,20 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
+    "state": "Pending Submission",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Reject Submission",
+    "allow_self_approval": 1,
+    "allowed": "Sales Supervisor",
+    "condition": "",
+    "next_state": "Rejected Submission",
+    "parent": "Stock Adjustment Process",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Submission",
     "workflow_builder_id": null
    },
@@ -613,6 +683,7 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Submission",
     "workflow_builder_id": null
    },
@@ -625,6 +696,7 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Posted",
     "workflow_builder_id": null
    },
@@ -637,8 +709,22 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Cancellation",
     "workflow_builder_id": "action-9"
+   },
+   {
+    "action": "Cancel",
+    "allow_self_approval": 1,
+    "allowed": "Sales Supervisor",
+    "condition": "",
+    "next_state": "Discarded",
+    "parent": "Stock Adjustment Process",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "send_email_to_creator": 0,
+    "state": "Pending Cancellation",
+    "workflow_builder_id": null
    },
    {
     "action": "Reject Cancellation",
@@ -649,6 +735,20 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
+    "state": "Pending Cancellation",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Reject Cancellation",
+    "allow_self_approval": 1,
+    "allowed": "Sales Supervisor",
+    "condition": "",
+    "next_state": "Rejected Cancellation",
+    "parent": "Stock Adjustment Process",
+    "parentfield": "transitions",
+    "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Cancellation",
     "workflow_builder_id": null
    },
@@ -661,6 +761,7 @@
     "parent": "Stock Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Cancellation",
     "workflow_builder_id": null
    }
@@ -689,6 +790,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Saved",
     "update_field": null,
     "update_value": null,
@@ -704,6 +806,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Pending Submission",
     "update_field": null,
     "update_value": null,
@@ -719,6 +822,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Rejected Submission",
     "update_field": null,
     "update_value": null,
@@ -734,6 +838,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Posted",
     "update_field": null,
     "update_value": null,
@@ -749,6 +854,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Pending Cancellation",
     "update_field": null,
     "update_value": null,
@@ -764,6 +870,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Rejected Cancellation",
     "update_field": null,
     "update_value": null,
@@ -779,6 +886,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "states",
     "parenttype": "Workflow",
+    "send_email": 0,
     "state": "Discarded",
     "update_field": null,
     "update_value": null,
@@ -795,6 +903,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Saved",
     "workflow_builder_id": "action-1"
    },
@@ -807,6 +916,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Saved",
     "workflow_builder_id": "action-2"
    },
@@ -819,6 +929,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Saved",
     "workflow_builder_id": "action-3"
    },
@@ -831,6 +942,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Submission",
     "workflow_builder_id": null
    },
@@ -843,6 +955,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Submission",
     "workflow_builder_id": null
    },
@@ -855,6 +968,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Submission",
     "workflow_builder_id": null
    },
@@ -867,6 +981,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Submission",
     "workflow_builder_id": null
    },
@@ -879,6 +994,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Submission",
     "workflow_builder_id": null
    },
@@ -891,6 +1007,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Posted",
     "workflow_builder_id": null
    },
@@ -903,6 +1020,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Posted",
     "workflow_builder_id": null
    },
@@ -915,6 +1033,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Posted",
     "workflow_builder_id": null
    },
@@ -927,6 +1046,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Cancellation",
     "workflow_builder_id": "action-9"
    },
@@ -939,6 +1059,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Pending Cancellation",
     "workflow_builder_id": null
    },
@@ -951,6 +1072,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Cancellation",
     "workflow_builder_id": null
    },
@@ -963,6 +1085,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Cancellation",
     "workflow_builder_id": null
    },
@@ -975,6 +1098,7 @@
     "parent": "Sales Adjustment Process",
     "parentfield": "transitions",
     "parenttype": "Workflow",
+    "send_email_to_creator": 0,
     "state": "Rejected Cancellation",
     "workflow_builder_id": null
    }
