@@ -15,6 +15,9 @@ class PaymentVoucher(Document):
 			frappe.msgprint(msg=_(f'Paid Amount in Company Currency not equal to Received Amount in Company Currency'), title=_('Mismatch'), indicator='red')
 			raise frappe.ValidationError
 		
+	def before_submit(self):
+		self.update_status("Submitted")
+		
 	def on_submit(self):
 		if self.payment_to == "Supplier":
 			payment_entry = frappe.get_doc({

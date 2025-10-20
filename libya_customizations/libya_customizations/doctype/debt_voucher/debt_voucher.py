@@ -10,6 +10,9 @@ class DebtVoucher(Document):
 	def validate(self):
 		self.update_status("Draft")
 
+	def before_submit(self):
+		self.update_status("Submitted")
+		
 	def on_submit(self):	
 		if self.type == 'Add':
 			accounts_add = []

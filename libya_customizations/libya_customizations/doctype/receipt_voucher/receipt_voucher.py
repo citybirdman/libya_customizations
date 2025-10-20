@@ -12,6 +12,9 @@ class ReceiptVoucher(Document):
 		if self.base_paid_amount != self.base_received_amount:
 			frappe.msgprint(msg=f'Paid Amount in Company Currency not equal to Received Amount in Company Currency', title='Mismatch', indicator='red')
 			raise frappe.ValidationError
+			
+	def before_submit(self):
+		self.update_status("Submitted")
 		
 	def on_trash(self):
 		doctype = 'Journal Entry'

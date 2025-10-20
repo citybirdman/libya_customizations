@@ -7,6 +7,8 @@ from frappe import _
 
 
 class ClearingVoucher(Document):
+	def before_submit(self):
+		self.update_status("Submitted")
 	def validate(self):
 		self.update_status("Draft")
 		if self.base_deducted_amount != self.base_added_amount:
