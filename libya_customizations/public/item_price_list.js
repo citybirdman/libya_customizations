@@ -18,7 +18,16 @@ frappe.listview_settings['Item Price'] = {
             listview.refresh();
         }, "Filters");
 
-        // 3. Add the "Not Priced Items" button
+        // 3. Add the "Available Items" button
+        listview.page.add_inner_button(__('Available Items'), function () {
+            listview.filter_area.clear();
+            listview.filter_area.add([
+                ['Item Price', 'Available_qty', '>', 0]
+            ]);
+            listview.refresh();
+        }, "Filters");        
+        
+        // 4. Add the "Not Priced Items" button
         listview.page.add_inner_button(__('Non-Priced Items'), function () {
             listview.filter_area.clear();
             listview.filter_area.add([
@@ -29,7 +38,7 @@ frappe.listview_settings['Item Price'] = {
             listview.refresh();
         }, "Filters");
 
-        // 4. Add the "Non-Profitable Items" button
+        // 5. Add the "Non-Profitable Items" button
         listview.page.add_inner_button(__('Non-Profitable Items'), function () {
             frappe.call({
                 method: 'frappe.client.get_list',

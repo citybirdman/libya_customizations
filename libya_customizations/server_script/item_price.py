@@ -112,12 +112,27 @@ def update_stock_valuation_rate():
         stock_qty = frappe.db.sql("""
             SELECT IFNULL(SUM(actual_qty), 0)
             FROM `tabStock Ledger Entry`
-            WHERE item_code = %s AND IFNULL(production_year, '') = IFNULL(%s, '')
+            WHERE is_cancelled = 0 AND item_code = %s AND IFNULL(production_year, '') = IFNULL(%s, '')
         """, (ip.item_code, ip.production_year))[0][0]
+
+        qty_to_deliver = frappe.db.sql("""
+            WITH reserved_qty AS (
+                SELECT so.name, IF(SUM(soi.qty - soi.delivered_qty) > 0, SUM(soi.qty - soi.delivered_qty), 0) AS qty_to_deliver
+                FROM `tabSales Order Item` soi
+                INNER JOIN `tabSales Order` so ON soi.parent = so.name
+                WHERE soi.docstatus = 1 AND so.docstatus = 1 AND so.status NOT IN ('Completed', 'Closed') AND soi.qty - soi.delivered_qty > 0
+                AND soi.item_code = %s AND IFNULL(soi.production_year, '') = IFNULL(%s, '')
+            )
+            SELECT IFNULL(SUM(qty_to_deliver), 0)
+            FROM reserved_qty
+        """, (ip.item_code, ip.production_year))[0][0]
+
+        available_qty = stock_qty - qty_to_deliver
 
         frappe.db.set_value("Item Price", ip.name, {
             "stock_valuation_rate": avg_rate or 0,
-            "stock_qty": stock_qty or 0
+            "stock_qty": stock_qty or 0,
+            "available_qty": available_qty or 0
         })
 
     frappe.db.commit()
