@@ -57835,5 +57835,18 @@
   "name": "2lfd68327s",
   "source_text": "Item {0} is already added in Row {1}",
   "translated_text": "الصنف {0} بالفعل مضاف في الصف رقم {1}"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-10-25 13:21:45.428852",
+  "name": "uuu2cmo6ee",
+  "source_text": "In-Stock Items",
+  "translated_text": "الأصناف الموجودة بالمخزن"
  }
 ]
