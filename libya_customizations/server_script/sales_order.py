@@ -177,7 +177,7 @@ def before_save_sales_order(doc, method):
     doc = frappe.get_doc(doc)
     if  (
             doc.reservation_status == "Reserve against Future Receipts"
-            and not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "=", "Chief Sales Officer"]])
+            and not frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", ["Chief Sales Officer", "Sales Assistant Manager"]]])
         ):
         frappe.msgprint(_("You do not have the authority to choose <b>Reserve against Future Receipts</b>"), title=_('Error'), indicator='red')
         raise frappe.ValidationError
