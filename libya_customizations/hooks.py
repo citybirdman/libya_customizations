@@ -184,7 +184,8 @@ doc_events = {
         "on_submit":[
             "libya_customizations.server_script.sales_invoice.after_submit_amended_sales_invoice",
 			"libya_customizations.server_script.sales_invoice.reconcile_payments",
-			"libya_customizations.server_script.sales_invoice.reconcile_everything"
+			"libya_customizations.server_script.sales_invoice.reconcile_everything",
+            "libya_customizations.server_script.sales_invoice.notify_other_branch_users"
         ],
         "before_cancel":[
 			"libya_customizations.server_script.sales_invoice.cancel_linked_payment"

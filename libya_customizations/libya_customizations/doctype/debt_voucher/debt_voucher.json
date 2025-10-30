@@ -25,6 +25,8 @@
   "amount",
   "exchange_rate",
   "base_amount",
+  "dimensions_section",
+  "branch",
   "section_break_23",
   "remark",
   "status",
@@ -206,6 +208,17 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "dimensions_section",
+   "fieldtype": "Section Break",
+   "label": "Dimensions"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -217,7 +230,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-10-09 12:10:17.318788",
+ "modified": "2025-10-29 08:45:00.626545",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Debt Voucher",

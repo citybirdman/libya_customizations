@@ -37,6 +37,8 @@
   "added_amount",
   "target_exchange_rate",
   "base_added_amount",
+  "dimensions_section",
+  "branch",
   "section_break_30",
   "remark",
   "status",
@@ -80,7 +82,7 @@
    "fieldname": "from",
    "fieldtype": "Autocomplete",
    "label": "From?",
-   "options": "Customer\nAccount\nSupplier"
+   "options": "Customer\nAccount"
   },
   {
    "fieldname": "from_party_type",
@@ -109,7 +111,7 @@
    "fieldname": "to",
    "fieldtype": "Autocomplete",
    "label": "To?",
-   "options": "Customer\nAccount\nSupplier"
+   "options": "Customer\nAccount"
   },
   {
    "fieldname": "to_party_type",
@@ -309,6 +311,17 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "dimensions_section",
+   "fieldtype": "Section Break",
+   "label": "Dimensions"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -320,7 +333,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-10-09 12:09:17.805687",
+ "modified": "2025-06-28 20:25:25.269089",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Clearing Voucher",
@@ -345,7 +358,6 @@
    "write": 1
   }
  ],
- "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

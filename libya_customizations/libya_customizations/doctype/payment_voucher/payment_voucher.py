@@ -9,9 +9,14 @@ from frappe import _
 
 class PaymentVoucher(Document):
 	def validate(self):
+		self.update_status("Draft")
+
 		if self.base_paid_amount != self.base_received_amount:
 			frappe.msgprint(msg=_(f'Paid Amount in Company Currency not equal to Received Amount in Company Currency'), title=_('Mismatch'), indicator='red')
 			raise frappe.ValidationError
+		
+	def before_submit(self):
+		self.update_status("Submitted")
 		
 	def on_submit(self):
 		if self.payment_to == "Supplier":
@@ -35,6 +40,7 @@ class PaymentVoucher(Document):
 				"custom_voucher_no": self.name,
 				"reference_date": self.posting_date,
 				"custom_remarks": 1,
+				'branch': self.branch,
 				"remarks": self.remark
 			})
 			payment_entry.insert(ignore_permissions=True)
@@ -44,6 +50,7 @@ class PaymentVoucher(Document):
 			accounts.append({
 				'account': self.paid_from,
 				'exchange_rate': self.source_exchange_rate,
+				'branch': self.branch,
 				'credit_in_account_currency': abs(self.paid_amount)
 			})
 			accounts.append({
@@ -51,6 +58,7 @@ class PaymentVoucher(Document):
 				'party_type': self.party_type,
 				'party': self.party,
 				'exchange_rate': self.target_exchange_rate,
+				'branch': self.branch,
 				'debit_in_account_currency': abs(self.received_amount)
 			})
 			journal_entry = frappe.get_doc({

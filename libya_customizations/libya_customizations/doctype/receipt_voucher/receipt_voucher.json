@@ -40,6 +40,8 @@
   "column_break_aoiy",
   "banking_charges",
   "include_party_balance_in_print",
+  "dimensions_section",
+  "branch",
   "section_break_25",
   "remark",
   "status",
@@ -88,7 +90,7 @@
    "fieldname": "receipt_from",
    "fieldtype": "Autocomplete",
    "label": "Receipt From?",
-   "options": "Customer\nAccount\nSupplier",
+   "options": "Customer\nAccount",
    "reqd": 1
   },
   {
@@ -330,6 +332,17 @@
    "fieldname": "include_party_balance_in_print",
    "fieldtype": "Check",
    "label": "Include Party Balance In Print"
+  },
+  {
+   "fieldname": "dimensions_section",
+   "fieldtype": "Section Break",
+   "label": "Dimensions"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -346,7 +359,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-10-09 12:10:01.772998",
+ "modified": "2025-04-19 12:33:44.432297",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Receipt Voucher",
@@ -371,7 +384,6 @@
    "write": 1
   }
  ],
- "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

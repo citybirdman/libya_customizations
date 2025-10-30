@@ -7,10 +7,15 @@ from frappe import _
 
 class TransferVoucher(Document):
 	def validate(self):
+		self.update_status("Draft")
+
 		if self.base_paid_amount != self.base_received_amount:
 			frappe.msgprint(msg=_(f'Paid Amount in Company Currency not equal to Received Amount in Company Currency'), title=_('Mismatch'), indicator='red')
 			raise frappe.ValidationError
 	
+	def before_submit(self):
+		self.update_status("Submitted")
+		
 	def on_submit(self):
 		payment_entry = frappe.get_doc({
 			"doctype": "Payment Entry",
@@ -30,6 +35,7 @@ class TransferVoucher(Document):
 			"custom_voucher_no": self.name,
 			"reference_date": self.posting_date,
 			"custom_remarks": 1,
+			'branch': self.branch,
 			'remarks': self.remark
 		})
 		payment_entry.insert(ignore_permissions=True)
@@ -44,12 +50,14 @@ class TransferVoucher(Document):
 			accounts.append({
 				'account': paid_account,
 				'exchange_rate': self.source_exchange_rate if self.sender else self.target_exchange_rate,
-				'credit_in_account_currency': abs(self.banking_charges)
+				'credit_in_account_currency': abs(self.banking_charges),
+				'remark': self.remark
 			})
 			accounts.append({
 				'account': self.charge_account,
 				'exchange_rate': 1,
-				'debit_in_account_currency': abs(self.banking_charges)
+				'debit_in_account_currency': abs(self.banking_charges),
+				'remark': self.remark
 			})
 			journal_entry = frappe.get_doc({
 				'doctype': 'Journal Entry',
@@ -63,7 +71,6 @@ class TransferVoucher(Document):
 				'custom_voucher_no': self.name,
 				'user_remark': self.remark,
 				'multi_currency': 1,
-				'remark': self.remark,
 				'cannot_be_cancelled': 1
 			}).insert(ignore_permissions=True)
 			journal_entry.submit()

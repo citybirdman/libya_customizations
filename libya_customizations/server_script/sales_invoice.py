@@ -1,6 +1,7 @@
 import frappe
 from frappe import _
 from frappe import json
+from frappe.share import add
 
 def get_default_company():
 	default_company = frappe.db.get_single_value("Global Defaults", "default_company")
@@ -277,3 +278,13 @@ def validate_before_submit_sales_invoice(doc, method):
 
 def after_update_after_submit_sales_invoice(doc, method):
 	doc = frappe.get_doc(doc)
+
+def notify_other_branch_users(doc, method):
+	if reciever := frappe.db.get_value("Warehouse", doc.set_warehouse, "custom_warehouse_reciever"):
+		if doc.owner != reciever:
+			add(
+				doctype="Sales Invoice",
+				name=doc.name,
+				user=reciever,
+				notify=True
+			)

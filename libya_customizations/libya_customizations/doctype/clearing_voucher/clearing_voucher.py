@@ -7,7 +7,10 @@ from frappe import _
 
 
 class ClearingVoucher(Document):
+	def before_submit(self):
+		self.update_status("Submitted")
 	def validate(self):
+		self.update_status("Draft")
 		if self.base_deducted_amount != self.base_added_amount:
 			frappe.msgprint(msg=_(f'Deducted Amount in Company Currency not equal to Added Amount in Company Currency'), title=_('Mismatch'), indicator='red')
 			raise frappe.ValidationError
@@ -19,6 +22,7 @@ class ClearingVoucher(Document):
 			'party_type': self.from_party_type,
 			'party': self.from_party,
 			'exchange_rate': self.source_exchange_rate,
+			'branch': self.branch,
 			'credit_in_account_currency': abs(self.deducted_amount)
 		})
 		accounts.append({
@@ -26,6 +30,7 @@ class ClearingVoucher(Document):
 			'party_type': self.to_party_type,
 			'party': self.to_party,
 			'exchange_rate': self.target_exchange_rate,
+			'branch': self.branch,
 			'debit_in_account_currency': abs(self.added_amount)
 		})
 		journal_entry = frappe.get_doc({

@@ -7,6 +7,12 @@ from frappe import _
 
 
 class DebtVoucher(Document):
+	def validate(self):
+		self.update_status("Draft")
+
+	def before_submit(self):
+		self.update_status("Submitted")
+		
 	def on_submit(self):	
 		if self.type == 'Add':
 			accounts_add = []
@@ -16,13 +22,15 @@ class DebtVoucher(Document):
 			accounts_add.append({
 				'account': debt_account,
 				'exchange_rate': 1,
-				'credit_in_account_currency': abs(self.amount)
+				'credit_in_account_currency': abs(self.amount),
+				'branch': self.branch
 			})
 			accounts_add.append({
 				'account': self.from_or_to_account,
 				'party_type': self.party_type,
 				'party': self.party,
 				'exchange_rate': self.exchange_rate,
+				'branch': self.branch,
 				'debit_in_account_currency': abs(self.amount),
 			})
 			journal_entry = frappe.get_doc({
@@ -51,11 +59,13 @@ class DebtVoucher(Document):
 				'party_type': self.party_type,
 				'party': self.party,
 				'exchange_rate': self.exchange_rate,
+				'branch': self.branch,
 				'credit_in_account_currency': abs(self.amount)
 			})
 			accounts_deduct.append({
 				'account': debt_account,
 				'exchange_rate': 1,
+				'branch': self.branch,
 				'debit_in_account_currency': abs(self.base_amount)
 			})
 			journal_entry = frappe.get_doc({

@@ -7,9 +7,14 @@ from frappe.model.document import Document
 
 class ReceiptVoucher(Document):
 	def validate(self):
+		self.update_status("Draft")
+
 		if self.base_paid_amount != self.base_received_amount:
 			frappe.msgprint(msg=f'Paid Amount in Company Currency not equal to Received Amount in Company Currency', title='Mismatch', indicator='red')
 			raise frappe.ValidationError
+			
+	def before_submit(self):
+		self.update_status("Submitted")
 		
 	def on_trash(self):
 		doctype = 'Journal Entry'
@@ -54,6 +59,7 @@ class ReceiptVoucher(Document):
 				"reference_date": self.posting_date,
 				"custom_remarks": 1,
 				'remarks': self.remark,
+				'branch': self.branch,
 				"cannot_be_cancelled": 1
 			})
 			payment_entry.insert(ignore_permissions=True)
@@ -66,12 +72,14 @@ class ReceiptVoucher(Document):
 				'party_type': self.party_type,
 				'party': self.party,
 				'exchange_rate': self.source_exchange_rate,
-				'credit_in_account_currency': abs(self.paid_amount)
+				'credit_in_account_currency': abs(self.paid_amount),
+				'branch': 'Main'
 			})
 			accounts.append({
 				'account': self.paid_to,
 				'exchange_rate': self.target_exchange_rate,
-				'debit_in_account_currency': abs(self.received_amount)
+				'debit_in_account_currency': abs(self.received_amount),
+				'branch': 'Main'
 			})
 			journal_entry = frappe.get_doc({
 				'doctype': 'Journal Entry',
@@ -86,6 +94,7 @@ class ReceiptVoucher(Document):
 				'user_remark': self.remark,
 				'multi_currency': 1,
 				'remark': self.remark,
+				'branch': self.branch,
 				'cannot_be_cancelled': 1
 			}).insert(ignore_permissions=True)
 			journal_entry.submit()
@@ -96,14 +105,16 @@ class ReceiptVoucher(Document):
 			accounts.append({
 				'account': self.paid_to,
 				'exchange_rate': self.source_exchange_rate,
-				'credit_in_account_currency': abs(self.banking_charges)
+				'credit_in_account_currency': abs(self.banking_charges),
+				'branch': self.branch
 			})
 			accounts.append({
 				'account': self.paid_from,
 				'party_type': self.party_type,
 				'party': self.party,
 				'exchange_rate': self.target_exchange_rate,
-				'debit_in_account_currency': abs(self.banking_charges)
+				'debit_in_account_currency': abs(self.banking_charges),
+				'branch': self.branch
 			})
 			journal_entry = frappe.get_doc({
 				'doctype': 'Journal Entry',

@@ -32,6 +32,8 @@
   "sender",
   "column_break_vtin",
   "banking_charges",
+  "dimensions_section",
+  "branch",
   "section_break_26",
   "remark",
   "status",
@@ -261,6 +263,17 @@
    "fieldname": "sender",
    "fieldtype": "Check",
    "label": "Charges to be borne by Sender"
+  },
+  {
+   "fieldname": "dimensions_section",
+   "fieldtype": "Section Break",
+   "label": "Dimensions"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
   }
  ],
  "index_web_pages_for_search": 1,
