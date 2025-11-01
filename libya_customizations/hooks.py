@@ -107,9 +107,6 @@ fixtures = [
     {
         "doctype": "Translation"
     },
-    # {
-    #     "doctype": "Document Naming Rule"
-    # },
     {
         "doctype": "Number Card"
     }

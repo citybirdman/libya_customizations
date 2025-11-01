@@ -1,8 +1,12 @@
 {
  "charts": [],
- "content": "[{\"id\":\"DuSWVl9PsI\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/stock-entry?stock_entry_type=Material+Issue\\\"><b>Material Issue</b></a></span>\",\"col\":8}},{\"id\":\"gP_Ddd37vI\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"New Material Issue\",\"col\":4}},{\"id\":\"9vbqdnhwzV\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Submitted\",\"col\":4}},{\"id\":\"16USEaDzPN\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Draft\",\"col\":4}},{\"id\":\"HVI_6o3ITK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Cancelled\",\"col\":4}},{\"id\":\"5I3mcpdR1O\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/stock-entry?stock_entry_type=Material+Receipt\\\"><b>Material Receipt</b></a></span>\",\"col\":8}},{\"id\":\"UkvVVmjiYh\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"New Material Receipt\",\"col\":4}},{\"id\":\"1w8TCBjs7U\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Submitted\",\"col\":4}},{\"id\":\"1F-LrF029P\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Draft\",\"col\":4}},{\"id\":\"P1CQ0S7NKd\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Cancelled\",\"col\":4}}]",
+ "content": "[{\"id\":\"DuSWVl9PsI\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/stock-entry?stock_entry_type=Material+Issue\\\"><b>Material Issue</b></a></span>\",\"col\":8}},{\"id\":\"gP_Ddd37vI\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"New Material Issue\",\"col\":4}},{\"id\":\"9vbqdnhwzV\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Submitted\",\"col\":4}},{\"id\":\"16USEaDzPN\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Draft\",\"col\":4}},{\"id\":\"HVI_6o3ITK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issue No - Cancelled\",\"col\":4}},{\"id\":\"5I3mcpdR1O\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\" style=\\\"\\\"><a href=\\\"/app/stock-entry?stock_entry_type=Material+Receipt\\\"><b>Material Receipt</b></a></span>\",\"col\":8}},{\"id\":\"UkvVVmjiYh\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"New Material Receipt\",\"col\":4}},{\"id\":\"1w8TCBjs7U\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Submitted\",\"col\":4}},{\"id\":\"1F-LrF029P\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Draft\",\"col\":4}},{\"id\":\"P1CQ0S7NKd\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Receipt No - Cancelled\",\"col\":4}},{\"id\":\"BigFrT0ovt\",\"type\":\"paragraph\",\"data\":{\"text\":\"<a href=\\\"/app/stock-entry?stock_entry_type=Material+Transfer\\\">Material Transfer</a>\",\"col\":8}},{\"id\":\"KNQ-E0p3EA\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"New Material Transfer\",\"col\":4}},{\"id\":\"MPKa0x83Mk\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Transfer No - Submitted\",\"col\":4}},{\"id\":\"s6dVVflxRG\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Transfer No - Draft\",\"col\":4}},{\"id\":\"w0C2eGzXdI\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Transfer No - Cancelled\",\"col\":4}},{\"id\":\"so5s9Q4nxP\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Transfer No - Pending Submission\",\"col\":3}},{\"id\":\"e5vz2ateRz\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Transfer No - Pending Cancellation\",\"col\":3}},{\"id\":\"Vs-po1JIIP\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Transfer No - Rejected Submission\",\"col\":3}},{\"id\":\"M1ER0qz_CV\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Transfer No - Rejected Cancellation\",\"col\":3}}]",
  "creation": "2024-12-07 08:46:56.462737",
  "custom_blocks": [
+  {
+   "custom_block_name": "New Material Transfer",
+   "label": "New Material Transfer"
+  },
   {
    "custom_block_name": "New Material Issue",
    "label": "New Material Issue"
@@ -22,22 +26,50 @@
  "is_hidden": 0,
  "label": "Inventory",
  "links": [],
- "modified": "2025-10-09 09:55:19.275073",
+ "modified": "2025-10-31 14:54:04.699518",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Inventory",
  "number_cards": [
   {
+   "label": "Material Transfer No - Submitted",
+   "number_card_name": "Material Transfer No - Submitted"
+  },
+  {
+   "label": "Material Transfer No - Pending Submission",
+   "number_card_name": "Material Transfer No - Pending Submission"
+  },
+  {
    "label": "Material Issue No - Submitted",
    "number_card_name": "Material Issue No - Submitted"
+  },
+  {
+   "label": "Material Transfer No - Draft",
+   "number_card_name": "Material Transfer No - Draft"
+  },
+  {
+   "label": "Material Transfer No - Pending Cancellation",
+   "number_card_name": "Material Transfer No - Pending Cancellation"
   },
   {
    "label": "Material Issue No - Draft",
    "number_card_name": "Material Issue No - Draft"
   },
   {
+   "label": "Material Transfer No - Cancelled",
+   "number_card_name": "Material Transfer No - Cancelled"
+  },
+  {
+   "label": "Material Transfer No - Rejected Submission",
+   "number_card_name": "Material Transfer No - Rejected Submission"
+  },
+  {
    "label": "Material Issue No - Cancelled",
    "number_card_name": "Material Issue No - Cancelled"
+  },
+  {
+   "label": "Material Transfer No - Rejected Cancellation",
+   "number_card_name": "Material Transfer No - Rejected Cancellation"
   },
   {
    "label": "Material Receipt No - Submitted",

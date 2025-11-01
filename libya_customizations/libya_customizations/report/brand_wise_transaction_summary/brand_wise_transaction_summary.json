@@ -1,5 +1,6 @@
 {
  "add_total_row": 1,
+ "add_translate_data": 0,
  "columns": [
   {
    "fieldname": "brand",
@@ -67,11 +68,11 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 0,
+ "idx": 2,
  "is_standard": "Yes",
- "letter_head": "itar",
+ "letter_head": "",
  "letterhead": null,
- "modified": "2025-04-25 09:11:12.237161",
+ "modified": "2025-11-01 03:00:05.405523",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Brand-wise Transaction Summary",
@@ -87,12 +88,6 @@
   },
   {
    "role": "Stock User"
-  },
-  {
-   "role": "Chief Sales Officer"
-  },
-  {
-   "role": "Sales Supervisor"
   },
   {
    "role": "System Manager"

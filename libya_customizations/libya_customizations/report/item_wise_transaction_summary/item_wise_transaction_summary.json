@@ -1,5 +1,6 @@
 {
  "add_total_row": 1,
+ "add_translate_data": 0,
  "columns": [
   {
    "fieldname": "item_code",
@@ -79,11 +80,11 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 3,
+ "idx": 5,
  "is_standard": "Yes",
- "letter_head": "itar",
+ "letter_head": "",
  "letterhead": null,
- "modified": "2025-04-25 09:15:36.903867",
+ "modified": "2025-11-01 02:59:40.573125",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Item-wise Transaction Summary",
@@ -99,12 +100,6 @@
   },
   {
    "role": "Stock User"
-  },
-  {
-   "role": "Chief Sales Officer"
-  },
-  {
-   "role": "Sales Supervisor"
   },
   {
    "role": "System Manager"

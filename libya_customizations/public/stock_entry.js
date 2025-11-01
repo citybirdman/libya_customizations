@@ -15,7 +15,7 @@ frappe.ui.form.on("Stock Entry", {
 
     onload_post_render(frm) {
 		// Remove unnecessary buttons on load
-		if(frm.is_new())
+		if(frm.is_new() && frm.doc.stock_entry_type != 'Material Transfer')
 			frm.set_value("expense_account", null)
         const buttonsToRemove = [
 			["Material Request", "Create"],
@@ -87,3 +87,28 @@ frappe.ui.form.on("Stock Entry", {
 		 }   
 	 }
  });
+
+ frappe.ui.form.on("Clearing Voucher", "onload", function(frm) {
+    frm.set_query("from_account", function() {
+        return {
+            filters: {
+                account_type: ["not in", ["Receivable", "Payable", "Bank", "Cash"]],
+				is_group: 0
+           }
+        };
+    });
+});
+
+frappe.ui.form.on("Stock Entry", {
+	refresh: function(frm) {
+		if (frm.doc.stock_entry_type == "Material Transfer") {
+			frm.set_query("to_warehouse", function() {
+				return {
+					filters: {
+						name: ["!=", frm.doc.from_warehouse]
+					}
+				};
+			});
+		}
+	}
+});

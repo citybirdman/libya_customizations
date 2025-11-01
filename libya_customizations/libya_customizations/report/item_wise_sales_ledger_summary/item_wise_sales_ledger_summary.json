@@ -73,9 +73,17 @@
    "wildcard_filter": 0
   },
   {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "mandatory": 1,
+   "options": "Branch",
+   "wildcard_filter": 0
+  },
+  {
    "fieldname": "from_date",
    "fieldtype": "Date",
-   "label": "From",
+   "label": "From Date",
    "mandatory": 1,
    "wildcard_filter": 0
   },
@@ -87,17 +95,17 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 9,
+ "idx": 10,
  "is_standard": "Yes",
  "letter_head": "",
  "letterhead": null,
- "modified": "2025-10-09 09:58:09.750987",
+ "modified": "2025-10-31 22:22:08.758127",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Item-wise Sales Ledger Summary",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "SELECT\r\n    sii.item_code,\r\n    i.item_name,\r\n    sii.parent AS sales_invoice,\r\n    si.posting_date,\r\n    si.customer,\r\n    c.customer_name,\r\n    IF(sii.qty < 0, sii.qty, 0) * -1 AS in_qty,\r\n    IF(sii.qty > 0, sii.qty, 0) AS out_qty,\r\n    sii.rate\r\nFROM\r\n    `tabSales Invoice Item` sii\r\nINNER JOIN\r\n    `tabSales Invoice` si\r\nON\r\n    sii.parent = si.name\r\nINNER JOIN\r\n    `tabItem` i\r\nON\r\n    sii.item_code = i.name\r\nINNER JOIN\r\n    `tabCustomer` c\r\nON\r\n    si.customer = c.name\r\nWHERE\r\n    sii.docstatus = 1\r\n    AND si.docstatus = 1\r\n    AND si.is_opening = 'No'\r\n    AND si.posting_date BETWEEN %(from_date)s AND %(to_date)s\r\n    AND i.item_code = %(item_code)s\r\nORDER BY\r\n    si.posting_date DESC,\r\n    sii.parent DESC",
+ "query": "SELECT\r\n    sii.item_code,\r\n    i.item_name,\r\n    sii.parent AS sales_invoice,\r\n    si.posting_date,\r\n    si.customer,\r\n    c.customer_name,\r\n    IF(sii.qty < 0, sii.qty, 0) * -1 AS in_qty,\r\n    IF(sii.qty > 0, sii.qty, 0) AS out_qty,\r\n    sii.rate\r\nFROM\r\n    `tabSales Invoice Item` sii\r\nINNER JOIN\r\n    `tabSales Invoice` si\r\nON\r\n    sii.parent = si.name\r\nINNER JOIN\r\n    `tabItem` i\r\nON\r\n    sii.item_code = i.name\r\nINNER JOIN\r\n    `tabCustomer` c\r\nON\r\n    si.customer = c.name\r\nWHERE\r\n    sii.docstatus = 1\r\n    AND si.docstatus = 1\r\n    AND si.is_opening = 'No'\r\n    AND si.posting_date BETWEEN %(from_date)s AND %(to_date)s\r\n    AND i.item_code = %(item_code)s\r\n    AND si.branch = %(branch)s\r\nORDER BY\r\n    si.posting_date DESC,\r\n    sii.parent DESC",
  "ref_doctype": "Sales Invoice",
  "report_name": "Item-wise Sales Ledger Summary",
  "report_type": "Query Report",

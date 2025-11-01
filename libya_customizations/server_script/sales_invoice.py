@@ -280,7 +280,7 @@ def after_update_after_submit_sales_invoice(doc, method):
 	doc = frappe.get_doc(doc)
 
 def notify_other_branch_users(doc, method):
-	if reciever := frappe.db.get_value("Warehouse", doc.set_warehouse, "custom_warehouse_reciever"):
+	if reciever := frappe.db.get_value("Warehouse", doc.set_warehouse, "warehouse_user"):
 		if doc.owner != reciever:
 			add(
 				doctype="Sales Invoice",

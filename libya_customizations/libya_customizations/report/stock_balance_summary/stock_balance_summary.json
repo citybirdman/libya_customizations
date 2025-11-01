@@ -35,6 +35,14 @@
  "doctype": "Report",
  "filters": [
   {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "mandatory": 1,
+   "options": "Warehouse",
+   "wildcard_filter": 0
+  },
+  {
    "default": "Today",
    "fieldname": "to_date",
    "fieldtype": "Date",
@@ -43,17 +51,17 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 23,
+ "idx": 25,
  "is_standard": "Yes",
  "letter_head": "",
  "letterhead": null,
- "modified": "2025-10-09 10:04:04.859425",
+ "modified": "2025-10-31 22:27:07.125785",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Stock Balance Summary",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "WITH\nstock_ledger_entry AS (\n\tSELECT\n\t\titem_code,\n\t\tSUM(actual_qty) AS actual_qty\n\tFROM\n\t\t`tabStock Ledger Entry`\n\tWHERE\n\t\tis_cancelled = 0\n\tAND\n\t\tposting_date <= %(to_date)s\n\tGROUP BY\n\t\titem_code\n\tHAVING\n\t\tSUM(actual_qty) > 0\n)\nSELECT\n\tstock_ledger_entry.item_code,\n\titem.item_name,\n\titem.brand,\n\tstock_ledger_entry.actual_qty\nFROM\n\tstock_ledger_entry\nINNER JOIN\n\t`tabItem` item\nON\n\tstock_ledger_entry.item_code = item.name\nWHERE\n\titem.is_stock_item = 1\nAND\n\tstock_ledger_entry.actual_qty > 0\nORDER BY\n    item.brand",
+ "query": "WITH\nstock_ledger_entry AS (\n\tSELECT\n\t\titem_code,\n\t\tSUM(actual_qty) AS actual_qty\n\tFROM\n\t\t`tabStock Ledger Entry`\n\tWHERE\n\t\tis_cancelled = 0\n\tAND\n\t\tposting_date <= %(to_date)s\n    AND\n        warehouse = %(warehouse)s\n\tGROUP BY\n\t\titem_code\n\tHAVING\n\t\tSUM(actual_qty) > 0\n)\nSELECT\n\tstock_ledger_entry.item_code,\n\titem.item_name,\n\titem.brand,\n\tstock_ledger_entry.actual_qty\nFROM\n\tstock_ledger_entry\nINNER JOIN\n\t`tabItem` item\nON\n\tstock_ledger_entry.item_code = item.name\nWHERE\n\titem.is_stock_item = 1\nAND\n\tstock_ledger_entry.actual_qty > 0\nORDER BY\n    item.brand",
  "ref_doctype": "Stock Ledger Entry",
  "report_name": "Stock Balance Summary",
  "report_type": "Query Report",

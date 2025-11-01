@@ -35,6 +35,7 @@ def execute(filters=None):
         SELECT item_code, SUM(actual_qty) AS actual_qty
         FROM `tabStock Ledger Entry`
         WHERE is_cancelled = 0
+	    AND warehouse = %(warehouse)s
         AND posting_date <= %(to_date)s
         GROUP BY item_code
         HAVING SUM(actual_qty) > 0
@@ -43,16 +44,13 @@ def execute(filters=None):
         SELECT item_code, price_list_rate
         FROM `tabItem Price`
         WHERE selling = 1
-        AND price_list IN (
-            SELECT value FROM `tabSingles`
-            WHERE doctype = 'Selling Settings' AND field = 'selling_price_list'
-        )
+        AND price_list = %(price_list)s
     ),
     item AS (
         SELECT i.name, i.item_name, i.brand, i.is_stock_item
         FROM `tabItem` i
         LEFT JOIN `tabStock Ledger Entry` sle ON i.name = sle.item_code
-        WHERE is_cancelled = 0
+        WHERE is_cancelled = 0 AND warehouse = %(warehouse)s
         GROUP BY i.name
     )
     SELECT

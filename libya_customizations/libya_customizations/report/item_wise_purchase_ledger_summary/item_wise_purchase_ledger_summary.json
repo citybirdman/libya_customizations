@@ -73,6 +73,14 @@
    "wildcard_filter": 0
   },
   {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "mandatory": 1,
+   "options": "Branch",
+   "wildcard_filter": 0
+  },
+  {
    "fieldname": "from_date",
    "fieldtype": "Date",
    "label": "From",
@@ -91,13 +99,13 @@
  "is_standard": "Yes",
  "letter_head": "",
  "letterhead": null,
- "modified": "2025-10-11 18:19:00.768631",
+ "modified": "2025-10-31 22:23:49.459497",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Item-wise Purchase Ledger Summary",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "SELECT\r\n    pii.item_code,\r\n    i.item_name,\r\n    pii.parent AS purchase_invoice,\r\n    pi.posting_date,\r\n    pi.supplier,\r\n    s.supplier_name,\r\n    IF(pii.qty < 0, pii.qty, 0) * -1 AS in_qty,\r\n    IF(pii.qty > 0, pii.qty, 0) AS out_qty,\r\n    pii.rate\r\nFROM\r\n    `tabPurchase Invoice Item` pii\r\nINNER JOIN\r\n    `tabPurchase Invoice` pi\r\nON\r\n    pii.parent = pi.name\r\nINNER JOIN\r\n    `tabItem` i\r\nON\r\n    pii.item_code = i.name\r\nINNER JOIN\r\n    `tabSupplier` s\r\nON\r\n    pi.supplier = s.name\r\nWHERE\r\n    pii.docstatus = 1\r\n    AND pi.docstatus = 1\r\n    AND pi.is_opening = 'No'\r\n    AND pi.posting_date BETWEEN %(from_date)s AND %(to_date)s\r\n    AND i.item_code = %(item_code)s\r\nORDER BY\r\n    pi.posting_date DESC,\r\n    pii.parent DESC",
+ "query": "SELECT\r\n    pii.item_code,\r\n    i.item_name,\r\n    pii.parent AS purchase_invoice,\r\n    pi.posting_date,\r\n    pi.supplier,\r\n    s.supplier_name,\r\n    IF(pii.qty < 0, pii.qty, 0) * -1 AS in_qty,\r\n    IF(pii.qty > 0, pii.qty, 0) AS out_qty,\r\n    pii.rate\r\nFROM\r\n    `tabPurchase Invoice Item` pii\r\nINNER JOIN\r\n    `tabPurchase Invoice` pi\r\nON\r\n    pii.parent = pi.name\r\nINNER JOIN\r\n    `tabItem` i\r\nON\r\n    pii.item_code = i.name\r\nINNER JOIN\r\n    `tabSupplier` s\r\nON\r\n    pi.supplier = s.name\r\nWHERE\r\n    pii.docstatus = 1\r\n    AND pi.docstatus = 1\r\n    AND pi.is_opening = 'No'\r\n    AND pi.posting_date BETWEEN %(from_date)s AND %(to_date)s\r\n    AND i.item_code = %(item_code)s\r\n    AND pi.branch = %(branch)s    \r\nORDER BY\r\n    pi.posting_date DESC,\r\n    pii.parent DESC",
  "ref_doctype": "Purchase Invoice",
  "report_name": "Item-wise Purchase Ledger Summary",
  "report_type": "Query Report",

@@ -13,6 +13,7 @@ def execute(filters=None):
 
     params = {
         "account": filters.get("account"),
+        "branch": filters.get("branch"),
         "from_date": filters.get("from_date"),
         "to_date": filters.get("to_date"),
     }
@@ -107,6 +108,11 @@ def execute(filters=None):
             is_cancelled = 0
             AND is_opening = 'No'
             AND account = %(account)s
+            AND (
+            branch = %(branch)s
+            OR branch IS NULL
+            OR branch = ''
+            )
             AND posting_date < %(from_date)s
     ),
     opening_2 AS (
@@ -123,6 +129,11 @@ def execute(filters=None):
             is_cancelled = 0
             AND is_opening = 'Yes'
             AND account = %(account)s
+            AND (
+            branch = %(branch)s
+            OR branch IS NULL
+            OR branch = ''
+            )
     ),
     opening AS (
         SELECT
@@ -168,6 +179,11 @@ def execute(filters=None):
             AND gl_entry.is_opening = 'No'
             AND IFNULL(sys_gen_gl_entries.is_system_generated, 0) != 1
             AND gl_entry.account = %(account)s
+            AND (
+            gl_entry.branch = %(branch)s
+            OR gl_entry.branch IS NULL
+            OR gl_entry.branch = ''
+            )
             AND gl_entry.posting_date BETWEEN %(from_date)s AND %(to_date)s
         GROUP BY
             gl_entry.posting_date,
@@ -228,6 +244,11 @@ def execute(filters=None):
              FROM `tabGL Entry`
              WHERE is_cancelled = 0
                AND account = %(account)s
+               AND (
+               branch = %(branch)s
+               OR branch IS NULL
+               OR branch = ''
+               )
                AND posting_date <= %(to_date)s) AS balance,
             NULL AS against,
             NULL AS remarks,
@@ -248,6 +269,7 @@ def execute(filters=None):
             AND gl_entry.is_opening = 'No'
             AND IFNULL(sys_gen_gl_entries.is_system_generated, 0) != 1
             AND gl_entry.account = %(account)s
+            AND gl_entry.branch IN (%(branch)s, NULL, "")
             AND gl_entry.posting_date BETWEEN %(from_date)s AND %(to_date)s
     )
     SELECT * FROM opening_and_transactions

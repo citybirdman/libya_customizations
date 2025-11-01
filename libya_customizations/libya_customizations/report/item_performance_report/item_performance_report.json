@@ -1,5 +1,6 @@
 {
  "add_total_row": 1,
+ "add_translate_data": 0,
  "columns": [
   {
    "fieldname": "item_code",
@@ -80,9 +81,9 @@
  ],
  "idx": 9,
  "is_standard": "Yes",
- "letter_head": "itar",
+ "letter_head": "",
  "letterhead": null,
- "modified": "2025-04-25 10:06:40.579651",
+ "modified": "2025-11-01 03:00:54.750612",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Item Performance Report",

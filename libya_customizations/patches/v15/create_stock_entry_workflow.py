@@ -155,7 +155,7 @@ def execute():
     "allowed":"Sales Supervisor",
     "allow_self_approval":0,
     "send_email_to_creator":0,
-    "condition":"frappe.db.get_value(\"Warehouse\", doc.to_warehouse, \"custom_warehouse_reciever\") == frappe.session.user",
+    "condition":"frappe.db.get_value(\"Warehouse\", doc.to_warehouse, \"warehouse_user\") == frappe.session.user",
     "workflow_builder_id":None,
     "parent":"Stock Transfer Process",
     "parentfield":"transitions",

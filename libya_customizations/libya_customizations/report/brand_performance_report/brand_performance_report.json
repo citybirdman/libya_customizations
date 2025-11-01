@@ -1,5 +1,6 @@
 {
  "add_total_row": 1,
+ "add_translate_data": 0,
  "columns": [
   {
    "fieldname": "brand",
@@ -65,11 +66,11 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 0,
+ "idx": 1,
  "is_standard": "Yes",
- "letter_head": "itar",
+ "letter_head": "",
  "letterhead": null,
- "modified": "2025-04-25 09:51:45.677339",
+ "modified": "2025-11-01 03:00:41.715524",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Brand Performance Report",
@@ -82,9 +83,6 @@
  "roles": [
   {
    "role": "System Manager"
-  },
-  {
-   "role": "Chief Executive Officer"
   }
  ],
  "timeout": 0

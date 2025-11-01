@@ -1,5 +1,6 @@
 {
  "add_total_row": 1,
+ "add_translate_data": 0,
  "columns": [
   {
    "fieldname": "account_number",
@@ -44,19 +45,27 @@
    "label": "To Date",
    "mandatory": 1,
    "wildcard_filter": 0
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "mandatory": 1,
+   "options": "Branch",
+   "wildcard_filter": 0
   }
  ],
- "idx": 31,
+ "idx": 33,
  "is_standard": "Yes",
- "letter_head": "itar",
+ "letter_head": "",
  "letterhead": null,
- "modified": "2025-06-28 20:01:02.438519",
+ "modified": "2025-10-31 22:10:20.386926",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Account Balances Summary",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "WITH gl_entry AS (\nSELECT\n\taccount,\n\tIF(SUM(debit) > SUM(credit), SUM(debit) - SUM(credit), 0) AS debit,\n\tIF(SUM(credit) > SUM(debit), SUM(credit) - SUM(debit), 0) AS credit\nFROM\n\t`tabGL Entry`\nWHERE\n\tis_cancelled = 0\nAND\n\tposting_date <= %(to_date)s\nGROUP BY\n\taccount\n)\nSELECT\n\taccount.account_number,\n\taccount.account_name,\n\taccount.parent_account,\n\tIFNULL(gl_entry.debit, 0) AS debit,\n\tIFNULL(gl_entry.credit, 0) AS credit\nFROM\n\t`tabAccount` account\nLEFT JOIN\n\tgl_entry\nON\n\taccount.name = gl_entry.account\nWHERE\n\taccount.restrict_account_view = 'No'\nAND\n\taccount.is_group = 0\nGROUP BY\n\taccount.name,\n\taccount.account_number,\n\taccount.account_name,\n\taccount.parent_account\nORDER BY\n\taccount.parent_account,\n\taccount.account_number",
+ "query": "WITH gl_entry AS (\nSELECT\n\taccount,\n\tIF(SUM(debit) > SUM(credit), SUM(debit) - SUM(credit), 0) AS debit,\n\tIF(SUM(credit) > SUM(debit), SUM(credit) - SUM(debit), 0) AS credit\nFROM\n\t`tabGL Entry`\nWHERE\n\tis_cancelled = 0\nAND\n    (\n    branch = %(branch)s\n    OR branch IS NULL\n    OR branch = ''\n    )\nAND\n\tposting_date <= %(to_date)s\nGROUP BY\n\taccount\n)\nSELECT\n\taccount.account_number,\n\taccount.account_name,\n\taccount.parent_account,\n\tIFNULL(gl_entry.debit, 0) AS debit,\n\tIFNULL(gl_entry.credit, 0) AS credit\nFROM\n\t`tabAccount` account\nLEFT JOIN\n\tgl_entry\nON\n\taccount.name = gl_entry.account\nWHERE\n\taccount.restrict_account_view = 'No'\nAND\n\taccount.is_group = 0\nGROUP BY\n\taccount.name,\n\taccount.account_number,\n\taccount.account_name,\n\taccount.parent_account\nORDER BY\n\taccount.parent_account,\n\taccount.account_number",
  "ref_doctype": "GL Entry",
  "report_name": "Account Balances Summary",
  "report_type": "Query Report",

@@ -13,6 +13,17 @@
  {
   "docstatus": 0,
   "doctype": "Custom HTML Block",
+  "html": "<!DOCTYPE html>\n<div class=\"widget shortcut-widget-box\" style=\"margin-left:0; padding-left: 0;\">\n\t<div class=\"widget-head\">\n\t\t<div class=\"widget-label\">\n\t\t\t<div class=\"widget-title\"><span class=\"ellipsis\" title=\"Customer\">إذن تحويل مواد جديد</span>\n\t\t\t<svg class=\"icon ml-2 icon-xs\" style=\"stroke: grey\">\n\t\t        <use class=\"\" href=\"#icon-arrow-up-right\"></use>\n            </svg>\n    </div>\n\t\t\t<div class=\"widget-subtitle\"></div>\n\t\t</div>\n\t\t<div class=\"widget-control\"></div>\n\t</div>\n\t<div class=\"widget-body\"></div>\n\t<div class=\"widget-footer\"></div>\n</div><div class=\"divider\"></div>",
+  "modified": "2025-10-31 15:58:14.491615",
+  "name": "New Material Transfer",
+  "private": 0,
+  "roles": [],
+  "script": "root_element.addEventListener(\"click\", async function(e) {\n    // Get default company\n    const default_company = frappe.defaults.get_default(\"Company\");\n\n    // Fetch the round_off_account from the Company doctype\n    const company = await frappe.db.get_doc(\"Company\", default_company);\n\n    // Create new Stock Entry\n    const newdoc = frappe.model.get_new_doc(\"Stock Entry\");\n\n    await frappe.run_serially([\n        () => frappe.model.with_doctype(\"Stock Entry\"),\n        () => frappe.model.set_default_values(newdoc)\n    ]);\n\n    // Set desired field values\n    newdoc.stock_entry_type = \"Material Transfer\";\n    newdoc.posting_time = '00:00:05';\n    newdoc.expense_account = company.round_off_account;\n    newdoc.to_warehouse = null;\n\n    // Sync and route to new form\n    frappe.model.sync(newdoc);\n    frappe.set_route(\"Form\", newdoc.doctype, newdoc.name);\n});\n",
+  "style": null
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Custom HTML Block",
   "html": "<!DOCTYPE html>\n<div class=\"widget shortcut-widget-box\" style=\"margin-left:0; padding-left: 0;\">\n\t<div class=\"widget-head\">\n\t\t<div class=\"widget-label\">\n\t\t\t<div class=\"widget-title\"><span class=\"ellipsis\" title=\"Customer\">إذن استلام مواد جديد</span>\n\t\t\t<svg class=\"icon ml-2 icon-xs\" style=\"stroke: grey\">\n\t\t        <use class=\"\" href=\"#icon-arrow-up-right\"></use>\n            </svg>\n    </div>\n\t\t\t<div class=\"widget-subtitle\"></div>\n\t\t</div>\n\t\t<div class=\"widget-control\"></div>\n\t</div>\n\t<div class=\"widget-body\"></div>\n\t<div class=\"widget-footer\"></div>\n</div><div class=\"divider\"></div>",
   "modified": "2024-11-28 13:17:30.303930",
   "name": "New Material Receipt",

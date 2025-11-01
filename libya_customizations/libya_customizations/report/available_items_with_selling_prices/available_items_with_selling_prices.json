@@ -35,6 +35,22 @@
  "doctype": "Report",
  "filters": [
   {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "mandatory": 1,
+   "options": "Warehouse",
+   "wildcard_filter": 0
+  },
+  {
+   "fieldname": "price_list",
+   "fieldtype": "Link",
+   "label": "Price List",
+   "mandatory": 1,
+   "options": "Price List",
+   "wildcard_filter": 0
+  },
+  {
    "default": "Today",
    "fieldname": "to_date",
    "fieldtype": "Date",
@@ -51,17 +67,17 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 20,
+ "idx": 22,
  "is_standard": "Yes",
  "letter_head": "",
  "letterhead": null,
- "modified": "2025-10-09 10:27:53.200685",
+ "modified": "2025-11-01 02:53:39.961714",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Available Items with Selling Prices",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "WITH\nstock_ledger_entry AS (\n\tSELECT\n\t\titem_code,\n\t\tSUM(actual_qty) AS actual_qty\n\tFROM\n\t\t`tabStock Ledger Entry`\n\tWHERE\n\t\tis_cancelled = 0\n\tAND\n\t\tposting_date <= %(to_date)s\n\tGROUP BY\n\t\titem_code\n\tHAVING\n\t\tSUM(actual_qty) > 0\n),\nitem_price AS (\n\tSELECT\n\t\titem_code,\n\t\tprice_list_rate\n\tFROM\n\t\t`tabItem Price`\n\tWHERE\n\t\tselling = 1\n\tAND\n\t\tprice_list IN (\n\t\t\tSELECT\n\t\t\t\tvalue\n\t\t\tFROM\n\t\t\t\t`tabSingles`\n\t\t\tWHERE\n\t\t\t\tdoctype = 'Selling Settings'\n\t\t\tAND\n\t\t\t\tfield = 'selling_price_list'\n\t\t)\n)\nSELECT\n\tstock_ledger_entry.item_code,\n\titem.item_name,\n\titem.brand,\n\titem_price.price_list_rate\nFROM\n\tstock_ledger_entry\nINNER JOIN\n\t`tabItem` item\nON\n\tstock_ledger_entry.item_code = item.name\nLEFT JOIN\n\titem_price\nON\n\tstock_ledger_entry.item_code = item_price.item_code\nWHERE\n\titem.is_stock_item = 1\nAND\n\tstock_ledger_entry.actual_qty > 0\nORDER BY\n    item.brand",
+ "query": "WITH\nstock_ledger_entry AS (\n\tSELECT\n\t\titem_code,\n\t\tSUM(actual_qty) AS actual_qty\n\tFROM\n\t\t`tabStock Ledger Entry`\n\tWHERE\n\t\tis_cancelled = 0\n\tAND\n\t    warehouse = %(warehouse)s\n\tAND\n\t\tposting_date <= %(to_date)s\n\tGROUP BY\n\t\titem_code\n\tHAVING\n\t\tSUM(actual_qty) > 0\n),\nitem_price AS (\n\tSELECT\n\t\titem_code,\n\t\tprice_list_rate\n\tFROM\n\t\t`tabItem Price`\n\tWHERE\n\t\tselling = 1\n\tAND\n\t\tprice_list = %(price_list)s\n)\nSELECT\n\tstock_ledger_entry.item_code,\n\titem.item_name,\n\titem.brand,\n\titem_price.price_list_rate\nFROM\n\tstock_ledger_entry\nINNER JOIN\n\t`tabItem` item\nON\n\tstock_ledger_entry.item_code = item.name\nLEFT JOIN\n\titem_price\nON\n\tstock_ledger_entry.item_code = item_price.item_code\nWHERE\n\titem.is_stock_item = 1\nAND\n\tstock_ledger_entry.actual_qty > 0\nORDER BY\n    item.brand",
  "ref_doctype": "Stock Ledger Entry",
  "report_name": "Available Items with Selling Prices",
  "report_type": "Query Report",

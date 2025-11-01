@@ -18,6 +18,13 @@ frappe.query_reports["Cash and Bank Statement Summary"] = {
             }
         },
         {
+            fieldname: "branch",
+            label: "Branch",
+            fieldtype: "Link",
+            options: "Branch",
+            reqd: 1
+        },
+        {
             fieldname: "from_date",
             label: "From Date",
             fieldtype: "Date",

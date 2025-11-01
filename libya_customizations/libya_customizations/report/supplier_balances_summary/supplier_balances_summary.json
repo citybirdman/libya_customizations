@@ -35,6 +35,14 @@
  "doctype": "Report",
  "filters": [
   {
+   "fieldname": "supplier_group",
+   "fieldtype": "Link",
+   "label": "Supplier Group",
+   "mandatory": 1,
+   "options": "Supplier Group",
+   "wildcard_filter": 0
+  },
+  {
    "default": "Today",
    "fieldname": "to_date",
    "fieldtype": "Date",
@@ -56,13 +64,13 @@
  "is_standard": "Yes",
  "letter_head": "",
  "letterhead": null,
- "modified": "2025-10-11 18:08:24.639482",
+ "modified": "2025-10-31 22:17:32.084098",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Supplier Balances Summary",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "WITH gl_entry AS (\nSELECT\n\tparty AS supplier,\n    SUM(debit) AS debit,\n\tSUM(credit) AS credit,\n\tSUM(debit) - SUM(credit) AS balance\n\t\nFROM\n\t`tabGL Entry`\nWHERE\n\tis_cancelled = 0\nAND\n    party_type = 'Supplier'\nAND\n\tposting_date <= %(to_date)s\nGROUP BY\n\tparty\n)\nSELECT\n\tsupplier.name AS supplier,\n\tsupplier.supplier_name,\n\tsupplier.supplier_group,\n\tIFNULL(gl_entry.balance, 0) AS balance\nFROM\n\t`tabSupplier` supplier\nLEFT JOIN\n\tgl_entry\nON\n\tsupplier.name = gl_entry.supplier\nWHERE\n    (CASE\n        WHEN %(show_balances)s = 'All Balances' THEN TRUE\n        WHEN %(show_balances)s = 'Debit Balances' THEN ROUND(IFNULL(gl_entry.balance, 0), 2) > 0\n        WHEN %(show_balances)s = 'Credit Balances' THEN ROUND(IFNULL(gl_entry.balance, 0), 2) < 0\n        WHEN %(show_balances)s = 'Zero Balances' THEN ROUND(IFNULL(gl_entry.balance, 0), 2) = 0\n        ELSE FALSE\n    END)\nORDER BY\n\tIFNULL(gl_entry.balance, 0),\n\tsupplier.name",
+ "query": "WITH gl_entry AS (\nSELECT\n\tparty AS supplier,\n    SUM(debit) AS debit,\n\tSUM(credit) AS credit,\n\tSUM(debit) - SUM(credit) AS balance\n\t\nFROM\n\t`tabGL Entry`\nWHERE\n\tis_cancelled = 0\nAND\n    party_type = 'Supplier'\nAND\n\tposting_date <= %(to_date)s\nGROUP BY\n\tparty\n)\nSELECT\n\tsupplier.name AS supplier,\n\tsupplier.supplier_name,\n\tsupplier.supplier_group,\n\tIFNULL(gl_entry.balance, 0) AS balance\nFROM\n\t`tabSupplier` supplier\nLEFT JOIN\n\tgl_entry\nON\n\tsupplier.name = gl_entry.supplier\nWHERE\n    (CASE\n        WHEN %(show_balances)s = 'All Balances' THEN TRUE\n        WHEN %(show_balances)s = 'Debit Balances' THEN ROUND(IFNULL(gl_entry.balance, 0), 2) > 0\n        WHEN %(show_balances)s = 'Credit Balances' THEN ROUND(IFNULL(gl_entry.balance, 0), 2) < 0\n        WHEN %(show_balances)s = 'Zero Balances' THEN ROUND(IFNULL(gl_entry.balance, 0), 2) = 0\n        ELSE FALSE\n    END)\nAND\n    supplier.supplier_group = %(supplier_group)s\nORDER BY\n\tIFNULL(gl_entry.balance, 0),\n\tsupplier.name",
  "ref_doctype": "GL Entry",
  "report_name": "Supplier Balances Summary",
  "report_type": "Query Report",

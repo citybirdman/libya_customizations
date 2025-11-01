@@ -47,6 +47,22 @@
  "doctype": "Report",
  "filters": [
   {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "mandatory": 1,
+   "options": "Warehouse",
+   "wildcard_filter": 0
+  },
+  {
+   "fieldname": "price_list",
+   "fieldtype": "Link",
+   "label": "Price List",
+   "mandatory": 1,
+   "options": "Price List",
+   "wildcard_filter": 0
+  },
+  {
    "default": "Today",
    "fieldname": "to_date",
    "fieldtype": "Date",
@@ -55,17 +71,17 @@
    "wildcard_filter": 0
   }
  ],
- "idx": 30,
+ "idx": 31,
  "is_standard": "Yes",
  "letter_head": "",
  "letterhead": null,
- "modified": "2025-10-18 20:44:10.264208",
+ "modified": "2025-11-01 02:49:48.582525",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Stock Balance with Selling and Cost Prices",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "WITH\nstock_ledger_entry_qty AS (\n\tSELECT\n\t\titem_code,\n\t\tSUM(actual_qty) AS actual_qty\n\tFROM\n\t\t`tabStock Ledger Entry`\n\tWHERE\n\t\tis_cancelled = 0\n\tAND\n\t\tposting_date <= %(to_date)s\n\tGROUP BY\n\t\titem_code\n\tHAVING\n\t\tSUM(actual_qty) > 0\n),\nstock_ledger_entry_rate AS (\n\tSELECT\n\t\titem_code,\n\t\tSUM(stock_value_difference) / SUM(actual_qty) AS valuation_rate\n\tFROM\n\t\t`tabStock Ledger Entry`\n\tWHERE\n\t\tis_cancelled = 0\n\tAND\n\t\tposting_date <= %(to_date)s\n\tGROUP BY\n\t\titem_code\n\tHAVING\n\t\tSUM(actual_qty) > 0\n),\nitem_price AS (\n\tSELECT\n\t\titem_code,\n\t\tprice_list_rate\n\tFROM\n\t\t`tabItem Price`\n\tWHERE\n\t\tselling = 1\n\tAND\n\t\tprice_list IN (\n\t\t\tSELECT\n\t\t\t\tvalue\n\t\t\tFROM\n\t\t\t\t`tabSingles`\n\t\t\tWHERE\n\t\t\t\tdoctype = 'Selling Settings'\n\t\t\tAND\n\t\t\t\tfield = 'selling_price_list'\n\t\t)\n),\nitem AS (\n    SELECT i.name, i.item_name, i.brand, i.is_stock_item\n    FROM `tabItem` i\n    LEFT JOIN `tabStock Ledger Entry` sle ON i.name = sle.item_code\n    WHERE is_cancelled = 0\n    GROUP BY i.name\n)\n\nSELECT\n\titem.name AS item_code,\n\titem.item_name,\n\titem.brand,\n\tstock_ledger_entry_qty.actual_qty,\n\titem_price.price_list_rate,\n\tstock_ledger_entry_rate.valuation_rate\nFROM\n\titem\nINNER JOIN\n\tstock_ledger_entry_qty\nON\n\titem.name = stock_ledger_entry_qty.item_code\nLEFT JOIN\n\tstock_ledger_entry_rate\nON\n\titem.name = stock_ledger_entry_rate.item_code\nLEFT JOIN\n    item_price\nON\n    item.name = item_price.item_code\nWHERE\n\titem.is_stock_item = 1\nAND\n\tstock_ledger_entry_qty.actual_qty > 0\nORDER BY\n    item.brand",
+ "query": "WITH\nstock_ledger_entry_qty AS (\n\tSELECT\n\t\titem_code,\n\t\tSUM(actual_qty) AS actual_qty\n\tFROM\n\t\t`tabStock Ledger Entry`\n\tWHERE\n\t\tis_cancelled = 0\n\tAND\n\t    warehouse = %(warehouse)s\n\tAND\n\t\tposting_date <= %(to_date)s\n\tGROUP BY\n\t\titem_code\n\tHAVING\n\t\tSUM(actual_qty) > 0\n),\nstock_ledger_entry_rate AS (\n\tSELECT\n\t\titem_code,\n\t\tSUM(stock_value_difference) / SUM(actual_qty) AS valuation_rate\n\tFROM\n\t\t`tabStock Ledger Entry`\n\tWHERE\n\t\tis_cancelled = 0\n\tAND\n\t    warehouse = %(warehouse)s\n\tAND\n\t\tposting_date <= %(to_date)s\n\tGROUP BY\n\t\titem_code\n\tHAVING\n\t\tSUM(actual_qty) > 0\n),\nitem_price AS (\n\tSELECT\n\t\titem_code,\n\t\tprice_list_rate\n\tFROM\n\t\t`tabItem Price`\n\tWHERE\n\t\tselling = 1\n\tAND\n\t\tprice_list = %(price_list)s\n),\nitem AS (\n    SELECT i.name, i.item_name, i.brand, i.is_stock_item\n    FROM `tabItem` i\n    LEFT JOIN `tabStock Ledger Entry` sle ON i.name = sle.item_code\n    WHERE is_cancelled = 0 AND warehouse = %(warehouse)s\n    GROUP BY i.name\n)\n\nSELECT\n\titem.name AS item_code,\n\titem.item_name,\n\titem.brand,\n\tstock_ledger_entry_qty.actual_qty,\n\titem_price.price_list_rate,\n\tstock_ledger_entry_rate.valuation_rate\nFROM\n\titem\nINNER JOIN\n\tstock_ledger_entry_qty\nON\n\titem.name = stock_ledger_entry_qty.item_code\nLEFT JOIN\n\tstock_ledger_entry_rate\nON\n\titem.name = stock_ledger_entry_rate.item_code\nLEFT JOIN\n    item_price\nON\n    item.name = item_price.item_code\nWHERE\n\titem.is_stock_item = 1\nAND\n\tstock_ledger_entry_qty.actual_qty > 0\nORDER BY\n    item.brand",
  "ref_doctype": "Stock Ledger Entry",
  "report_name": "Stock Balance with Selling and Cost Prices",
  "report_type": "Query Report",
