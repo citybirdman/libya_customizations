@@ -85,7 +85,7 @@
    "fieldname": "payment_to",
    "fieldtype": "Autocomplete",
    "label": "Payment To?",
-   "options": "Customer\nAccount",
+   "options": "Customer\nSupplier\nAccount",
    "reqd": 1
   },
   {
@@ -297,7 +297,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-04-19 12:34:44.632336",
+ "modified": "2025-11-02 08:23:52.711710",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Payment Voucher",
@@ -322,6 +322,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
