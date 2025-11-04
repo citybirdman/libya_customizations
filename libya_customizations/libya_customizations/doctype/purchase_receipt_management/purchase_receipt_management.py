@@ -192,6 +192,14 @@ def get_purchase_receipt_data(purchase_receipt):
 		WHERE is_cancelled = 0
 		GROUP BY item_code, IFNULL(production_year, "")
 	),
+	sales_order_item AS (
+		SELECT sii.item_code, IFNULL(sii.production_year, "") AS production_year, SUM(sii.qty - sii.delivered_qty) AS qty_to_deliver
+		FROM `tabSales Order Item` sii
+		INNER JOIN `tabSales Order` si ON sii.parent = si.name
+		WHERE sii.docstatus = 1 AND si.docstatus = 1 AND si.status NOT IN ('Completed', 'Closed')
+		GROUP BY sii.item_code, IFNULL(sii.production_year, "")
+		HAVING SUM(sii.qty - sii.delivered_qty) > 0
+	),
 	stock_ledger_entry_value AS (
 		SELECT item_code, SUM(actual_qty) AS actual_qty, SUM(stock_value_difference) AS stock_value
 		FROM `tabStock Ledger Entry`
@@ -217,6 +225,7 @@ def get_purchase_receipt_data(purchase_receipt):
 		pri.qty AS receipt_qty,
 		pri.total_cost_amount / pri.qty AS receipt_valuation_rate,
 		IF(pri.docstatus = 1, sle_qty.actual_qty, IFNULL(sle_qty.actual_qty, 0) + pri.qty) AS stock_qty,
+		IF(pri.docstatus = 1, sle_qty.actual_qty - IFNULL(soi.qty_to_deliver, 0), IFNULL(sle_qty.actual_qty, 0) + pri.qty - IFNULL(soi.qty_to_deliver, 0)) AS available_qty,
 		IF(pri.docstatus = 1, sle_value.stock_value,
 			IFNULL(sle_value.stock_value, 0) + pri.total_cost_amount) /
 			IF(pri.docstatus = 1, sle_value.actual_qty,
@@ -225,6 +234,7 @@ def get_purchase_receipt_data(purchase_receipt):
 		ip.name AS price_name
 	FROM purchase_receipt_item pri
 	LEFT JOIN stock_ledger_entry_qty sle_qty ON pri.item_code = sle_qty.item_code AND pri.production_year <=> sle_qty.production_year
+	LEFT JOIN sales_order_item soi ON pri.item_code = soi.item_code AND pri.production_year <=> soi.production_year
 	LEFT JOIN stock_ledger_entry_value sle_value ON pri.item_code = sle_value.item_code
 	LEFT JOIN item_price ip ON pri.item_code = ip.item_code AND pri.production_year <=> ip.production_year
 	INNER JOIN `tabItem` i ON pri.item_code = i.name

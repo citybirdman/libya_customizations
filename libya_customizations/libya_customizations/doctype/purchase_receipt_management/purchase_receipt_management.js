@@ -242,6 +242,7 @@ frappe.ui.form.on('Purchase Receipt Management Detail', {
                     { label: __('Receipt Qty'), fieldtype: 'Int', fieldname: 'receipt_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1 },
                     { label: __('Receipt Valuation Rate'), fieldtype: 'Float', fieldname: 'receipt_valuation_rate', in_list_view:1, precision: 2, read_only:1, colsize: 1, columns: 1},
                     { label: __('Stock Qty'), fieldtype: 'Int', fieldname: 'stock_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1},
+                    { label: __('Available Qty'), fieldtype: 'Int', fieldname: 'available_qty', in_list_view:1, precision: 0, read_only:1, colsize: 1, columns: 1},
                     { label: __('Stock Valuation Rate'), fieldtype: 'Float', fieldname: 'stock_valuation_rate', in_list_view:1 , precision: 2, read_only:1, colsize: 1, columns: 1},
                     { label: __('Selling Price'), fieldtype: 'Currency', fieldname: 'selling_price', in_list_view:1, precision: 0, colsize: 1, columns: 1},
                     { label: __('Proposed Price'), fieldtype: 'Data', fieldname: 'p_price', in_list_view:1, read_only:1, colsize: 1, columns: 1 },
