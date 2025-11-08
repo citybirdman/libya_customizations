@@ -214,10 +214,13 @@ async function openPurchaseInvoiceDialog(frm) {
         }
     });
     dialog.fields_dict.purchase_invoice_table.$wrapper.keyup(function(e) {
-        if(e.key === "Enter")
+        if(e.key === "Enter") {
             e.preventDefault()
-        let row_idx = Number(document.activeElement.parentElement.parentElement.parentElement.parentElement.querySelector(".row-index span").innerText) -1
-        dialog.fields_dict.purchase_invoice_table.grid.data[row_idx].selling_price = e.target.value
+            let row_idx = Number(document.activeElement.parentElement.parentElement.parentElement.parentElement.querySelector(".row-index span").innerText) -1
+            if (dialog.fields_dict.purchase_invoice_table.grid.data && dialog.fields_dict.purchase_invoice_table.grid.data[row_idx]) {
+                dialog.fields_dict.purchase_invoice_table.grid.data[row_idx].selling_price = e.target.value
+            }
+        }
     });
     
 }
