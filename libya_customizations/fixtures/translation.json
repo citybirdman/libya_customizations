@@ -58212,5 +58212,83 @@
   "name": "kk77go59mk",
   "source_text": "New Material Transfer",
   "translated_text": "تحويل مواد جديد"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-11-09 06:39:36.646657",
+  "name": "38guik7doj",
+  "source_text": "Purchase Invoice Details",
+  "translated_text": "تفاصيل فاتورة المشتريات"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-11-09 06:40:27.703547",
+  "name": "42lblnnccb",
+  "source_text": "Purchase Invoice Data",
+  "translated_text": "بيان فاتورة المشتريات"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-11-09 06:42:09.743417",
+  "name": "4dn9ukrcih",
+  "source_text": "Download Excel",
+  "translated_text": "تحميل ملف اكسيل"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-11-09 06:45:20.261973",
+  "name": "4t5igklrjb",
+  "source_text": "Upload Excel",
+  "translated_text": "رفع ملف اكسيل"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-11-09 06:43:37.521232",
+  "name": "5tvn32hdf0",
+  "source_text": "Invoice Qty",
+  "translated_text": "كمية الفاتورة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-11-09 06:44:12.398951",
+  "name": "68s4s5u5a3",
+  "source_text": "Invoice Valuation Rate",
+  "translated_text": "تكلفة الفاتورة"
  }
 ]
