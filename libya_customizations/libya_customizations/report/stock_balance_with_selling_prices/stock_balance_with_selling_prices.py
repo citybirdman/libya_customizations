@@ -12,7 +12,8 @@ def execute(filters=None):
     filters.setdefault("to_date", frappe.utils.today())
     filters.setdefault("brand", [])
     filters.setdefault("minimum_qty", 1)
-
+    warehouse = filters.get("warehouse")
+    price_list = filters.get("price_list")
     # --- Parameters for query ---
     conditions = []
     params = {
@@ -26,7 +27,17 @@ def execute(filters=None):
             conditions.append("i.brand IN %(brand)s")
             params["brand"] = brand_list
 
-    brand_condition = f" AND {' AND '.join(conditions)}" if conditions else ""
+    brand_condition = f"\n        AND {' AND '.join(conditions)}" if conditions else ""
+
+    warehouse_condition = ""
+    if warehouse:
+        params["warehouse"] = warehouse
+        warehouse_condition = "\n        AND warehouse = %(warehouse)s"
+
+    price_list_condition = ""
+    if price_list:
+        params["price_list"] = price_list
+        price_list_condition = "\n        AND price_list = %(price_list)s"
 
     # --- Query ---
     query = f"""
@@ -35,7 +46,7 @@ def execute(filters=None):
         SELECT item_code, SUM(actual_qty) AS actual_qty
         FROM `tabStock Ledger Entry`
         WHERE is_cancelled = 0
-	    AND warehouse = %(warehouse)s
+{warehouse_condition}
         AND posting_date <= %(to_date)s
         GROUP BY item_code
         HAVING SUM(actual_qty) > 0
@@ -44,14 +55,7 @@ def execute(filters=None):
         SELECT item_code, price_list_rate
         FROM `tabItem Price`
         WHERE selling = 1
-        AND price_list = %(price_list)s
-    ),
-    item AS (
-        SELECT i.name, i.item_name, i.brand, i.is_stock_item
-        FROM `tabItem` i
-        LEFT JOIN `tabStock Ledger Entry` sle ON i.name = sle.item_code
-        WHERE is_cancelled = 0 AND warehouse = %(warehouse)s
-        GROUP BY i.name
+{price_list_condition}
     )
     SELECT
         i.name AS item_code,
@@ -59,7 +63,7 @@ def execute(filters=None):
         i.brand,
         IFNULL(sle.actual_qty, 0) AS actual_qty,
         ip.price_list_rate
-    FROM item i
+    FROM `tabItem` i
     LEFT JOIN stock_ledger_entry sle ON i.name = sle.item_code
     LEFT JOIN item_price ip ON i.name = ip.item_code
     WHERE

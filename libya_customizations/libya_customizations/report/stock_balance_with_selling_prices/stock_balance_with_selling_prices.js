@@ -32,6 +32,13 @@ frappe.query_reports["Stock Balance with Selling Prices"] = {
             reqd: 1
         },
         {
+            label: "Price List",
+            fieldname: "price_list",
+            fieldtype: "Link",
+            options: "Price List",
+            reqd: 1
+        },
+        {
             label: "Brand",
             fieldname: "brand",
             fieldtype: "MultiSelectList",
