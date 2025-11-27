@@ -95,6 +95,7 @@ class ReceiptVoucher(Document):
 				'remark': self.remark,
 				'cannot_be_cancelled': 1
 			}).insert(ignore_permissions=True)
+			journal_entry.flags.ignore_credit_limit=True
 			journal_entry.submit()
 			self.on_update_after_submit()
 		
@@ -129,6 +130,7 @@ class ReceiptVoucher(Document):
 				'remark': self.remark,
 				'cannot_be_cancelled': 1
 			}).insert(ignore_permissions=True)
+			journal_entry.flags.ignore_credit_limit=True
 			journal_entry.submit()
 			frappe.db.set_value("Journal Entry", journal_entry.name, "remark", f" عمولة: {self.remark}")
 			self.on_update_after_submit()
