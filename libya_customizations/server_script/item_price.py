@@ -10,7 +10,7 @@ import math
 @frappe.whitelist()
 def increase_item_price(filters, percent):
     filters = json.loads(filters)
-    items = frappe.get_all("Item Price", filters, ["stock_valuation_rate", "name"])
+    items = frappe.get_all("Item Price", filters=filters, fields=["stock_valuation_rate", "name"])
     for item in items:
         frappe.db.set_value("Item Price", item.name, "price_list_rate", math.ceil(item.stock_valuation_rate*(100+int(percent))/100))
 
@@ -98,22 +98,24 @@ def import_item_price_data(file_url):
 
 @frappe.whitelist()
 def update_stock_valuation_rate():
-    item_prices = frappe.get_all("Item Price", fields=["name", "item_code"])
+    item_prices = frappe.get_all("Item Price", filters={"selling": 1}, fields=["name", "item_code", "price_list"])
     
     for ip in item_prices:
         # Get Stock Valuation Rate (based on item_code)
         avg_rate = frappe.db.sql("""
-            SELECT SUM(stock_value) / SUM(actual_qty)
-            FROM `tabBin`
-            WHERE item_code = %s AND actual_qty > 0
-        """, (ip.item_code,))[0][0]
+            SELECT SUM(b.stock_value) / SUM(b.actual_qty)
+            FROM `tabBin` b
+            INNER JOIN `tabWarehouse` w ON b.warehouse = w.name
+            WHERE b.item_code = %s AND w.default_selling_price_list = %s AND b.actual_qty > 0
+        """, (ip.item_code, ip.price_list))[0][0]
 
         # Get Stock Qty (based on item_code)
         stock_qty = frappe.db.sql("""
-            SELECT IFNULL(SUM(actual_qty), 0)
-            FROM `tabStock Ledger Entry`
-            WHERE item_code = %s
-        """, (ip.item_code))[0][0]
+            SELECT IFNULL(SUM(sle.actual_qty), 0)
+            FROM `tabStock Ledger Entry` sle
+            INNER JOIN `tabWarehouse` w ON sle.warehouse = w.name
+            WHERE sle.is_cancelled = 0 AND sle.item_code = %s AND w.default_selling_price_list = %s
+        """, (ip.item_code, ip.price_list))[0][0]
 
         frappe.db.set_value("Item Price", ip.name, {
             "stock_valuation_rate": avg_rate or 0,
