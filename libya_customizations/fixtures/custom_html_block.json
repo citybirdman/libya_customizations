@@ -25,11 +25,11 @@
   "docstatus": 0,
   "doctype": "Custom HTML Block",
   "html": "<!DOCTYPE html>\n<div class=\"widget shortcut-widget-box\" style=\"margin-left:0; padding-left: 0;\">\n\t<div class=\"widget-head\">\n\t\t<div class=\"widget-label\">\n\t\t\t<div class=\"widget-title\"><span class=\"ellipsis\" title=\"Customer\">فاتورة مردودات مشتريات جديدة</span>\n\t\t\t<svg class=\"icon ml-2 icon-xs\" style=\"stroke: grey\">\n\t\t        <use class=\"\" href=\"#icon-arrow-up-right\"></use>\n            </svg>\n    </div>\n\t\t\t<div class=\"widget-subtitle\"></div>\n\t\t</div>\n\t\t<div class=\"widget-control\"></div>\n\t</div>\n\t<div class=\"widget-body\"></div>\n\t<div class=\"widget-footer\"></div>\n</div><div class=\"divider\"></div>",
-  "modified": "2025-12-03 04:49:50.109145",
+  "modified": "2025-12-03 05:36:15.433089",
   "name": "New Purchase Return Invoice",
   "private": 0,
   "roles": [],
-  "script": "root_element.addEventListener(\"click\", async function(e) {\n    const newdoc = frappe.model.get_new_doc('Purchase Invoice');\n\n    await frappe.run_serially([\n        () => frappe.model.with_doctype('Purchase Invoice'),\n        () => frappe.model.set_default_values(newdoc)\n    ]);\n\n    newdoc.is_return = 1;\n    newdoc.update_stock = 1;\n    newdoc.set_posting_time = 1;\n\n    frappe.model.sync(newdoc);\n    frappe.set_route('Form', newdoc.doctype, newdoc.name);\n});",
+  "script": "root_element.addEventListener(\"click\", async function(e) {\n    const newdoc = frappe.model.get_new_doc('Purchase Invoice');\n\n    await frappe.run_serially([\n        () => frappe.model.with_doctype('Purchase Invoice'),\n        () => frappe.model.set_default_values(newdoc)\n    ]);\n\n    newdoc.is_return = 1;\n    newdoc.update_stock = 1;\n    newdoc.set_posting_time = 1;\n    newdoc.posting_time = frappe.datetime.now_time();\n\n    frappe.model.sync(newdoc);\n    frappe.set_route('Form', newdoc.doctype, newdoc.name);\n});",
   "style": null
  },
  {
