@@ -1,8 +1,13 @@
 {
  "charts": [],
- "content": "[{\"id\":\"bFaMk98u-M\",\"type\":\"header\",\"data\":{\"text\":\"<a href=\\\"/app/brand?name=[&quot;is&quot;%2C&quot;set&quot;]\\\">Brands</a>\",\"col\":8}},{\"id\":\"dM6XecFeJo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Brand\",\"col\":4}},{\"id\":\"0jCO6459Xx\",\"type\":\"header\",\"data\":{\"text\":\"<a href=\\\"/app/item?name=[&quot;is&quot;%2C&quot;set&quot;]\\\">Items</a>\",\"col\":8}},{\"id\":\"paiTcDTIkb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Item\",\"col\":4}},{\"id\":\"-Fdo7TmHqj\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Items - Enabled\",\"col\":6}},{\"id\":\"VErynbrqz2\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Items - Disabled\",\"col\":6}},{\"id\":\"gpQxo39u6n\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"BDNu18xcC_\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"63HWKC7P3p\",\"type\":\"header\",\"data\":{\"text\":\"<a href=\\\"/app/supplier?name=[&quot;is&quot;%2C&quot;set&quot;]\\\">Suppliers</a>\",\"col\":8}},{\"id\":\"tro2mO3ng_\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Supplier\",\"col\":4}},{\"id\":\"Ns1d9aaNHp\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Suppliers - Enabled\",\"col\":6}},{\"id\":\"OT2HRnQ67e\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Suppliers - Disabled\",\"col\":6}},{\"id\":\"FmsBGZ49Ey\",\"type\":\"header\",\"data\":{\"text\":\"<a href=\\\"/app/purchase-invoice?name=[&quot;is&quot;%2C&quot;set&quot;]\\\">Purchase Invoices</a>\",\"col\":8}},{\"id\":\"BeA607FvYl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Purchase Invoice\",\"col\":4}},{\"id\":\"1J0RFLLR7l\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Purchase Invoice No - Submitted\",\"col\":4}},{\"id\":\"ygG3musn8z\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Purchase Invoice No - Draft\",\"col\":4}},{\"id\":\"fO0hz1U-dy\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Purchase Invoice No - Cancelled\",\"col\":4}}]",
+ "content": "[{\"id\":\"bFaMk98u-M\",\"type\":\"header\",\"data\":{\"text\":\"<a href=\\\"/app/brand?name=[&quot;is&quot;%2C&quot;set&quot;]\\\">Brands</a>\",\"col\":8}},{\"id\":\"dM6XecFeJo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Brand\",\"col\":4}},{\"id\":\"0jCO6459Xx\",\"type\":\"header\",\"data\":{\"text\":\"<a href=\\\"/app/item?name=[&quot;is&quot;%2C&quot;set&quot;]\\\">Items</a>\",\"col\":8}},{\"id\":\"paiTcDTIkb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Item\",\"col\":4}},{\"id\":\"-Fdo7TmHqj\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Items - Enabled\",\"col\":6}},{\"id\":\"VErynbrqz2\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Items - Disabled\",\"col\":6}},{\"id\":\"gpQxo39u6n\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"BDNu18xcC_\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"63HWKC7P3p\",\"type\":\"header\",\"data\":{\"text\":\"<a href=\\\"/app/supplier?name=[&quot;is&quot;%2C&quot;set&quot;]\\\">Suppliers</a>\",\"col\":8}},{\"id\":\"tro2mO3ng_\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Supplier\",\"col\":4}},{\"id\":\"Ns1d9aaNHp\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Suppliers - Enabled\",\"col\":6}},{\"id\":\"OT2HRnQ67e\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Suppliers - Disabled\",\"col\":6}},{\"id\":\"FmsBGZ49Ey\",\"type\":\"header\",\"data\":{\"text\":\"<a href=\\\"/app/purchase-invoice?name=[&quot;is&quot;%2C&quot;set&quot;]\\\">Purchase Invoices</a>\",\"col\":4}},{\"id\":\"BeA607FvYl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Purchase Invoice\",\"col\":4}},{\"id\":\"7tEIcm44yG\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"New Purchase Return Invoice\",\"col\":4}},{\"id\":\"1J0RFLLR7l\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Purchase Invoice No - Submitted\",\"col\":4}},{\"id\":\"ygG3musn8z\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Purchase Invoice No - Draft\",\"col\":4}},{\"id\":\"fO0hz1U-dy\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Purchase Invoice No - Cancelled\",\"col\":4}},{\"id\":\"Cffo10Q7O8\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Purchase Return No - Submitted\",\"col\":4}},{\"id\":\"Y3w69vLxjw\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Purchase Return No - Draft\",\"col\":4}},{\"id\":\"UGGCJD8cHd\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Purchase Return No - Cancelled\",\"col\":4}}]",
  "creation": "2024-11-28 21:58:54.471013",
- "custom_blocks": [],
+ "custom_blocks": [
+  {
+   "custom_block_name": "New Purchase Return Invoice",
+   "label": "New Purchase Return Invoice"
+  }
+ ],
  "docstatus": 0,
  "doctype": "Workspace",
  "for_user": "",
@@ -13,7 +18,7 @@
  "is_hidden": 0,
  "label": "Purchases",
  "links": [],
- "modified": "2025-10-09 15:07:47.557858",
+ "modified": "2025-12-03 05:09:03.695378",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Purchases",
@@ -27,6 +32,10 @@
    "number_card_name": "Purchase Invoice No - Submitted"
   },
   {
+   "label": "Purchase Return No - Submitted",
+   "number_card_name": "Purchase Return No - Submitted"
+  },
+  {
    "label": "Suppliers - Disabled",
    "number_card_name": "Suppliers - Disabled"
   },
@@ -35,12 +44,20 @@
    "number_card_name": "Purchase Invoice No - Draft"
   },
   {
+   "label": "Purchase Return No - Draft",
+   "number_card_name": "Purchase Return No - Draft"
+  },
+  {
    "label": "Items - Enabled",
    "number_card_name": "Items - Enabled"
   },
   {
    "label": "Purchase Invoice No - Cancelled",
    "number_card_name": "Purchase Invoice No - Cancelled"
+  },
+  {
+   "label": "Purchase Return No - Cancelled",
+   "number_card_name": "Purchase Return No - Cancelled"
   },
   {
    "label": "Items - Disabled",

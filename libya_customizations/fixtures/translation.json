@@ -56063,10 +56063,10 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "ar",
-  "modified": "2024-12-07 08:40:09.700037",
+  "modified": "2025-12-03 05:05:51.257526",
   "name": "t83adas9j4",
   "source_text": "Sales Return No - Cancelled",
-  "translated_text": "عدد فواتير المردودات - ملغاة"
+  "translated_text": "عدد فواتير مردودات المبيعات - ملغاة"
  },
  {
   "context": null,
@@ -56076,10 +56076,10 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "ar",
-  "modified": "2024-12-07 08:40:48.978754",
+  "modified": "2025-12-03 05:05:51.245506",
   "name": "2nu72sjg9i",
   "source_text": "Sales Return No - Draft",
-  "translated_text": "عدد فواتير المردودات - مسودة"
+  "translated_text": "عدد فواتير مردودات المبيعات - مسودة"
  },
  {
   "context": null,
@@ -56089,10 +56089,10 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "ar",
-  "modified": "2024-12-07 08:41:24.630060",
+  "modified": "2025-12-03 05:05:51.223733",
   "name": "f7ekeao3pa",
   "source_text": "Sales Return No - Submitted",
-  "translated_text": "عدد فواتير المردودات - مسجلة"
+  "translated_text": "عدد فواتير مردودات المبيعات - مسجلة"
  },
  {
   "context": null,
@@ -58290,5 +58290,44 @@
   "name": "68s4s5u5a3",
   "source_text": "Invoice Valuation Rate",
   "translated_text": "تكلفة الفاتورة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-12-03 05:07:01.312858",
+  "name": "7alis1i687",
+  "source_text": "Purchase Return No - Submitted",
+  "translated_text": "عدد فواتير مردودات المشتريات - مسجلة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-12-03 05:07:01.333431",
+  "name": "7alt0nibhl",
+  "source_text": "Purchase Return No - Draft",
+  "translated_text": "عدد فواتير مردودات المشتريات - مسودة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2025-12-03 05:07:01.341261",
+  "name": "7alcd9etb2",
+  "source_text": "Purchase Return No - Cancelled",
+  "translated_text": "عدد فواتير مردودات المشتريات - ملغاة"
  }
 ]

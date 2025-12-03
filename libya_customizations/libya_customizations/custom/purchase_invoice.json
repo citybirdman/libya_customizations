@@ -714,9 +714,9 @@
    "modified": "2025-10-29 16:55:33.021819",
    "modified_by": "Administrator",
    "module": null,
-   "name": "Purchase Invoice-is_return-hidden",
+   "name": "Purchase Invoice-is_return-read_only",
    "owner": "Administrator",
-   "property": "hidden",
+   "property": "read_only",
    "property_type": "Check",
    "row_name": null,
    "value": "1"
