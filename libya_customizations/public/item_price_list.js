@@ -1,13 +1,14 @@
 frappe.listview_settings['Item Price'] = {
     onload: function (listview) {
         // 1. Update stock valuation rate
-        frappe.call({
-            method: "libya_customizations.server_script.item_price.update_stock_valuation_rate",
-            freeze: true,
-            callback: function(r) { 
-                listview.refresh();
-            }
-        });
+        // frappe.call({
+        //     method: "libya_customizations.server_script.item_price.update_stock_valuation_rate",
+        //     args: {docs: listview.data.map(d => d.name)},
+        //     freeze: true,
+        //     callback: function(r) { 
+        //         listview.refresh();
+        //     }
+        // });
 
         // 2. Add the "Not Priced Items" button
         listview.page.add_inner_button(__('Non-Priced Items'), function () {

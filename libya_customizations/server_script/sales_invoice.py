@@ -77,7 +77,7 @@ def create_payment(doc, method):
 				'reference_name': doc.name,
 				'total_amount': doc.grand_total,
 				'outstanding_amount': doc.outstanding_amount,
-				'allocated_amount': amount,
+				'allocated_amount': doc.outstanding_amount,
 				'due_date': doc.due_date,
 				'exchange_rate': doc.conversion_rate
 			})      
