@@ -235,7 +235,10 @@ doc_events = {
     "Purchase Receipt": {
         "on_submit": "libya_customizations.server_script.purchase_receipt.on_submit",
          "on_update_after_submit": "libya_customizations.server_script.purchase_receipt.on_update_after_submit"
-    }
+    },
+    # "Stock Ledger Entry": {
+    #     "on_update": "libya_customizations.server_script.stock_ledger_entry.update_item_price"
+    # }
 }
 
 # Scheduled Tasks
