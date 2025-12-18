@@ -132,14 +132,13 @@ def create_payment(doc, method):
 		else:
 			amount = abs(doc.grand_total)
 		if doc.is_paid and not doc.is_return:
-			print(amount)
 			references = []
 			references.append({
 				'reference_doctype': 'Sales Invoice',
 				'reference_name': doc.name,
 				'total_amount': doc.grand_total,
 				'outstanding_amount': doc.outstanding_amount,
-				'allocated_amount': amount,
+				'allocated_amount': doc.outstanding_amount,
 				'due_date': doc.due_date,
 				'exchange_rate': doc.conversion_rate
 			})      
