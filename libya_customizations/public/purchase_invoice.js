@@ -43,6 +43,26 @@ frappe.ui.form.on("Purchase Invoice", {
             frm.refresh_field("inspection_exchange_rate");
         }
     },
+    validate: function(frm) {
+        if(!frm.doc.transport_amount)
+            frm.set_value("transport_amount", frm.doc.transport_amount || 0);
+        if(!frm.doc.clearance_amount)
+            frm.set_value("clearance_amount", frm.doc.clearance_amount || 0);
+        if(!frm.doc.foreign_bank_charges_exchange_rate)
+            frm.set_value("foreign_bank_charges_exchange_rate", frm.doc.foreign_bank_charges_exchange_rate || 0);
+        if(!frm.doc.local_bank_charges_amount)
+            frm.set_value("local_bank_charges_amount", frm.doc.local_bank_charges_amount || 0);
+        if(!frm.doc.foreign_bank_charges_amount)
+            frm.set_value("foreign_bank_charges_amount", frm.doc.foreign_bank_charges_amount || 0);
+        if(!frm.doc.freight_amount)
+            frm.set_value("freight_amount", frm.doc.freight_amount || 0);
+        if(!frm.doc.freight_exchange_rate)
+            frm.set_value("freight_exchange_rate", frm.doc.freight_exchange_rate || 0);
+        if(!frm.doc.inspection_amount)
+            frm.set_value("inspection_amount", frm.doc.inspection_amount || 0);
+        if(!frm.doc.inspection_exchange_rate)
+            frm.set_value("inspection_exchange_rate", frm.doc.inspection_exchange_rate || 0);
+    }
 });
 
 frappe.ui.form.on("Purchase Invoice", {
