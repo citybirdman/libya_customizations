@@ -1,0 +1,137 @@
+{
+ "add_total_row": 0,
+ "add_translate_data": 0,
+ "columns": [
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "\u0627\u0644\u062a\u0627\u0631\u064a\u062e",
+   "width": 120
+  },
+  {
+   "fieldname": "translated_voucher_type",
+   "fieldtype": "Data",
+   "label": "\u0646\u0648\u0639 \u0627\u0644\u0645\u0633\u062a\u0646\u062f",
+   "options": "",
+   "width": 150
+  },
+  {
+   "fieldname": "voucher_no",
+   "fieldtype": "Dynamic Link",
+   "label": "\u0631\u0642\u0645 \u0627\u0644\u0645\u0633\u062a\u0646\u062f",
+   "options": "voucher_type",
+   "width": 240
+  },
+  {
+   "fieldname": "debit",
+   "fieldtype": "Currency",
+   "label": "\u0627\u0644\u0645\u062f\u064a\u0646",
+   "width": 100
+  },
+  {
+   "fieldname": "credit",
+   "fieldtype": "Currency",
+   "label": "\u0627\u0644\u062f\u0627\u0626\u0646",
+   "width": 100
+  },
+  {
+   "fieldname": "balance",
+   "fieldtype": "Currency",
+   "label": "\u0627\u0644\u0631\u0635\u064a\u062f",
+   "width": 100
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "\u0627\u0644\u0645\u0644\u0627\u062d\u0638\u0627\u062a",
+   "width": 420
+  },
+  {
+   "fieldname": "supplier_name",
+   "fieldtype": "Data",
+   "label": "\u0627\u0633\u0645 \u0627\u0644\u0645\u0648\u0631\u062f",
+   "width": 0
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "\u0627\u0633\u0645 \u0627\u0644\u0639\u0645\u064a\u0644",
+   "width": 0
+  },
+  {
+   "fieldname": "voucher_type",
+   "fieldtype": "Data",
+   "label": "Voucher Type",
+   "width": 1
+  }
+ ],
+ "creation": "2026-01-01 14:30:38.112401",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "mandatory": 1,
+   "options": "Supplier",
+   "wildcard_filter": 0
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "mandatory": 1,
+   "options": "Customer",
+   "wildcard_filter": 0
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date",
+   "mandatory": 1,
+   "wildcard_filter": 0
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "mandatory": 1,
+   "wildcard_filter": 0
+  }
+ ],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "",
+ "letterhead": null,
+ "modified": "2026-01-01 14:30:38.112401",
+ "modified_by": "Administrator",
+ "module": "Libya Customizations",
+ "name": "Party Statement Summary",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "WITH\r\nsupplier AS (\r\nSELECT\r\n    supplier_name\r\nFROM\r\n    `tabSupplier`\r\nWHERE\r\n    name = %(supplier)s\r\n),\r\ncustomer AS (\r\nSELECT\r\n    customer_name\r\nFROM\r\n    `tabCustomer`\r\nWHERE\r\n    name = %(customer)s\r\n),\r\ncustom_vouchers AS (\r\n\tSELECT\r\n\t\t'Payment Entry' AS voucher_type,\r\n\t\tname AS voucher_no,\r\n\t\tcustom_voucher_type,\r\n\t\tcustom_voucher_no\r\n\tFROM\r\n\t\t`tabPayment Entry`\r\n\tWHERE\r\n\t\tdocstatus = 1\r\n\tAND\r\n\t\tcustom_voucher_type IS NOT NULL\r\n\tAND\r\n\t\tposting_date BETWEEN %(from_date)s AND %(to_date)s\t\t\r\n\tUNION ALL\r\n\tSELECT\r\n\t\t'Journal Entry' AS voucher_type,\r\n\t\tname AS voucher_no,\r\n\t\tcustom_voucher_type,\r\n\t\tcustom_voucher_no\r\n\tFROM\r\n\t\t`tabJournal Entry`\r\n\tWHERE\r\n\t\tdocstatus = 1\r\n\tAND\r\n\t\tcustom_voucher_type IS NOT NULL\r\n\tAND\r\n\t\tposting_date BETWEEN %(from_date)s AND %(to_date)s\r\n),\r\nsys_gen_gl_entries AS (\r\n\tSELECT\r\n\t\tname,\r\n\t\tis_system_generated\r\n\tFROM\r\n\t\t`tabJournal Entry`\r\n\tWHERE\r\n\t\tdocstatus = 1\r\n\tAND\r\n\t\tis_system_generated = 1\r\n),\r\nopening_1 AS (\r\n\tSELECT\r\n\t\tNULL AS posting_date,\r\n\t\t'Opening' AS voucher_type,\r\n\t\tNULL AS voucher_no,\r\n\t\tSUM(debit) AS debit,\r\n\t\tSUM(credit) AS credit,\r\n\t\tNULL AS remarks\r\n\tFROM\r\n\t\t`tabGL Entry`\r\n\tWHERE\r\n\t\tis_cancelled = 0\r\n\tAND\r\n\t\tis_opening = 'No'\r\n\tAND\r\n\t\t((party_type = 'Supplier' AND party = %(supplier)s) OR (party_type = 'Customer' AND party = %(customer)s))\r\n\r\n\tAND\r\n\t\tposting_date < %(from_date)s\r\n),\r\nopening_2 AS (\r\n\tSELECT\r\n\t\tNULL AS posting_date,\r\n\t\t'Opening' AS voucher_type,\r\n\t\tNULL AS voucher_no,\r\n\t\tSUM(debit) AS debit,\r\n\t\tSUM(credit) AS credit,\r\n\t\tNULL AS remarks\r\n\tFROM\r\n\t\t`tabGL Entry`\r\n\tWHERE\r\n\t\tis_cancelled = 0\r\n\tAND\r\n\t\tis_opening = 'Yes'\r\n\tAND\r\n\t\t((party_type = 'Supplier' AND party = %(supplier)s) OR (party_type = 'Customer' AND party = %(customer)s))\r\n),\r\nopening AS (\r\n\tSELECT\r\n\t\tposting_date,\r\n\t\tvoucher_type,\r\n\t\tvoucher_no,\r\n\t\tIFNULL(SUM(debit), 0) AS debit,\r\n\t\tIFNULL(SUM(credit), 0) AS credit,\r\n\t\tremarks\r\n\tFROM\r\n\t\t(\r\n\t\tSELECT * FROM opening_1\r\n\t\tUNION ALL\r\n\t\tSELECT * FROM opening_2\r\n\t\t) opening\r\n\tGROUP BY\r\n\t\tposting_date,\r\n\t\tvoucher_type,\r\n\t\tvoucher_no,\r\n\t\tremarks\r\n),\r\ntransactions AS (\r\n\tSELECT\r\n\t\tgl_entry.posting_date,\r\n\t\tIF(custom_vouchers.custom_voucher_type IS NOT NULL, custom_vouchers.custom_voucher_type, gl_entry.voucher_type) AS voucher_type,\r\n\t\tIF(custom_vouchers.custom_voucher_no IS NOT NULL, custom_vouchers.custom_voucher_no, gl_entry.voucher_no) AS voucher_no,\r\n\t\tSUM(debit) AS debit,\r\n\t\tSUM(credit) AS credit,\r\n\t\tremarks\r\n\tFROM\r\n\t\t`tabGL Entry` gl_entry\r\n\tLEFT JOIN\r\n\t\tcustom_vouchers\r\n\tON\r\n\t\tgl_entry.voucher_type = custom_vouchers.voucher_type AND gl_entry.voucher_no = custom_vouchers.voucher_no\r\n\tLEFT JOIN\r\n\t\tsys_gen_gl_entries\r\n\tON\r\n\t\tgl_entry.voucher_no = sys_gen_gl_entries.name\r\n\tWHERE\r\n\t\tgl_entry.is_cancelled = 0\r\n\tAND\r\n\t\tgl_entry.is_opening = 'No'\r\n\tAND\r\n\t\tIFNULL(sys_gen_gl_entries.is_system_generated, 0) != 1\r\n\tAND\r\n\t\t((gl_entry.party_type = 'Supplier' AND gl_entry.party = %(supplier)s) OR (gl_entry.party_type = 'Customer' AND gl_entry.party = %(customer)s))\r\n\tAND\r\n\t\tgl_entry.posting_date BETWEEN %(from_date)s AND %(to_date)s\r\n\tGROUP BY\r\n\t\tgl_entry.posting_date,\r\n\t\tIF(custom_vouchers.custom_voucher_type IS NOT NULL, custom_vouchers.custom_voucher_type, gl_entry.voucher_type),\r\n\t\tIF(custom_vouchers.custom_voucher_no IS NOT NULL, custom_vouchers.custom_voucher_no, gl_entry.voucher_no),\r\n\t\tremarks\r\n),\r\ntranslation AS (\r\nSELECT\r\n    source_text,\r\n    translated_text\r\nFROM\r\n    `tabTranslation`\r\nWHERE\r\n    language = 'ar'\r\nGROUP BY\r\n    source_text\r\n)\r\nSELECT\r\n\tgl_entry.posting_date,\r\n\tIF(translation.translated_text IS NOT NULL, translation.translated_text, gl_entry.voucher_type) as translated_voucher_type,\r\n\tgl_entry.voucher_no,\r\n\tgl_entry.debit,\r\n\tgl_entry.credit,\r\n\tSUM(gl_entry.debit) OVER (ORDER BY gl_entry.posting_date, gl_entry.voucher_no, gl_entry.remarks) - SUM(gl_entry.credit) OVER (ORDER BY gl_entry.posting_date, gl_entry.voucher_no, gl_entry.remarks) AS balance,\r\n\tgl_entry.remarks,\r\n\tsupplier.supplier_name,\r\n\tcustomer.customer_name,\r\n\tgl_entry.voucher_type\r\nFROM\r\n\t(\r\n\tSELECT * FROM opening\r\n\tUNION ALL\r\n\tSELECT * FROM transactions\r\n\t) gl_entry\r\nLEFT JOIN\r\n    supplier\r\nON\r\n    TRUE\r\nLEFT JOIN\r\n    customer\r\nON\r\n    TRUE\r\nLEFT JOIN\r\n    translation\r\nON\r\n    gl_entry.voucher_type = translation.source_text\r\nORDER BY\r\n\tgl_entry.posting_date,\r\n\tgl_entry.voucher_no",
+ "ref_doctype": "GL Entry",
+ "report_name": "Party Statement Summary",
+ "report_script": "",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Accountant"
+  },
+  {
+   "role": "Chief Sales Officer"
+  },
+  {
+   "role": "Sales Supervisor"
+  },
+  {
+   "role": "Sales Coordinator"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "timeout": 0
+}
