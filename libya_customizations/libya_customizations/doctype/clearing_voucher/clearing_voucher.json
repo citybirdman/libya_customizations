@@ -172,6 +172,7 @@
   {
    "fieldname": "deducted_amount",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Deducted Amount",
    "non_negative": 1,
    "options": "from_account_currency",
@@ -333,7 +334,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-11-02 08:24:58.867411",
+ "modified": "2026-01-01 10:14:19.942032",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Clearing Voucher",

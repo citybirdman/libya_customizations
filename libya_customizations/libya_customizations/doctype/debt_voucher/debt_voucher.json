@@ -142,6 +142,7 @@
   {
    "fieldname": "amount",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Amount",
    "non_negative": 1,
    "options": "from_or_to_account_currency",
@@ -230,7 +231,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-10-29 08:45:00.626545",
+ "modified": "2026-01-01 10:14:51.920248",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Debt Voucher",

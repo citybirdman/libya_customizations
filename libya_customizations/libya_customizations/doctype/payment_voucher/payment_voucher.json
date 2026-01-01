@@ -147,6 +147,7 @@
   {
    "fieldname": "paid_amount",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Paid Amount",
    "non_negative": 1,
    "options": "paid_from_account_currency",
@@ -297,7 +298,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-11-02 08:23:52.711710",
+ "modified": "2026-01-01 10:12:06.004306",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Payment Voucher",

@@ -216,6 +216,7 @@
   {
    "fieldname": "received_amount",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Received Amount",
    "non_negative": 1,
    "options": "paid_to_account_currency",
@@ -359,7 +360,7 @@
    "link_fieldname": "custom_voucher_no"
   }
  ],
- "modified": "2025-11-02 08:23:29.142586",
+ "modified": "2026-01-01 10:10:23.869449",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Receipt Voucher",
