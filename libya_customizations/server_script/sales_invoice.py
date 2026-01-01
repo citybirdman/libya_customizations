@@ -35,7 +35,7 @@ def before_submit_sales_invoice(doc, method):
 	rows = [{"name": row.name, "rate": row.net_rate, "valuation_rate": row.incoming_rate, "item_code": row.item_code, "item_name": row.item_name} for row in doc.items]
 	bypass_role = frappe.db.get_value("Company", get_default_company(), "role_bypass_price_list_validation")
 
-	if not (	 or doc.is_return):
+	if not (frappe.db.get_value("Has Role", [["parent", "=", frappe.session.user], ['role', "in", [bypass_role, "Chief Sales Officer"]]]) or doc.is_return):
 		for row in rows:
 			if row['rate'] < row['valuation_rate']:
 				frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Valuation Rate</b>").format('{:0.2f}'.format(row['rate']), row['item_name']))
