@@ -58329,5 +58329,18 @@
   "name": "7alcd9etb2",
   "source_text": "Purchase Return No - Cancelled",
   "translated_text": "عدد فواتير مردودات المشتريات - ملغاة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2026-01-02 09:52:31.211460",
+  "name": "f3oqk3geni",
+  "source_text": "Party Statement Summary",
+  "translated_text": "كشف حساب جهات"
  }
 ]
