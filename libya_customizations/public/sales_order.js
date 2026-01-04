@@ -12,7 +12,7 @@ frappe.ui.form.on("Sales Order", {
 			frm.fields_dict.items.wrapper.querySelector(".grid-upload").style.display = "none";
 			frm.fields_dict.items.wrapper.querySelector(".grid-download").style.display = "none";
 		}
-        frm.remove_custom_button("Update Items")
+        // frm.remove_custom_button("Update Items")
 		if(frm.doc.docstatus === 1 && frm.doc.per_delivered !== 100){
 			frm.add_custom_button(__("Update Items"), () => {
 				erpnext.utils.advanced_update_child_items({
