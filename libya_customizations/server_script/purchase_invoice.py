@@ -44,9 +44,9 @@ def validate_post_carriage_costs(doc, method):
 def update_exchange_rate(invoice_name, new_rate):
     """Popup handler to update exchange rate for a submitted Purchase Invoice."""
     doctype = "Purchase Invoice"
-
+    user_roles = frappe.get_roles(frappe.session.user)
     # --- Step 0: Role check ---
-    if "Accounts User" not in frappe.get_roles(frappe.session.user):
+    if "Accounts User" not in user_roles:
         frappe.throw(_("You are not permitted to perform this action"))
 
     # --- Step 1: Load document ---
@@ -57,7 +57,7 @@ def update_exchange_rate(invoice_name, new_rate):
     # --- Step 2: Check Accounts Settings frozen date ---
     acc_settings = frappe.get_single("Accounts Settings")
     frozen_upto = acc_settings.acc_frozen_upto
-    if frozen_upto and getdate(doc.posting_date) <= getdate(frozen_upto):
+    if frozen_upto and getdate(doc.posting_date) <= getdate(frozen_upto) and acc_settings.frozen_accounts_modifier not in user_roles:
         frappe.throw(
             _("Cannot update exchange rate. Accounts are frozen up to {0}.")
             .format(frozen_upto)
