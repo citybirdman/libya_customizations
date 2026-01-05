@@ -54,6 +54,7 @@ doctype_js = {
 doctype_list_js = {
     "Sales Invoice" : "public/sales_invoice_list.js",
     "Item Price" : "public/item_price_list.js",
+    "Purchase Invoice" : "public/purchase_invoice_list.js"
 }
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -209,6 +210,13 @@ doc_events = {
     },
     "Stock Ledger Entry": {
         "on_update": "libya_customizations.server_script.stock_ledger_entry.update_item_price"
+    },
+    "Purchase Invoice": {
+        "on_update": "libya_customizations.server_script.purchase_invoice.on_update",
+        "on_update_after_submit": "libya_customizations.server_script.purchase_invoice.on_update_after_submit",
+        "before_update_after_submit": "libya_customizations.server_script.purchase_invoice.update_status",
+        "before_cancel": "libya_customizations.server_script.purchase_invoice.update_status",
+        "before_submit": "libya_customizations.server_script.purchase_invoice.update_status",
     }
 }
 

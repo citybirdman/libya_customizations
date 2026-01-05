@@ -71,7 +71,7 @@ def edit_item_price(values, selling_price_list):
 			})
 			item_price.insert()
 
-def make_payment_entry(purchase_invoice):
+def make_payment_entry(doc):
 	if doc.custom_is_paid and doc.custom_payment_account:
 		payment_dict = {
 			"payment_type":"Pay",
@@ -92,3 +92,28 @@ def make_payment_entry(purchase_invoice):
 		payment_entry = frappe.get_doc(payment_dict)
 		payment_entry.insert(ignore_permissions=True)
 		payment_entry.submit()
+
+def on_update(doc, method = None):
+	make_payment_entry(doc)
+def on_update_after_submit(doc, method = None):
+	make_payment_entry(doc)
+
+def update_status(doc, method = None):
+
+	def get_ord_status(is_paid, is_return = 0, is_opening = "No"):
+		if is_opening == 'Yes':
+			return "Opening"
+		elif not is_paid and not is_return:
+			return "Credit Invoice"
+		elif is_paid and not is_return:
+			return "Cash Invoice"
+		elif is_return and not is_paid:
+			return "Credit Return"
+		elif is_paid and is_return:
+			return "Cash Return"
+
+	if method in ["before_update_after_submit", "before_submit"]:
+		doc.custom_payment_status = get_ord_status(doc.custom_is_paid, doc.is_return, doc.is_opening)		
+	elif method == "before_cancel":
+		doc.custom_payment_status = "Cancelled"
+	return doc.custom_payment_status
