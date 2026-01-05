@@ -70,3 +70,25 @@ def edit_item_price(values, selling_price_list):
 				"price_list_rate": row['price']
 			})
 			item_price.insert()
+
+def make_payment_entry(purchase_invoice):
+	if doc.custom_is_paid and doc.custom_payment_account:
+		payment_dict = {
+			"payment_type":"Pay",
+			"posting_date":doc.posting_date,
+			"company": doc.company,
+			"party_type":"Supplier",
+			"party":doc.supplier,
+			"paid_from": doc.custom_payment_account,
+			"paid_to": doc.credit_to,
+			"paid_amount":doc.grand_total,
+			"received_amount":doc.grand_total,
+			"reference_no":doc.name,
+			"reference_date":doc.posting_date,
+			"branch": doc.branch,
+			"cost_center":doc.cost_center,
+			"doctype":"Payment Entry"
+		}
+		payment_entry = frappe.get_doc(payment_dict)
+		payment_entry.insert(ignore_permissions=True)
+		payment_entry.submit()
