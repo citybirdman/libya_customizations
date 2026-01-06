@@ -72,6 +72,12 @@ def edit_item_price(values, selling_price_list):
 			item_price.insert()
 
 def make_payment_entry(doc):
+	if frappe.db.exists("Payment Entry", {
+		"custom_voucher_type": "Purchase Invoice",
+		"custom_voucher_no": doc.name,
+		"docstatus": 1
+	}):
+		return
 	if doc.custom_is_paid and doc.custom_payment_account:
 		payment_dict = {
 			"payment_type":"Pay",
@@ -85,6 +91,8 @@ def make_payment_entry(doc):
 			"received_amount":doc.grand_total,
 			"reference_no":doc.name,
 			"reference_date":doc.posting_date,
+			"custom_voucher_type":"Purchase Invoice",
+			"custom_voucher_no":doc.name,
 			"branch": doc.branch,
 			"cost_center":doc.cost_center,
 			"doctype":"Payment Entry"
@@ -93,10 +101,24 @@ def make_payment_entry(doc):
 		payment_entry.insert(ignore_permissions=True)
 		payment_entry.submit()
 
-def on_update(doc, method = None):
+def on_submit(doc, method = None):
 	make_payment_entry(doc)
+
 def on_update_after_submit(doc, method = None):
 	make_payment_entry(doc)
+
+def on_cancel(doc, method = None):
+	payment_entries = frappe.get_all("Payment Entry", filters={
+		"custom_voucher_type": "Purchase Invoice",
+		"custom_voucher_no": doc.name,
+		"docstatus": 1
+	}, pluck="name")
+	for pe in payment_entries:
+		try:
+			payment_entry_doc = frappe.get_doc("Payment Entry", pe)
+			payment_entry_doc.cancel()
+		except Exception as e:
+			frappe.log_error(message = frappe.get_traceback(), title = f"Error cancelling Payment Entry {pe} for Purchase Invoice {doc.name}")
 
 def update_status(doc, method = None):
 
