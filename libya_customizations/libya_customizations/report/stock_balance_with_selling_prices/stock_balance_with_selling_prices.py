@@ -82,7 +82,7 @@ def execute(filters=None):
         SELECT i.name, i.item_name, i.brand, i.is_stock_item, i.tire_size, IFNULL(sle.production_year, "") AS production_year
         FROM `tabItem` i
         LEFT JOIN `tabStock Ledger Entry` sle ON i.name = sle.item_code
-        WHERE is_cancelled = 0
+        WHERE is_cancelled != 1
         GROUP BY i.name, IFNULL(sle.production_year, "")
     )
     SELECT
