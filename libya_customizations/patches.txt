@@ -4,3 +4,4 @@
 
 [post_model_sync]
 libya_customizations.patches.create_or_insert_warehouse_manager_role
+libya_customizations.patches.update_item_price_before_change_methodology
