@@ -57848,5 +57848,18 @@
   "name": "uuu2cmo6ee",
   "source_text": "In-Stock Items",
   "translated_text": "الأصناف الموجودة بالمخزن"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2026-01-16 23:28:56.389464",
+  "name": "hvjmk34mkg",
+  "source_text": "Stock Ageing Summary",
+  "translated_text": "بيان أعمار المخزون"
  }
 ]
