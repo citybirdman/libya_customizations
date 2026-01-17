@@ -57861,5 +57861,31 @@
   "name": "hvjmk34mkg",
   "source_text": "Stock Ageing Summary",
   "translated_text": "بيان أعمار المخزون"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2026-01-17 08:35:05.639898",
+  "name": "i00elgpsf2",
+  "source_text": "Cost Price",
+  "translated_text": "سعر التكلفة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2026-01-17 08:35:26.101012",
+  "name": "i6dk478pci",
+  "source_text": "Avg Age",
+  "translated_text": "متوسط العمر"
  }
 ]
