@@ -57863,29 +57863,29 @@
   "translated_text": "بيان أعمار المخزون"
  },
  {
-  "context": null,
+  "context": "",
   "contributed": 0,
   "contribution_docname": null,
   "contribution_status": "",
   "docstatus": 0,
   "doctype": "Translation",
   "language": "ar",
-  "modified": "2026-01-17 08:35:05.639898",
-  "name": "i00elgpsf2",
-  "source_text": "Cost Price",
-  "translated_text": "سعر التكلفة"
- },
- {
-  "context": null,
-  "contributed": 0,
-  "contribution_docname": null,
-  "contribution_status": "",
-  "docstatus": 0,
-  "doctype": "Translation",
-  "language": "ar",
-  "modified": "2026-01-17 08:35:26.101012",
-  "name": "i6dk478pci",
+  "modified": "2026-01-17 08:44:38.503518",
+  "name": "nj1cmh3rg2",
   "source_text": "Avg Age",
   "translated_text": "متوسط العمر"
+ },
+ {
+  "context": "",
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2026-01-17 08:44:43.780390",
+  "name": "nklak37l8b",
+  "source_text": "Cost Price",
+  "translated_text": "سعر التكلفة"
  }
 ]
