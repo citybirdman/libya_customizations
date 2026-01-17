@@ -9,13 +9,13 @@
   "doctype_event": "Before Insert",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2024-12-25 09:27:06.266012",
+  "modified": "2026-01-17 09:05:32.646486",
   "module": "Libya Customizations",
   "name": "Sales Order - Permission Query",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Sales Order",
-  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabSales Order`.name NOT IN (SELECT amended_from FROM `tabSales Order` WHERE amended_from IS NOT NULL)\"\n\nif frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"Warehouse User\"]]):\n    conditions = \"docstatus=1 AND reservation_status='Reserve with Delivery'AND delivery_status IN ('Not Delivered', 'Partly Delivered')\"",
+  "script": "if not frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"System Manager\"]]):\n    conditions = \"`tabSales Order`.name NOT IN (SELECT amended_from FROM `tabSales Order` WHERE amended_from IS NOT NULL)\"\n\nif frappe.db.get_value(\"Has Role\", [[\"parent\", \"=\", frappe.session.user], ['role', \"=\", \"Warehouse User\"]]):\n    conditions = \"`tabSales Order`.docstatus=1 AND reservation_status='Reserve with Delivery'AND delivery_status IN ('Not Delivered', 'Partly Delivered')\"",
   "script_type": "Permission Query"
  },
  {
