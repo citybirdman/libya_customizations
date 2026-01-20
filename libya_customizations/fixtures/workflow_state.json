@@ -66,28 +66,10 @@
   "docstatus": 0,
   "doctype": "Workflow State",
   "icon": "",
-  "modified": "2024-12-07 11:55:43.865719",
-  "name": "Rejected Submission",
-  "style": "Danger",
-  "workflow_state_name": "Rejected Submission"
- },
- {
-  "docstatus": 0,
-  "doctype": "Workflow State",
-  "icon": "",
   "modified": "2024-11-27 12:47:28.683906",
   "name": "Pending Cancellation",
   "style": "Warning",
   "workflow_state_name": "Pending Cancellation"
- },
- {
-  "docstatus": 0,
-  "doctype": "Workflow State",
-  "icon": "",
-  "modified": "2024-11-24 10:48:42.575206",
-  "name": "Posted",
-  "style": "",
-  "workflow_state_name": "Posted"
  },
  {
   "docstatus": 0,
@@ -106,6 +88,24 @@
   "name": "Pending Submission",
   "style": "Warning",
   "workflow_state_name": "Pending Submission"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2024-12-07 11:55:43.865719",
+  "name": "Rejected Submission",
+  "style": "Danger",
+  "workflow_state_name": "Rejected Submission"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2024-11-24 10:48:42.575206",
+  "name": "Posted",
+  "style": "",
+  "workflow_state_name": "Posted"
  },
  {
   "docstatus": 0,

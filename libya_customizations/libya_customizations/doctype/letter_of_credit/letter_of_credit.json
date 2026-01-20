@@ -8,7 +8,34 @@
  "engine": "InnoDB",
  "field_order": [
   "lc_number",
-  "supplier"
+  "supplier",
+  "advising_bank",
+  "issuing_bank",
+  "intermediary_bank",
+  "column_break_bapp",
+  "request_date",
+  "expected_presentation_date",
+  "actual_presentation_date",
+  "fund_blocking_date",
+  "issue_date",
+  "fund_deduction_date",
+  "section_break_qadr",
+  "lc_amount",
+  "exchange_rate",
+  "base_lc_amount",
+  "column_break_vcyb",
+  "section_break_zezp",
+  "amended_from",
+  "accounting_tab",
+  "fund_blocking_entry",
+  "fund_deduction_entry",
+  "purchasing_tab",
+  "invoice_details",
+  "attachment_tab",
+  "proforma_invoice",
+  "lc_application",
+  "lc_swift_issuing",
+  "lc_swift_intermediary"
  ],
  "fields": [
   {
@@ -23,13 +50,169 @@
    "fieldname": "supplier",
    "fieldtype": "Link",
    "label": "Supplier",
-   "options": "Supplier"
+   "options": "Supplier",
+   "reqd": 1
+  },
+  {
+   "fieldname": "advising_bank",
+   "fieldtype": "Link",
+   "label": "Advising Bank",
+   "options": "Advising Bank",
+   "reqd": 1
+  },
+  {
+   "fieldname": "issuing_bank",
+   "fieldtype": "Link",
+   "label": "Issuing Bank",
+   "options": "Issuing Bank"
+  },
+  {
+   "fieldname": "intermediary_bank",
+   "fieldtype": "Link",
+   "label": "Intermediary Bank",
+   "options": "Intermediary Bank"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Letter of Credit",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_bapp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "request_date",
+   "fieldtype": "Date",
+   "label": "Request Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expected_presentation_date",
+   "fieldtype": "Date",
+   "label": "Expected Presentation Date"
+  },
+  {
+   "fieldname": "actual_presentation_date",
+   "fieldtype": "Date",
+   "label": "Actual Presentation Date"
+  },
+  {
+   "fieldname": "lc_amount",
+   "fieldtype": "Currency",
+   "label": "LC Amount",
+   "non_negative": 1,
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Exchange Rate",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "base_lc_amount",
+   "fieldtype": "Currency",
+   "label": "LC Amount (Company Currency)",
+   "non_negative": 1,
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "attachment_tab",
+   "fieldtype": "Tab Break",
+   "label": "Attachment"
+  },
+  {
+   "fieldname": "proforma_invoice",
+   "fieldtype": "Attach",
+   "label": "Proforma Invoice",
+   "reqd": 1
+  },
+  {
+   "fieldname": "lc_application",
+   "fieldtype": "Attach",
+   "label": "LC Application"
+  },
+  {
+   "fieldname": "issue_date",
+   "fieldtype": "Date",
+   "label": "Issue Date"
+  },
+  {
+   "fieldname": "lc_swift_issuing",
+   "fieldtype": "Attach",
+   "label": "LC Swift (Issuing Bank Version)"
+  },
+  {
+   "fieldname": "lc_swift_intermediary",
+   "fieldtype": "Attach",
+   "label": "LC Swift (Intermediary Bank Version)"
+  },
+  {
+   "fieldname": "fund_blocking_date",
+   "fieldtype": "Date",
+   "label": "Fund Blocking Date"
+  },
+  {
+   "fieldname": "section_break_qadr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_zezp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "fund_deduction_date",
+   "fieldtype": "Date",
+   "label": "Fund Deduction Date"
+  },
+  {
+   "fieldname": "column_break_vcyb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "accounting_tab",
+   "fieldtype": "Tab Break",
+   "label": "Accounting"
+  },
+  {
+   "fieldname": "fund_blocking_entry",
+   "fieldtype": "Link",
+   "label": "Fund Blocking Entry",
+   "link_filters": "[[\"Journal Entry\",\"docstatus\",\"=\",\"1\"]]",
+   "options": "Journal Entry"
+  },
+  {
+   "fieldname": "fund_deduction_entry",
+   "fieldtype": "Link",
+   "label": "Fund Deduction Entry",
+   "link_filters": "[[\"Journal Entry\",\"docstatus\",\"=\",\"1\"]]",
+   "options": "Journal Entry"
+  },
+  {
+   "fieldname": "purchasing_tab",
+   "fieldtype": "Tab Break",
+   "label": "Purchasing"
+  },
+  {
+   "fieldname": "invoice_details",
+   "fieldtype": "Table",
+   "label": "Invoice Details",
+   "options": "LC Invoice Detail"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-26 12:35:20.049967",
+ "make_attachments_public": 1,
+ "modified": "2026-01-15 10:35:47.497114",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "Letter of Credit",
@@ -50,6 +233,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [

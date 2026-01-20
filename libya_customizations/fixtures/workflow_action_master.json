@@ -23,13 +23,6 @@
  {
   "docstatus": 0,
   "doctype": "Workflow Action Master",
-  "modified": "2024-12-07 11:26:04.400302",
-  "name": "Reject Cancellation",
-  "workflow_action_name": "Reject Cancellation"
- },
- {
-  "docstatus": 0,
-  "doctype": "Workflow Action Master",
   "modified": "2024-12-07 11:22:08.702842",
   "name": "Reject Submission",
   "workflow_action_name": "Reject Submission"
@@ -68,5 +61,12 @@
   "modified": "2024-11-24 10:46:45.111631",
   "name": "Cancel for Review",
   "workflow_action_name": "Cancel for Review"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2024-12-07 11:26:04.400302",
+  "name": "Reject Cancellation",
+  "workflow_action_name": "Reject Cancellation"
  }
 ]
