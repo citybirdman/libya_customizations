@@ -10,7 +10,7 @@ def update_item_price(doc, method=None):
         SET stock_valuation_rate = %(stock_valuation_rate)s,
             stock_qty = %(stock_qty)s,
             available_qty = %(available_qty)s
-        WHERE WHERE item_code = %(item_code)s
+        WHERE item_code = %(item_code)s
             AND IFNULL(production_year, '') = IFNULL(%(production_year)s, '')
         """, values,
     )
