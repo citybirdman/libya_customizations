@@ -9,10 +9,15 @@
   "purchase_invoice",
   "invoice_title",
   "posting_date",
-  "column_break_pmth",
   "grand_total",
   "document_value",
-  "invoicing"
+  "invoicing",
+  "column_break_pmth",
+  "document_status",
+  "courier_tracking_no",
+  "payment_date",
+  "payment_swift",
+  "payment_voucher"
  ],
  "fields": [
   {
@@ -74,13 +79,40 @@
   {
    "fieldname": "column_break_pmth",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "document_status",
+   "fieldtype": "Select",
+   "label": "Document Status",
+   "options": "Draft\nIssued\nSent to Advising\nSent to Intermediary\nSent to Issuing\nReceived"
+  },
+  {
+   "fieldname": "courier_tracking_no",
+   "fieldtype": "Data",
+   "label": "Courier Tracking No"
+  },
+  {
+   "fieldname": "payment_date",
+   "fieldtype": "Date",
+   "label": "Payment Date"
+  },
+  {
+   "fieldname": "payment_swift",
+   "fieldtype": "Attach",
+   "label": "Payment Swift"
+  },
+  {
+   "fieldname": "payment_voucher",
+   "fieldtype": "Link",
+   "label": "Payment Voucher",
+   "options": "Journal Entry"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-01-15 10:41:28.361980",
+ "modified": "2026-01-27 09:32:39.317006",
  "modified_by": "Administrator",
  "module": "Libya Customizations",
  "name": "LC Invoice Detail",
