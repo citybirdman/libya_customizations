@@ -46,9 +46,9 @@ def create_workflow_actions():
     ]
 
     for action in actions:
-        if not frappe.db.exists("Workflow Action", action):
+        if not frappe.db.exists("Workflow Action Master", action):
             frappe.get_doc({
-                "doctype": "Workflow Action",
+                "doctype": "Workflow Action Master",
                 "workflow_action_name": action
             }).insert(ignore_permissions=True)
 
