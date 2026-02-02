@@ -5,6 +5,8 @@ DOCTYPE = "Letter of Credit"
 
 
 def execute():
+    create_workflow_states()
+    create_workflow_actions()
     create_workflow()
     create_states()
     create_transitions()
@@ -12,6 +14,48 @@ def execute():
     frappe.db.commit()
 
 
+# --------------------------------------------------
+# Workflow State master
+# --------------------------------------------------
+def create_workflow_states():
+    states = [
+        "Open",
+        "Pending",
+        "Approved",
+        "Rejected",
+        "Presented",
+    ]
+
+    for state in states:
+        if not frappe.db.exists("Workflow State", state):
+            frappe.get_doc({
+                "doctype": "Workflow State",
+                "workflow_state_name": state
+            }).insert(ignore_permissions=True)
+
+
+# --------------------------------------------------
+# Workflow Action master
+# --------------------------------------------------
+def create_workflow_actions():
+    actions = [
+        "Send",
+        "Approve",
+        "Reject",
+        "Present",
+    ]
+
+    for action in actions:
+        if not frappe.db.exists("Workflow Action", action):
+            frappe.get_doc({
+                "doctype": "Workflow Action",
+                "workflow_action_name": action
+            }).insert(ignore_permissions=True)
+
+
+# --------------------------------------------------
+# Workflow
+# --------------------------------------------------
 def create_workflow():
     if frappe.db.exists("Workflow", WORKFLOW_NAME):
         return
@@ -27,6 +71,9 @@ def create_workflow():
     }).insert(ignore_permissions=True)
 
 
+# --------------------------------------------------
+# Workflow Document States
+# --------------------------------------------------
 def create_states():
     states = [
         ("Open", "0", "Procurement Team"),
@@ -58,9 +105,12 @@ def create_states():
         }).insert(ignore_permissions=True)
 
 
+# --------------------------------------------------
+# Workflow Transitions
+# --------------------------------------------------
 def create_transitions():
     transitions = [
-        # state, action, next_state, allowed_role
+        # state, action, next_state, role
         ("Open", "Send", "Pending", "Procurement Team"),
         ("Pending", "Approve", "Approved", "Finance Team"),
         ("Pending", "Reject", "Rejected", "Finance Team"),
