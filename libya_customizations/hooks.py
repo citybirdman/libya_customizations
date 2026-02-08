@@ -190,13 +190,14 @@ doc_events = {
         "before_cancel":"libya_customizations.server_script.journal_entry.on_trash"
     },
     "Item": {
-        "after_insert": "libya_customizations.server_script.Item.after_insert_item",
+        # "after_insert": "libya_customizations.server_script.Item.after_insert_item",
         "on_update": "libya_customizations.server_script.Item.after_update_item"
     },
     "Purchase Invoice":{
         "on_update": "libya_customizations.server_script.purchase_invoice.handle_title_change",
         "before_update_after_submit": "libya_customizations.server_script.purchase_invoice.before_update_after_submit",
         "before_submit": "libya_customizations.server_script.purchase_invoice.validate_post_carriage_costs",
+        "after_submit": "libya_customizations.server_script.purchase_invoice.add_item_prices",
         "on_update_after_submit": "libya_customizations.server_script.purchase_invoice.handle_title_change",
     },
     "Sales Invoice":{
