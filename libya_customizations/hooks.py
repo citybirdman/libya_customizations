@@ -234,8 +234,10 @@ doc_events = {
         "before_save": "libya_customizations.server_script.sales_order.before_save_sales_order",
         "on_update_after_submit": ["libya_customizations.server_script.sales_order.after_update_after_submit_sales_order",
 			"libya_customizations.server_script.sales_order.validate_item_prices_after_submit",
-			"libya_customizations.server_script.sales_order.validate_before_submit_sales_order"
-		]
+			"libya_customizations.server_script.sales_order.validate_before_submit_sales_order",
+            "libya_customizations.server_script.sales_order.update_available_qty_on_sales_order",
+		],
+        "on_cancel": "libya_customizations.server_script.sales_order.update_available_qty_on_sales_order"
     },
     "Purchase Receipt": {
         "on_submit": "libya_customizations.server_script.purchase_receipt.on_submit",

@@ -1,5 +1,6 @@
 import frappe
 from frappe import _
+from libya_customizations.server_script.stock_ledger_entry import update_item_price
 
 def get_default_company():
     default_company = frappe.db.get_single_value("Global Defaults", "default_company")
@@ -428,4 +429,12 @@ def validate_item_prices_after_submit(doc, method):
                     price_list_rate = frappe.db.get_value("Item Price", [["item_code","=", row['item_code']], ["price_list", "=", doc.selling_price_list]], "price_list_rate")
                     if row['rate'] < price_list_rate:
                         frappe.throw(_("<b>Net Rate</b> ({0}) of Item <b>{1}</b> is less than <b>Price List Rate</b> ({2})").format('{:0.2f}'.format(row['rate']), row['item_name'], '{:0.2f}'.format(price_list_rate)))
-                    
+
+def _update_available_quantities(doc):
+    for item in doc.items:
+        price_doc = frappe._dict({"item_code": item.item_code, "production_year": item.production_year})
+        update_item_price(price_doc)
+    frappe.db.commit()
+def update_available_qty_on_sales_order(doc, method):
+    
+    frappe.enqueue(_update_available_quantities, queue="long", timeout=300, doc=doc)
