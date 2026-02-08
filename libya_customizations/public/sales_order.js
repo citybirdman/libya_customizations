@@ -14,6 +14,8 @@ frappe.ui.form.on("Sales Order", {
 		}
         // frm.remove_custom_button("Update Items")
 		if(frm.doc.docstatus === 1 && frm.doc.per_delivered !== 100){
+			frm.remove_custom_button("Update Items")
+			cur_frm.remove_custom_button("Update Items")
 			frm.add_custom_button(__("Update Items"), () => {
 				erpnext.utils.advanced_update_child_items({
 					frm: frm,
