@@ -2,6 +2,15 @@
  {
   "docstatus": 0,
   "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-02-02 15:13:43.851700",
+  "name": "Presented",
+  "style": "",
+  "workflow_state_name": "Presented"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
   "icon": "question-sign",
   "modified": "2024-10-21 13:41:48.016572",
   "name": "Pending",
@@ -115,5 +124,14 @@
   "name": "Saved",
   "style": "",
   "workflow_state_name": "Saved"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2026-02-02 11:22:06.737485",
+  "name": "Open",
+  "style": "",
+  "workflow_state_name": "Open"
  }
 ]

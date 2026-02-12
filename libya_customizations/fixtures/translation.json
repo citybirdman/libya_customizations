@@ -57887,5 +57887,57 @@
   "name": "nklak37l8b",
   "source_text": "Cost Price",
   "translated_text": "سعر التكلفة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2026-02-12 09:49:59.070513",
+  "name": "fc6mt50hok",
+  "source_text": "Customer Performance Report",
+  "translated_text": "تقرير أداء العملاء"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2026-02-12 09:50:20.546907",
+  "name": "fitmrn2g1h",
+  "source_text": "Balance (w/o Orders)",
+  "translated_text": "الرصيد بدون اوامر البيع"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2026-02-12 09:50:59.152980",
+  "name": "fuvvvv91v5",
+  "source_text": "Orders To Bill",
+  "translated_text": "أوامر قيد الفوترة"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "ar",
+  "modified": "2026-02-12 09:52:09.190528",
+  "name": "gkre79urfd",
+  "source_text": "Balance Incl. Orders",
+  "translated_text": "الرصيد شامل الأوامر"
  }
 ]
